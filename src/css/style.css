@@ -1,3 +1,27 @@
-.hello {
-  color: red;
+img {
+  display: block;
+  height: auto;
+  max-width: 100%;
+}
+
+.big-grid {
+  padding: 0px;
+}
+
+.small-grid-image:hover {
+  outline-offset: -3px;
+  outline: 3px solid #000;
+}
+
+.big-grid-image {
+  display: none;
+}
+
+.big-grid-image.active {
+  display: block;
+}
+
+.small-grid-image.active {
+  outline-offset: -3px;
+  outline: 3px solid #000;
 }
