@@ -360,7 +360,7 @@
               <Port>
                 <Location>
                   <X>0 px</X>
-                  <Y>95.25 px</Y>
+                  <Y>63.5 px</Y>
                 </Location>
                 <Anchors>Top Bottom</Anchors>
                 <Align>Left</Align>
@@ -385,7 +385,7 @@
             <BendPoints>
               <PointD>
                 <X>506.5 px</X>
-                <Y>5.25 px</Y>
+                <Y>-26.5 px</Y>
               </PointD>
             </BendPoints>
             <IsManuallyRouted>false</IsManuallyRouted>
@@ -432,7 +432,7 @@
             </Location>
             <Size>
               <Width>184 px</Width>
-              <Height>110 px</Height>
+              <Height>161 px</Height>
             </Size>
             <DbOid>
               <Path>tokyo_hotel.room_types</Path>
@@ -458,7 +458,7 @@
               <Port>
                 <Location>
                   <X>0 px</X>
-                  <Y>30 px</Y>
+                  <Y>55.5 px</Y>
                 </Location>
                 <Anchors>Top Bottom</Anchors>
                 <Align>Left</Align>
@@ -470,7 +470,7 @@
               <Port>
                 <Location>
                   <X>0 px</X>
-                  <Y>80 px</Y>
+                  <Y>105.5 px</Y>
                 </Location>
                 <Anchors>Top Bottom</Anchors>
                 <Align>Right</Align>
@@ -518,7 +518,7 @@
           <ScaleMode>Free</ScaleMode>
           <Scale>1</Scale>
           <Location>
-            <X>-255.25 px</X>
+            <X>-255 px</X>
             <Y>-273 px</Y>
           </Location>
         </ViewPort>

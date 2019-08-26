@@ -108,6 +108,16 @@ img {
   text-decoration: underline;
 }
 
+#uslugi-data .card-img-top {
+  max-height: 500px;
+  overflow: hidden;
+}
+
+.card {
+  box-shadow: inset 2px 2px 12px rgba(167, 167, 167, 0.4);
+  ;
+}
+
 .alert {
   font-size: 15px;
   display: none;
@@ -122,7 +132,7 @@ img {
   display: none;
   min-height: 0px;
   max-height: 0px;
-  box-shadow: inset 2px 2px 8px rgba(167, 167, 167, 0.4)
+  box-shadow: inset 2px 2px 8px rgba(167, 167, 167, 0.4);
 }
 
 #eat .owl-item {
@@ -155,13 +165,6 @@ img {
   display: none;
 }
 
-#bar .first.card-body {
-  margin: 0;
-  padding: 0;
-  max-height: 500px;
-  overflow: hidden;
-}
-
 #parkur {
   display: none;
 }
@@ -174,23 +177,46 @@ img {
   display: none;
 }
 
-#pool .first.card-body {
-  margin: 0;
-  padding: 0;
-  max-height: 500px;
-  overflow: hidden;
-}
-
 .dengi .title {
   margin-top: 40px;
 }
 
 #catalog {
-  margin-bottom: 300px;
+  margin-bottom: 200px;
 }
 
 #catalog .container {
   padding-top: 20px;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+#catalog .grid .owl-stage-outer {
+  margin-bottom: 10px;
+}
+
+#catalog .grid .owl-dots {
+  width: 100px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#catalog .grid .owl-dots .owl-dot {
+  margin-left: 5px;
+  border-radius: 5px;
+  outline: none;
+  margin-right: 5px;
+  background-color: #e4e4e4cb;
+  min-width: 10px;
+  min-height: 10px;
+}
+
+#catalog .grid .owl-dots .owl-dot.active {
+  background-color: #8a8a8acb;
+}
+
+.grid-content {
+  margin: auto;
 }
 
 .grid-main {
@@ -222,4 +248,152 @@ img {
 .grid-image-small.active {
   outline-offset: -1px;
   outline: 1px solid #e4e4e4cb;
+}
+
+.grid-desc {
+  padding: 0;
+}
+
+.grid-desc #desc {
+  margin-bottom: 20px;
+}
+
+#desc .card-text {
+  font-size: 20px;
+}
+
+@media (max-width: 400px) {
+  .grid-desc #price .card-title {
+    padding-left: 0;
+    padding-right: 0;
+    font-size: 15px;
+  }
+  .grid-desc #to-book .btn {
+    font-size: 12px;
+    width: 120px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+.modal {
+  display: none;
+}
+
+.modal .modal-dialog {
+  margin: 13rem auto;
+}
+
+.modal .modal-footer .btn {
+  margin-right: 45px;
+  width: 188px;
+}
+
+.datepicker {
+  cursor: default;
+}
+
+@media (max-width: 600px) {
+  .modal .modal-footer .btn {
+    margin-right: auto;
+    margin-left: auto;
+    width: 188px;
+  }
+}
+
+.datepicker .table-condensed {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.datepicker .table-condensed .prev {
+  cursor: pointer;
+  text-align: right;
+}
+
+.datepicker .table-condensed .datepicker-switch {
+  cursor: pointer;
+  text-align: center;
+}
+
+.datepicker .table-condensed .next {
+  cursor: pointer;
+  text-align: left;
+}
+
+.datepicker .table-condensed td span {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.datepicker .table-condensed .day:hover, .datepicker .table-condensed .month:hover, .datepicker .table-condensed .year:hover, .datepicker .table-condensed .decade:hover {
+  cursor: pointer;
+  background-color: #a8a8a8af;
+}
+
+.datepicker .highlighted {
+  background-color: #e4e4e4cb;
+}
+
+.datepicker .active {
+  color: #fff;
+  background-color: #1a1a1a;
+  border-color: #1a1a1a;
+}
+
+.datepicker .active:hover {
+  background-color: #1a1a1a!important;
+}
+
+.datepicker .today {
+  text-align: center;
+}
+
+.datepicker .disabled {
+  color: #919aa182;
+}
+
+.datepicker .highlighted.disabled:hover {
+  cursor: default!important;
+  background-color: #e4e4e4cb!important;
+}
+
+.datepicker .disabled:hover {
+  cursor: default!important;
+  background-color: #fff!important;
+}
+
+.input-daterange label {
+  margin-top: 8px;
+}
+
+#room-check {
+  display: none;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+img.rot {
+  position: sticky;
+  animation: 1s linear 0s normal none infinite running rot;
+  -webkit-animation: 1s linear 0s normal none infinite running rot;
+  width: 100px;
+}
+
+@keyframes rot {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@-webkit-keyframes rot {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

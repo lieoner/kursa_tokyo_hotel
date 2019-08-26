@@ -35,6 +35,12 @@ class tokyo_hotel
     throw new \Exception("Cannot unserialize a singleton.");
   }
 
+  public function checkwork()
+  {
+    $res = 'ItsWork!';
+    return $res;
+  }
+
   private function getUserDataFromDB($login)
   {
     $stmt = $this->pdo->prepare('SELECT IDc, user_password FROM clients WHERE user_login=? LIMIT 1');
@@ -48,9 +54,42 @@ class tokyo_hotel
 
   private function updateHashIntoTables($params)
   {
-    $query = "UPDATE clients SET user_hash=? WHERE IDc=?";
+    $query = 'UPDATE clients SET user_hash=? WHERE IDc=?';
     $stmt = $this->pdo->prepare($query);
     $stmt->execute([$params[0], $params[1]]);
+  }
+
+  private function getRoomsTypesDataFromDB()
+  {
+    $stmt = $this->pdo->prepare('SELECT IDrt, r_typeName, r_typeImageDir, r_typeCost, r_typeDesc FROM room_types');
+    $stmt->execute();
+    $result = array();
+    foreach ($stmt as $row) {
+      $result[] = $row;
+    }
+    return $result;
+  }
+
+  private function getRoomsIDbyRoomTypeFromDB($params)
+  {
+    $stmt = $this->pdo->prepare('SELECT IDr FROM rooms WHERE IDrt = ?');
+    $stmt->execute([$params[0]]);
+    $result = array();
+    foreach ($stmt as $row) {
+      $result[] = $row;
+    }
+    return $result;
+  }
+
+  private function CallCHECKBOOKED($params)
+  {
+    $stmt = $this->pdo->prepare('CALL CHECK_BOOKED(?,?,?)');
+    $stmt->execute([$params[0], $params[1], $params[2]]);
+    $result = array();
+    foreach ($stmt as $row) {
+      $result[] = $row;
+    }
+    return $result;
   }
 
   protected function callMethod($method_name, $params = [])
@@ -68,6 +107,25 @@ class tokyo_hotel
   {
     $method_name = 'updateHashIntoTables';
     $data = $this->callMethod($method_name, array($hash, $user_id));
+    return $data;
+  }
+  public function getRoomsTypes()
+  {
+    $method_name = 'getRoomsTypesDataFromDB';
+    $data = $this->callMethod($method_name);
+    return $data;
+  }
+  public function getRoomIDs($IDrt)
+  {
+    $method_name = 'getRoomsIDbyRoomTypeFromDB';
+    $data = $this->callMethod($method_name, array($IDrt));
+    return $data;
+  }
+
+  public function findFreeRoom($IDrt, $begDate, $endDate)
+  {
+    $method_name = 'CallCHECKBOOKED';
+    $data = $this->callMethod($method_name, array($IDrt, $begDate, $endDate));
     return $data;
   }
 }
