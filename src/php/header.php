@@ -20,9 +20,19 @@
     <header>
       <nav class="navbar navbar-expand-lg navbar-dark bg-primary justify-content-center">
         <a class="navbar-brand" href="http://kursa/">
-          <div><img src="src/image/dab.png"></div>
+          <div>
+            <picture>
+              <source srcset="src/image/dab.webp" type="image/webp">
+              <img src="src/image/dab.png">
+            </picture>
+          </div>
           <div><span>tokyohotel</span></div>
-          <div><img class="mirrorX" src="src/image/dab.png"></div>
+          <div>
+            <picture>
+              <source srcset="src/image/dab.webp" type="image/webp">
+              <img class="mirrorX" src="src/image/dab.png">
+            </picture>
+          </div>
         </a>
       </nav>
     </header>

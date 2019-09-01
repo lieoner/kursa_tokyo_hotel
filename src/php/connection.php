@@ -40,11 +40,25 @@ class tokyo_hotel
     $res = 'ItsWork!';
     return $res;
   }
+  private function genPass($length)
+  {
+    $token = "";
+    $codeAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    $codeAlphabet .= "abcdefghijklmnopqrstuvwxyz";
+    $codeAlphabet .= "0123456789";
+    $max = strlen($codeAlphabet); // edited
 
-  private function getUserDataFromDB($login)
+    for ($i = 0; $i < $length; $i++) {
+      $token .= $codeAlphabet[random_int(0, $max - 1)];
+    }
+
+    return $token;
+  }
+
+  private function getUserDataFromDB($params)
   {
     $stmt = $this->pdo->prepare('SELECT IDc, user_password FROM clients WHERE user_login=? LIMIT 1');
-    $stmt->execute(array($login));
+    $stmt->execute([$params[0]]);
     $result = array();
     foreach ($stmt as $row) {
       $result[] = $row;
@@ -81,7 +95,7 @@ class tokyo_hotel
     return $result;
   }
 
-  private function CallCHECKBOOKED($params)
+  private function callCHECKBOOKED($params)
   {
     $stmt = $this->pdo->prepare('CALL CHECK_BOOKED(?,?,?)');
     $stmt->execute([$params[0], $params[1], $params[2]]);
@@ -92,6 +106,31 @@ class tokyo_hotel
     return $result;
   }
 
+  private function callROOMBOOKING($params)
+  {
+    $stmt = $this->pdo->prepare('CALL ROOM_BOOKING(?,?,?,?)');
+    $stmt->execute([$params[0], $params[1], $params[2], $params[3]]);
+  }
+
+  private function createNewClientAccount()
+  {
+    $d = new DateTime();
+    $login = $d->format('myd') * $d->format('u');
+    $pass = $this->genPass(8);
+    $stmt = $this->pdo->prepare('INSERT INTO clients (user_login,  user_password) VALUES (?, ?)');
+    $stmt->execute([$login, md5(md5($pass))]);
+    $fileopen = fopen("udata.txt", "a+");
+    $write = $login . ':' . $pass . "\r\n";
+    fwrite($fileopen, $write);
+    fclose($fileopen);
+  }
+
+  private function insertClientDataByIDc($params)
+  {
+    $stmt = $this->pdo->prepare('INSERT INTO clients_data (IDc,  client_name, client_phone) VALUES (?, ?, ?)');
+    $stmt->execute([$params[0], $params[1], $params[2]]);
+  }
+
   protected function callMethod($method_name, $params = [])
   {
     return static::$method_name($params);
@@ -100,7 +139,7 @@ class tokyo_hotel
   public function getUserData($login)
   {
     $method_name = 'getUserDataFromDB';
-    $data = $this->callMethod($method_name, $login);
+    $data = $this->callMethod($method_name, array($login));
     return $data;
   }
   public function updateHash($hash, $user_id)
@@ -127,5 +166,23 @@ class tokyo_hotel
     $method_name = 'CallCHECKBOOKED';
     $data = $this->callMethod($method_name, array($IDrt, $begDate, $endDate));
     return $data;
+  }
+
+  public function createAccount()
+  {
+    $method_name = 'createNewClientAccount';
+    $this->callMethod($method_name);
+  }
+
+  public function addBaseUserData($IDc, $clientName, $clientPhone)
+  {
+    $method_name = 'insertClientDataByIDc';
+    $this->callMethod($method_name, array($IDc, $clientName, $clientPhone));
+  }
+
+  public function bookRoom($freeroomID, $client_id, $startDate, $endDate)
+  {
+    $method_name = 'callROOMBOOKING';
+    $this->callMethod($method_name, array($freeroomID, $client_id, $startDate, $endDate));
   }
 }

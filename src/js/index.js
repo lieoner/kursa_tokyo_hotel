@@ -1,6 +1,8 @@
 global.jQuery = require('jquery');
 import popper from 'popper.js';
 import bootstrap from 'bootstrap';
+import IMask from 'imask';
+import 'jquery.cookie/jquery.cookie.js';
 import 'bootstrap-datepicker';
 import 'bootstrap-datepicker/js/locales/bootstrap-datepicker.ru';
 import 'owl.carousel/dist/assets/owl.carousel.css';
@@ -36,68 +38,6 @@ import './catalog.js';
             var id = $(this).attr('href'),
                 top = $(id).offset().top;
             $('body,html').animate({ scrollTop: top }, 1000);
-        });
-        var request;
-
-        $('#book-form').submit(function(event) {
-            event.preventDefault();
-            if (request) {
-                request.abort();
-            }
-            $('.modal .alert-danger').hide(500);
-
-            var $form = $(this);
-            var inputs = $form.find('input.input-sm');
-
-            var emtyfield = false;
-            inputs.each(function() {
-                $(this).removeClass('is-invalid');
-                if (!$(this).val()) {
-                    emtyfield = true;
-                    $(this).addClass('is-invalid');
-                }
-            });
-            if (emtyfield) {
-                $('.modal .alert-danger').show(1000);
-                $(this).addClass('is_invalid');
-            } else {
-                $('#room-check').show();
-                $('.modal-footer input[type=submit]').hide();
-                var $inputs = $form.find('input, select, button, textarea');
-                var serializedData = $form.serialize();
-                var room_id = $('#to-book .btn.selectedRoom').attr('data-roomtype-id');
-
-                serializedData = serializedData + '&roomtypeID=' + room_id;
-                $inputs.prop('disabled', true);
-                request = $.ajax({
-                    url: 'src/php/ajax.php',
-                    type: 'post',
-                    data: serializedData,
-                });
-                request.done(function(response) {
-                    setTimeout(() => {
-                        console.log(response);
-                        const result = JSON.parse(response);
-                        $inputs.prop('disabled', false);
-                        if (result.status) {
-                            $('.modal .alert-success').show(1000);
-                            $('#room-check span').hide();
-                            $('#room-check img')
-                                .css('animation', '0')
-                                .attr('src', 'src/image/dab.png');
-                        } else {
-                            $('.modal .alert-info').show(1000);
-                            $('#room-check span').hide();
-                            $('#room-check img')
-                                .css('animation', '0')
-                                .attr('src', 'src/image/findpig.png');
-                        }
-                    }, 1100);
-                });
-                request.fail(function(jqXHR, textStatus, errorThrown) {
-                    console.error('The following error occurred: ' + textStatus, errorThrown);
-                });
-            }
         });
     });
 })(jQuery);

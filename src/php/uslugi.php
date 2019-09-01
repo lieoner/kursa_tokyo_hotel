@@ -36,7 +36,12 @@
         </div>
         <div id="bar" class="col-12">
           <div class="card border-secondary mb-3">
-            <div class="card-img-top"><img src="src/image/bar.png" /></div>
+            <div class="card-img-top">
+              <picture>
+                <source srcset="src/image/bar.webp" type="image/webp">
+                <img src="src/image/bar.png">
+              </picture>
+            </div>
             <div class="card-header">Бар</div>
             <div class="card-body">
               <h4 class="card-title">Лучшие напитки</h4>
@@ -50,7 +55,12 @@
         </div>
         <div id="parkur" class="col-12">
           <div class="card border-secondary mb-3">
-            <div class="card-img-top"><img src="src/image/works.png" /></div>
+            <div class="card-img-top">
+              <picture>
+                <source srcset="src/image/works.webp" type="image/webp">
+                <img src="src/image/works.png">
+              </picture>
+            </div>
             <div class="card-header">Паркур</div>
             <div class="card-body">
               <h4 class="card-title"></h4>
@@ -60,7 +70,12 @@
         </div>
         <div id="pool" class="col-12">
           <div class="card border-secondary mb-3">
-            <div class="card-img-top"><img src="src/image/pool.png" /></div>
+            <div class="card-img-top">
+              <picture>
+                <source srcset="src/image/pool.webp" type="image/webp">
+                <img src="src/image/pool.png">
+              </picture>
+            </div>
             <div class="card-header">Бассейн</div>
             <div class="card-body">
               <h4 class="card-title">Да, у моря</h4>
