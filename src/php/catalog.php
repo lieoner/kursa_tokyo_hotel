@@ -58,6 +58,11 @@
       <? } ?>
     </div>
   </div>
+
+  <div class="booked alert alert-dismissible alert-success">
+    <strong>Успешно забронироано, проверьте почту</strong>
+  </div>
+
   <div class="modal">
     <div class="modal-dialog" role="document">
       <div class="modal-content">

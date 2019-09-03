@@ -129,37 +129,39 @@
                 });
 
                 request.done(function(response) {
-                    var result = JSON.parse(response);
-                    if (result.status) {
-                        var fioinput = `<fieldset id="f2"><div class="input-userdata input-group"><div class="row col-12"><div class="col-md-6 col-12"><label class="control-label" for="dateFirst">Ваше имя</label><input type="text" class="input-sm form-control" id="uname" name="uname" autocomplete="on" /></div><div class="col-md-6 col-12"><label class="control-label" for="dateSecond">Ваш телефон</label><input type="text" class="input-sm form-control " id="uphone" name="uphone" autocomplete="on" /></div></div></div></fieldset>`;
-                        $('.modal fieldset#f1').replaceWith($(fioinput));
-                        IMask(document.getElementById('uphone'), {
-                            mask: '+{7}(000)000-00-00',
-                        });
-                        IMask(document.getElementById('uname'), {
-                            mask: /[^0-9]/,
-                        });
-                        $('.modal .alert-success').show(1000);
-                        $('.modal .alert-success .btn').prop('disabled', false);
-                        $('#room-check span').hide();
-                        $('#room-check img')
-                            .css('animation', '0')
-                            .attr('src', 'src/image/dab.webp');
-                        request = false;
-                        continueBtnClick(result);
-                        $.cookie('result', JSON.stringify(result));
-                    } else {
-                        $inputs.prop('disabled', false);
-                        $('.modal .alert-info').show(1000);
-                        $('#room-check span').hide();
-                        $('#room-check img')
-                            .css('animation', '0')
-                            .attr('src', 'src/image/findpig.webp');
-                        setTimeout(() => {
-                            $('#room-check').hide(1000);
-                            $('.modal-footer input[type=submit]').show(1000);
-                        }, 3000);
-                    }
+                    setTimeout(() => {
+                        var result = JSON.parse(response);
+                        if (result.status) {
+                            var fioinput = `<fieldset id="f2"><div class="input-userdata input-group"><div class="row col-12"><div class="col-md-6 col-12"><label class="control-label" for="dateFirst">Ваше имя</label><input type="text" class="input-sm form-control" id="uname" name="uname" autocomplete="on" /></div><div class="col-md-6 col-12"><label class="control-label" for="dateSecond">Ваш телефон</label><input type="text" class="input-sm form-control " id="uphone" name="uphone" autocomplete="on" /></div></div></div></fieldset>`;
+                            $('.modal fieldset#f1').replaceWith($(fioinput));
+                            IMask(document.getElementById('uphone'), {
+                                mask: '+{7}(000)000-00-00',
+                            });
+                            IMask(document.getElementById('uname'), {
+                                mask: /[^0-9]/,
+                            });
+                            $('.modal .alert-success').show(1000);
+                            $('.modal .alert-success .btn').prop('disabled', false);
+                            $('#room-check span').hide();
+                            $('#room-check img')
+                                .css('animation', '0')
+                                .attr('src', 'src/image/dab.webp');
+                            request = false;
+                            continueBtnClick(result);
+                            $.cookie('result', JSON.stringify(result));
+                        } else {
+                            $inputs.prop('disabled', false);
+                            $('.modal .alert-info').show(1000);
+                            $('#room-check span').hide();
+                            $('#room-check img')
+                                .css('animation', '0')
+                                .attr('src', 'src/image/findpig.webp');
+                            setTimeout(() => {
+                                $('#room-check').hide(1000);
+                                $('.modal-footer input[type=submit]').show(1000);
+                            }, 3000);
+                        }
+                    }, 2000);
                 });
                 request.fail(function(jqXHR, textStatus, errorThrown) {
                     console.error('The following error occurred: ' + textStatus, errorThrown);
@@ -210,6 +212,10 @@
                         console.log(response);
                         request = false;
                         $('.modal .close').trigger('click');
+                        $('.booked').show(500);
+                        setTimeout(() => {
+                            $('.booked').hide(500);
+                        }, 3000);
                     });
                     request.fail(function(jqXHR, textStatus, errorThrown) {
                         console.error('The following error occurred: ' + textStatus, errorThrown);

@@ -403,3 +403,7 @@ img.rot {
   margin-right: auto;
   width: 150px;
 }
+
+.booked {
+  display: none;
+}
