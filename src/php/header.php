@@ -38,6 +38,26 @@
         <button id="login-toggler" type="button" class="btn btn-primary focus align-right">
           <span class="navbar-toggler-icon"></span>
         </button>
+        <div id="login-form">
+          <form>
+            <fieldset>
+              <legend>Авторизация</legend>
+              <div class="form-group row">
+                <div class="col-12">
+                  <label for="login" class="col-12 col-form-label">Номер брони</label>
+                  <input type="text" class="form-control" id="login" name="login" placeholder="000 000 000">
+                  <div id='short-login-feedback' class="invalid-feedback">Мало букав, введи всё</div>
+                </div>
+                <div class="col-12">
+                  <label for="pass" class="col-12 col-form-label">Пароль</label>
+                  <input type="password" class="form-control" id="pass" name="pass" autocomplete="">
+                  <div id='short-pass-feedback' class="invalid-feedback">Там не столько букв было, вводи как написано</div>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary">Войти</button>
+            </fieldset>
+          </form>
+        </div>
       </nav>
     </header>
   </section>

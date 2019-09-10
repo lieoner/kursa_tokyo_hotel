@@ -66,6 +66,17 @@ class tokyo_hotel
     return $result[0];
   }
 
+  private function getUserNameFromDB($params)
+  {
+    $stmt = $this->pdo->prepare('SELECT client_name FROM clients_data WHERE IDc=? LIMIT 1');
+    $stmt->execute([$params[0]]);
+    $result = array();
+    foreach ($stmt as $row) {
+      $result[] = $row;
+    }
+    return $result[0];
+  }
+
   private function updateHashIntoTables($params)
   {
     $query = 'UPDATE clients SET user_hash=? WHERE IDc=?';
@@ -140,6 +151,12 @@ class tokyo_hotel
   {
     $method_name = 'getUserDataFromDB';
     $data = $this->callMethod($method_name, array($login));
+    return $data;
+  }
+  public function getUserName($id)
+  {
+    $method_name = 'getUserNameFromDB';
+    $data = $this->callMethod($method_name, array($id));
     return $data;
   }
   public function updateHash($hash, $user_id)

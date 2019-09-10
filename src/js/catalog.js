@@ -159,9 +159,9 @@
                             setTimeout(() => {
                                 $('#room-check').hide(1000);
                                 $('.modal-footer input[type=submit]').show(1000);
-                            }, 3000);
+                            }, 2000);
                         }
-                    }, 2000);
+                    }, 1000);
                 });
                 request.fail(function(jqXHR, textStatus, errorThrown) {
                     console.error('The following error occurred: ' + textStatus, errorThrown);

@@ -9,6 +9,7 @@ import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel';
 import '../css/theme.css';
 import '../css/style.css';
+import './header.js';
 import './uslugi.js';
 import './catalog.js';
 

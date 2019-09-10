@@ -33,7 +33,7 @@ function tailCustom($filepath, $lines = 1, $adaptive = true)
 
 
 
-if (strcasecmp($_GET['action'], 'checkFreeRoom') == 0) {
+if (strcasecmp($_GET['action'], 'checkFreeRoom') == 0) :
   if (!empty($_POST['roomtypeID']) && !empty($_POST['start']) && !empty($_POST['end'])) {
     $roomIDs = $con->getRoomIDs($_POST['roomtypeID']);
     $temp =  explode('-', $_POST['start']);
@@ -79,7 +79,9 @@ if (strcasecmp($_GET['action'], 'checkFreeRoom') == 0) {
     echo json_encode($result);
     die();
   }
-} elseif (strcasecmp($_GET['action'], 'createAccount') == 0) {
+endif;
+
+if (strcasecmp($_GET['action'], 'createAccount') == 0) :
   $con->createAccount();
 
   $logpass = explode(':', tailCustom('udata.txt'));
@@ -91,4 +93,63 @@ if (strcasecmp($_GET['action'], 'checkFreeRoom') == 0) {
 
   echo json_encode($logpass);
   die();
-}
+endif;
+
+if (strcasecmp($_GET['action'], 'login') == 0) :
+  function generateCode($length = 6)
+  {
+    $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHI JKLMNOPRQSTUVWXYZ0123456789";
+    $code = "";
+    $clen = strlen($chars) - 1;
+    while (strlen($code) < $length) {
+      $code .= $chars[mt_rand(0, $clen)];
+    }
+    return $code;
+  }
+
+  $login  = str_replace(' ', '', $_POST['login']);
+  $pass = md5(md5($_POST['pass']));
+  $user = $con->getUserData($login);
+  if ($user['user_password'] === $pass) {
+    $hash = md5(generateCode(10));
+    $con->updateHash($hash, $user['IDc']);
+
+    setcookie("id", $user['IDc'], time() + 60 * 60 * 24 * 30);
+    setcookie("hash", $hash, time() + 60 * 60 * 24 * 30, null, null, null, true);
+
+    $result = ['status' => true, 'user' => $user];
+    echo json_encode($result);
+    die();
+  }
+
+  $result = ['status' => false];
+  echo json_encode($result);
+  die();
+endif;
+
+if (strcasecmp($_GET['action'], 'checkHash') == 0) :
+  if (isset($_COOKIE['id']) and isset($_COOKIE['hash'])) {
+    $user_name = $con->getUserName($_COOKIE['id']);
+    $result = ['status' => true, 'user_name' => $user_name['client_name']];
+    echo json_encode($result);
+    die();
+  } else {
+    $result = ['status' => false];
+    echo json_encode($result);
+    die();
+  }
+endif;
+
+if (strcasecmp($_GET['action'], 'logout') == 0) :
+  if (isset($_COOKIE['id'])) {
+    unset($_COOKIE['id']);
+    setcookie("id", "", time() - 3600);
+  }
+  if (isset($_COOKIE['hash'])) {
+    unset($_COOKIE['hash']);
+    setcookie("hash", "", time() - 3600);
+  }
+  $result = ['status' => true];
+  header("Location: ../../index.php");
+  die();
+endif;

@@ -90,6 +90,51 @@ img {
   }
 }
 
+#header #login-toggler {
+  position: absolute;
+  right: 20px;
+}
+
+#header #login-toggler .navbar-toggler-icon {
+  transform: scale(1.5);
+}
+
+#header #login-form {
+  display: none;
+  position: absolute;
+  right: 20px;
+  top: 95px;
+  z-index: 1;
+  width: 270px;
+  font-size: 10px;
+  background-color: #fff;
+  border-color: #fff;
+  padding: 10px;
+  box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.56);
+}
+
+#header #login-form #logout {
+  display: block;
+  text-align: right;
+  margin-right: 20px;
+}
+
+#header #login-form #short-login-feedback, #header #login-form #short-pass-feedback {
+  display: none;
+}
+
+#header #login-form button[type="submit"] {
+  width: 50%;
+}
+
+#header #login-form legend {
+  font-size: 1rem;
+}
+
+#header #login-form form {
+  z-index: 1050;
+}
+
 #uslugi {
   padding-top: 70px;
   padding-bottom: 70px;
