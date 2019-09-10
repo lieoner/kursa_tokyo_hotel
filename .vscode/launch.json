@@ -5,11 +5,26 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Listen for XDebug",
+      "type": "php",
+      "request": "launch",
+      "port": 9000,
+    },
+    {
+      "name": "Launch PHP",
+      "type": "php",
+      "request": "launch",
+      "program": "${file}",
+      "cwd": "${fileDirname}",
+      "port": 9000,
+      "runtimeExecutable": "E:\\server\\OSPanel\\modules\\php\\PHP_7.1-x64\\php.exe"
+    },
+    {
       "type": "chrome",
       "request": "launch",
-      "name": "Launch Chrome against localhost",
-      "url": "http://kursa1",
+      "name": "Launch Chrome",
+      "url": "http://kursa",
       "webRoot": "${workspaceFolder}"
-    }
+    },
   ]
 }
