@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Сен 02 2019 г., 20:53
+-- Время создания: Сен 11 2019 г., 12:13
 -- Версия сервера: 5.7.25
 -- Версия PHP: 7.1.22
 
@@ -64,9 +64,7 @@ CREATE TABLE `booking_list` (
 --
 
 INSERT INTO `booking_list` (`IDbook_l`, `IDc`, `IDr`, `bookDate`, `comingDate`, `outDate`) VALUES
-(31, 33, 7, '2019-09-02 05:23:10', '2019-09-02 00:00:00', '2019-09-28 00:00:00'),
-(32, 34, 1, '2019-09-02 05:23:22', '2019-09-02 00:00:00', '2019-09-28 00:00:00'),
-(33, 35, 7, '2019-09-02 05:27:42', '2019-10-02 00:00:00', '2019-11-09 00:00:00');
+(43, 45, 7, '2019-09-11 16:04:33', '2019-09-11 00:00:00', '2019-09-30 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -86,9 +84,7 @@ CREATE TABLE `clients` (
 --
 
 INSERT INTO `clients` (`IDc`, `user_login`, `user_password`, `user_hash`) VALUES
-(33, '10261777320', 'f3b54e4af2ca67d02eff24673bc2d7ed', ''),
-(34, '33187742142', '151e8bfe40805b39e46f481f581ecd97', ''),
-(35, '76598754666', '63b924b20ee7c9aaca7c05c9c2a0c175', '');
+(45, '727952583', '4caa50dfb9c5d8aedb79d6477a6f4131', '6c4e446ac85eb068c5016a49ce52a6ce');
 
 -- --------------------------------------------------------
 
@@ -109,9 +105,7 @@ CREATE TABLE `clients_data` (
 --
 
 INSERT INTO `clients_data` (`IDcdat`, `IDc`, `client_name`, `client_fam`, `client_phone`) VALUES
-(1, 33, 'dimon', '', '+7(123)154-64-87'),
-(2, 34, 'nedimon', '', '+7(564)684-65-13'),
-(3, 35, 'quest_quest', '', '+7(241)241-24-14');
+(13, 45, 'Димончес', '', '+7(111)111-11-11');
 
 -- --------------------------------------------------------
 
@@ -274,19 +268,19 @@ ALTER TABLE `room_types`
 -- AUTO_INCREMENT для таблицы `booking_list`
 --
 ALTER TABLE `booking_list`
-  MODIFY `IDbook_l` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `IDbook_l` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT для таблицы `clients`
 --
 ALTER TABLE `clients`
-  MODIFY `IDc` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `IDc` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT для таблицы `clients_data`
 --
 ALTER TABLE `clients_data`
-  MODIFY `IDcdat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `IDcdat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT для таблицы `rooms`
