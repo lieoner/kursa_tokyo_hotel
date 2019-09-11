@@ -191,7 +191,6 @@
                     $(this).addClass('is_invalid');
                 } else {
                     action = 'createAccount';
-                    console.log(JSON.parse($.cookie('result')));
                     var result = JSON.parse($.cookie('result'));
                     serData =
                         'begDate=' +
@@ -209,7 +208,6 @@
                         data: serData,
                     });
                     request.done(function(response) {
-                        console.log(response);
                         request = false;
                         $('.modal .close').trigger('click');
                         $('.booked').show(500);

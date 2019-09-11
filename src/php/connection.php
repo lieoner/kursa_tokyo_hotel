@@ -126,7 +126,12 @@ class tokyo_hotel
   private function createNewClientAccount()
   {
     $d = new DateTime();
-    $login = $d->format('myd') * $d->format('u');
+    $login = strval($d->format('myd') * $d->format('u'));
+    $token = "";
+    for ($i = 0; $i < 9; $i++) {
+      $token .= $login[$i];
+    }
+    $login = $token;
     $pass = $this->genPass(8);
     $stmt = $this->pdo->prepare('INSERT INTO clients (user_login,  user_password) VALUES (?, ?)');
     $stmt->execute([$login, md5(md5($pass))]);

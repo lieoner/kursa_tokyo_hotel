@@ -60,7 +60,7 @@
   </div>
 
   <div class="booked alert alert-dismissible alert-success">
-    <strong>Успешно забронироано, проверьте почту</strong>
+    <strong>Успешно забронировано, проверьте почту</strong>
   </div>
 
   <div class="modal">
