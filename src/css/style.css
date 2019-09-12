@@ -114,9 +114,10 @@ img {
 }
 
 #header #login-form #logout {
-  display: block;
+  display: flex;
+  width: fit-content;
   text-align: right;
-  margin-right: 20px;
+  margin-left: 200px;
 }
 
 #header #login-form #short-login-feedback, #header #login-form #short-pass-feedback {

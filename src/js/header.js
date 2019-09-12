@@ -12,11 +12,18 @@
                 $('#login-form form').replaceWith(
                     'Привет, ' +
                         res.user_name +
-                        '<br> <a id="logout" href="/src/php/ajax.php?action=logout">Выйти</a>'
+                        '<br> <a href="/profile.php">Личный кабинет</a> <br><a id="logout" href="/src/php/ajax.php?action=logout">Выйти</a>'
                 );
+            } else {
+                if (document.location.pathname != '/') {
+                    if (document.location.pathname != '/index.php') {
+                        document.location.href = '/';
+                    }
+                }
             }
         });
     }
+    check_login();
     $(document).ready(function() {
         const login_form = $('#header #login-form');
         $('#header #login-toggler').on('click', function() {
@@ -28,14 +35,16 @@
                 }
             }
         });
-        IMask(document.getElementById('login'), {
-            mask: '000 000 000',
-        });
-
-        IMask(document.getElementById('pass'), {
-            mask: '********',
-        });
-
+        if (document.getElementById('login')) {
+            IMask(document.getElementById('login'), {
+                mask: '000 000 000',
+            });
+        }
+        if (document.getElementById('pass')) {
+            IMask(document.getElementById('pass'), {
+                mask: '********',
+            });
+        }
         var request;
         const $form = login_form.find('form');
         $form.submit(function(event) {

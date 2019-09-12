@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 
 <head>
   <meta charset="utf-8" />
@@ -50,7 +50,7 @@
                 </div>
                 <div class="col-12">
                   <label for="pass" class="col-12 col-form-label">Пароль</label>
-                  <input type="password" class="form-control" id="pass" name="pass" autocomplete="">
+                  <input type="password" class="form-control" id="pass" name="pass" autocomplete>
                   <div id='short-pass-feedback' class="invalid-feedback">Там не столько букв было, вводи как написано</div>
                 </div>
               </div>
