@@ -1,0 +1,9 @@
+.profile {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.profile .list-group .label {
+  background-color: #1a1a1a !important;
+  color: #fff;
+}

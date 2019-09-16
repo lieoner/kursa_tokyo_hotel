@@ -9,9 +9,11 @@ import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel';
 import '../css/theme.css';
 import '../css/style.css';
+import '../css/profile.css';
 import './header.js';
 import './uslugi.js';
 import './catalog.js';
+import './profile.js';
 
 (function($) {
     $(document).ready(function() {
