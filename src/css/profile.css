@@ -7,3 +7,13 @@
   background-color: #1a1a1a !important;
   color: #fff;
 }
+
+.item-data {
+  display: none;
+  background-color: #1a1a1a;
+}
+
+.item-data.active {
+  display: block!important;
+  background-color: #1a1a1a;
+}
