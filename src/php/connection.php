@@ -147,6 +147,23 @@ class tokyo_hotel
     $stmt->execute([$params[0], $params[1], $params[2]]);
   }
 
+  private function getUserByID($params)
+  {
+    $stmt = $this->pdo->prepare('SELECT `cd`.`client_name` AS `client_name`, `cd`.`client_fam` AS `client_fam`, `cd`.`client_phone` AS `client_phone`, `c`.`user_login` AS `user_login` FROM (`clients_data` `cd` JOIN `clients` `c`) WHERE ((`cd`.`IDc` = ?) AND (`c`.`IDc` = `cd`.`IDc`)) LIMIT 1');
+    $stmt->execute([$params[0]]);
+    $result = array();
+    foreach ($stmt as $row) {
+      $result[] = $row;
+    }
+    return $result;
+  }
+
+  private function editUserDataUpdateDB($params)
+  {
+    $stmt = $this->pdo->prepare('UPDATE clients_data SET client_name=?, client_fam=?, client_phone=? WHERE IDc=?');
+    $stmt->execute($params);
+  }
+
   protected function callMethod($method_name, $params = [])
   {
     return static::$method_name($params);
@@ -158,6 +175,8 @@ class tokyo_hotel
     $data = $this->callMethod($method_name, array($login));
     return $data;
   }
+
+
   public function getUserName($id)
   {
     $method_name = 'getUserNameFromDB';
@@ -206,5 +225,18 @@ class tokyo_hotel
   {
     $method_name = 'callROOMBOOKING';
     $this->callMethod($method_name, array($freeroomID, $client_id, $startDate, $endDate));
+  }
+
+  public function getUser($UID)
+  {
+    $method_name = 'getUserByID';
+    $data = $this->callMethod($method_name, array($UID));
+    return $data;
+  }
+
+  public function editUserData($uid, $uname, $ufam, $uphone)
+  {
+    $method_name = 'editUserDataUpdateDB';
+    $data = $this->callMethod($method_name, array($uname, $ufam, $uphone, $uid));
   }
 }

@@ -12,7 +12,9 @@
                 $('#login-form form').replaceWith(
                     'Привет, ' +
                         res.user_name +
-                        '<br> <a href="/profile.php">Личный кабинет</a> <br><a id="logout" href="/src/php/ajax.php?action=logout">Выйти</a>'
+                        '<br> <a href="/profile.php?uid=' +
+                        res.UID +
+                        '">Личный кабинет</a> <br><a id="logout" href="/src/php/ajax.php?action=logout">Выйти</a>'
                 );
             } else {
                 if (document.location.pathname != '/') {
@@ -23,7 +25,9 @@
             }
         });
     }
+
     check_login();
+
     $(document).ready(function() {
         const login_form = $('#header #login-form');
         $('#header #login-toggler').on('click', function() {

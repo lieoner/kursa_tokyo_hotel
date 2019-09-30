@@ -130,7 +130,8 @@ endif;
 if (strcasecmp($_GET['action'], 'checkHash') == 0) :
   if (isset($_COOKIE['id']) and isset($_COOKIE['hash'])) {
     $user_name = $con->getUserName($_COOKIE['id']);
-    $result = ['status' => true, 'user_name' => $user_name['client_name']];
+    $GLOBALS['UID'] = $_COOKIE['id'];
+    $result = ['status' => true, 'user_name' => $user_name['client_name'], 'UID' => $UID];
     echo json_encode($result);
     die();
   } else {
@@ -152,4 +153,8 @@ if (strcasecmp($_GET['action'], 'logout') == 0) :
   $result = ['status' => true];
   header("Location: ../../index.php");
   die();
+endif;
+
+if (strcasecmp($_GET['action'], 'editUserData') == 0) :
+  $con->editUserData($_POST['uid'], $_POST['uname'], $_POST['ufam'], $_POST['uphone']);
 endif;

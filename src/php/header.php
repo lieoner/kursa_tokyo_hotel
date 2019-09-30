@@ -7,8 +7,9 @@
   <title>tokyohotel</title>
 
   <?php
-  require_once('src/php/connection.php');
-  require_once('src/php/core.php');
+  require_once('connection.php');
+  require_once('core.php');
+  require_once('profile/user.php');
   ?>
   <script src="dist/js/bundle.js"></script>
 
