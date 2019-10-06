@@ -75,6 +75,9 @@ img {
   .main-title {
     margin-top: -20px;
   }
+  .navbar-brand {
+    font-size: small;
+  }
   .main-title strong {
     line-height: 60px;
     font-size: 60px;

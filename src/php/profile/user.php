@@ -7,6 +7,7 @@ class User
   static protected $UFam;
   static protected $UPhone;
   static protected $BookNumber;
+  static protected $BookingData;
 
   static public function loadUser()
   {

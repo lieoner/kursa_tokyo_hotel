@@ -5,7 +5,7 @@
   <div class="container-fluid profile">
     <h2 class="text-center">Профиль № <?= User::getBookNumber() ?></h2>
     <div class="row">
-      <div class="col-3">
+      <div class="col-12 col-md-3">
         <div class="list-group">
           <div class="list-group-item label">
             Личный кабинет
@@ -16,28 +16,28 @@
           </a>
         </div>
       </div>
-      <div class="col-9">
+      <div class="col-12 col-md-9">
         <div class="item-data active col-12" data-val="1">
           <div class="static-data">
             <ul>
               <li class="row">
-                <div class="col-2">Имя</div>
-                <div class="col-6 static-uname"><?= User::getUserName() ?></div>
+                <div class="col-12 col-md-2">Имя</div>
+                <div class="col-12 col-md-6 static-uname"><?= User::getUserName() ?></div>
               </li>
               <li class="row">
-                <div class="col-2">Фамилия</div>
-                <div class="col-6 static-ufam"><?= User::getUserFam() ?></div>
+                <div class="col-12 col-md-2">Фамилия</div>
+                <div class="col-12 col-md-6 static-ufam"><?= User::getUserFam() ?></div>
               </li>
               <li class="row">
-                <div class="col-2">Телефон</div>
-                <div class="col-6 static-uphone"><?= User::getUserPhone() ?></div>
+                <div class="col-12 col-md-2">Телефон</div>
+                <div class="col-12 col-md-6 static-uphone"><?= User::getUserPhone() ?></div>
               </li>
             </ul>
             <button type="button" class="btn btn-primary edit-user">Изменить</button>
           </div>
           <div class="edit-data">
             <form>
-              <div>
+              <fieldset>
                 <legend>Редактирование</legend>
                 <div class="form-group row">
                   <div class="col-12">
@@ -54,11 +54,28 @@
                   </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Сохранить</button>
-                </fieldset>
+              </fieldset>
             </form>
           </div>
         </div>
-        <div class="item-data" data-val="2"></div>
+        <div class="item-data" data-val="2">
+          <div class="booking-data">
+            <ul>
+              <li class="row">
+                <div class="col-12 col-md-2">Статус брони</div>
+                <div class="col-12 col-md-6 book-status">...</div>
+              </li>
+              <li class="row">
+                <div class="col-12 col-md-2">Дата заезда</div>
+                <div class="col-12 col-md-6 book-begin">...</div>
+              </li>
+              <li class="row">
+                <div class="col-12 col-md-2">Дата отъезда</div>
+                <div class="col-12 col-md-6 book-end">...</div>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
   </div>
