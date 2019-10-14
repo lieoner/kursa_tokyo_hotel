@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Сен 11 2019 г., 12:13
+-- Время создания: Окт 14 2019 г., 23:47
 -- Версия сервера: 5.7.25
 -- Версия PHP: 7.1.22
 
@@ -56,15 +56,19 @@ CREATE TABLE `booking_list` (
   `IDr` int(11) NOT NULL,
   `bookDate` datetime NOT NULL,
   `comingDate` datetime NOT NULL,
-  `outDate` datetime NOT NULL
+  `outDate` datetime NOT NULL,
+  `book_status` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `booking_list`
 --
 
-INSERT INTO `booking_list` (`IDbook_l`, `IDc`, `IDr`, `bookDate`, `comingDate`, `outDate`) VALUES
-(43, 45, 7, '2019-09-11 16:04:33', '2019-09-11 00:00:00', '2019-09-30 00:00:00');
+INSERT INTO `booking_list` (`IDbook_l`, `IDc`, `IDr`, `bookDate`, `comingDate`, `outDate`, `book_status`) VALUES
+(36, 38, 18, '2019-09-30 17:31:29', '2019-09-30 00:00:00', '2019-10-06 00:00:00', 0),
+(37, 39, 14, '2019-09-30 20:40:21', '2019-10-04 00:00:00', '2019-11-10 00:00:00', 1),
+(38, 40, 10, '2019-09-30 20:40:36', '2019-09-30 00:00:00', '2019-10-06 00:00:00', 0),
+(39, 41, 10, '2019-10-15 03:06:38', '2019-10-18 00:00:00', '2019-10-19 00:00:00', 1);
 
 -- --------------------------------------------------------
 
@@ -76,15 +80,19 @@ CREATE TABLE `clients` (
   `IDc` int(11) NOT NULL,
   `user_login` varchar(30) NOT NULL,
   `user_password` varchar(32) NOT NULL,
-  `user_hash` varchar(32) NOT NULL DEFAULT ''
+  `user_hash` varchar(32) NOT NULL DEFAULT '',
+  `account_status` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `clients`
 --
 
-INSERT INTO `clients` (`IDc`, `user_login`, `user_password`, `user_hash`) VALUES
-(45, '727952583', '4caa50dfb9c5d8aedb79d6477a6f4131', '6c4e446ac85eb068c5016a49ce52a6ce');
+INSERT INTO `clients` (`IDc`, `user_login`, `user_password`, `user_hash`, `account_status`) VALUES
+(38, '753876561', 'password_has_been_reset', '', 0),
+(39, '371426617', 'c7e5d0235864bfeb2d8289da2c7d286a', '', 1),
+(40, '592198351', 'password_has_been_reset', '', 0),
+(41, '841356122', 'dc6d571e0fbfbc2262bf3a9f34a5d2e4', '43114fbb0b017428c078231ab37a1b42', 1);
 
 -- --------------------------------------------------------
 
@@ -105,7 +113,10 @@ CREATE TABLE `clients_data` (
 --
 
 INSERT INTO `clients_data` (`IDcdat`, `IDc`, `client_name`, `client_fam`, `client_phone`) VALUES
-(13, 45, 'Димончес', '', '+7(111)111-11-11');
+(6, 38, 'DVMON', 'KrutoyChel', '+7(228)133-14-48'),
+(7, 39, 'w', '', '+7(511)125-12-51'),
+(8, 40, 'rqwr', 'safasfsafa', '+7(112)512-51-52'),
+(9, 41, 'lol', 'asfasfa', '+7(214)124-12-41');
 
 -- --------------------------------------------------------
 
@@ -118,6 +129,27 @@ CREATE TABLE `living_list` (
   `IDc` int(11) NOT NULL,
   `IDr` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `logs`
+--
+
+CREATE TABLE `logs` (
+  `log_id` int(11) NOT NULL,
+  `a_date` datetime NOT NULL,
+  `a_caption` varchar(255) NOT NULL,
+  `a_initiator` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `logs`
+--
+
+INSERT INTO `logs` (`log_id`, `a_date`, `a_caption`, `a_initiator`) VALUES
+(3, '2019-10-15 03:46:09', 'Сброшен бронь и аккаунт с ID = 38 по истечению срока брони', 'SERVER'),
+(4, '2019-10-15 03:46:09', 'Сброшен бронь и аккаунт с ID = 40 по истечению срока брони', 'SERVER');
 
 -- --------------------------------------------------------
 
@@ -198,9 +230,7 @@ INSERT INTO `room_types` (`IDrt`, `r_typeName`, `r_typeSlug`, `r_typeImageDir`, 
 -- (См. Ниже фактическое представление)
 --
 CREATE TABLE `view1` (
-`IDbook_l` int(11)
-,`comingDate` datetime
-,`outDate` datetime
+`IDc` int(11)
 );
 
 -- --------------------------------------------------------
@@ -210,7 +240,7 @@ CREATE TABLE `view1` (
 --
 DROP TABLE IF EXISTS `view1`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW `view1`  AS  select `bl`.`IDbook_l` AS `IDbook_l`,`bl`.`comingDate` AS `comingDate`,`bl`.`outDate` AS `outDate` from `booking_list` `bl` where ((`bl`.`IDr` = 1) and ((`bl`.`comingDate` between '2019-08-28 01:00' and '2019-08-30 01:00') or (`bl`.`outDate` between '2019-08-28 01:00' and '2019-08-30 01:00') or ('2019-08-31 01:00' between `bl`.`comingDate` and `bl`.`outDate`) or ('2019-09-04 01:00' between `bl`.`comingDate` and `bl`.`outDate`))) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW `view1`  AS  select `booking_list`.`IDc` AS `IDc` from `booking_list` where ((`booking_list`.`outDate` < curdate()) and (`booking_list`.`book_status` = 1)) ;
 
 --
 -- Индексы сохранённых таблиц
@@ -247,6 +277,12 @@ ALTER TABLE `living_list`
   ADD KEY `livingRoomID_FK` (`IDr`);
 
 --
+-- Индексы таблицы `logs`
+--
+ALTER TABLE `logs`
+  ADD PRIMARY KEY (`log_id`);
+
+--
 -- Индексы таблицы `rooms`
 --
 ALTER TABLE `rooms`
@@ -268,19 +304,25 @@ ALTER TABLE `room_types`
 -- AUTO_INCREMENT для таблицы `booking_list`
 --
 ALTER TABLE `booking_list`
-  MODIFY `IDbook_l` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `IDbook_l` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT для таблицы `clients`
 --
 ALTER TABLE `clients`
-  MODIFY `IDc` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `IDc` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT для таблицы `clients_data`
 --
 ALTER TABLE `clients_data`
-  MODIFY `IDcdat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `IDcdat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT для таблицы `logs`
+--
+ALTER TABLE `logs`
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT для таблицы `rooms`

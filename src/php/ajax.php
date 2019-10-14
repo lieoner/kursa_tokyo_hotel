@@ -31,7 +31,19 @@ function tailCustom($filepath, $lines = 1, $adaptive = true)
   return trim($output);
 }
 
+if (strcasecmp($_GET['action'], 'cronRemoveOldBook') == 0) :
+  //%progdir%\modules\php\%phpdriver%\php-win.exe -c %progdir%\userdata\temp\config\php.ini -q -f %sitedir%\kursa\src\php\cron\cron.php из файла
+  // %progdir%\modules\wget\bin\wget.exe -q --no-cache http://kursa/src/php/ajax.php?action=cronRemoveOldBook -O %progdir%\userdata\temp\temp.txt po url
 
+  $log = $con->removeOldBook();
+  $fileopen = fopen("kursa_logs.txt", "a+");
+  $d = new DateTime();
+  $date = strval($d->format('H:i:s m.d.y'));
+  $write = $date . ' Я сделал крон из ajax.php' . "\r\n";
+  fwrite($fileopen, $write);
+  fclose($fileopen);
+
+endif;
 
 if (strcasecmp($_GET['action'], 'checkFreeRoom') == 0) :
   if (!empty($_POST['roomtypeID']) && !empty($_POST['start']) && !empty($_POST['end'])) {
@@ -82,10 +94,7 @@ if (strcasecmp($_GET['action'], 'checkFreeRoom') == 0) :
 endif;
 
 if (strcasecmp($_GET['action'], 'createAccount') == 0) :
-  $con->createAccount();
-
-  $logpass = explode(':', tailCustom('udata.txt'));
-  $login = $logpass[0];
+  $login = $con->createAccount();
   $client_id = $con->getUserData($login)['IDc'];
 
   $con->addBaseUserData($client_id, $_POST['uname'], $_POST['uphone']);
@@ -129,11 +138,17 @@ endif;
 
 if (strcasecmp($_GET['action'], 'checkHash') == 0) :
   if (isset($_COOKIE['id']) and isset($_COOKIE['hash'])) {
-    $user_name = $con->getUserName($_COOKIE['id']);
-    $GLOBALS['UID'] = $_COOKIE['id'];
-    $result = ['status' => true, 'user_name' => $user_name['client_name'], 'UID' => $UID];
-    echo json_encode($result);
-    die();
+    $user_name = $con->getUserName($_COOKIE['id'], $_COOKIE['hash']);
+    if ($user_name != 0) {
+      $GLOBALS['UID'] = $_COOKIE['id'];
+      $result = ['status' => true, 'user_name' => $user_name['client_name'], 'UID' => $UID];
+      echo json_encode($result);
+      die();
+    } else {
+      $result = ['status' => false];
+      echo json_encode($result);
+      die();
+    }
   } else {
     $result = ['status' => false];
     echo json_encode($result);

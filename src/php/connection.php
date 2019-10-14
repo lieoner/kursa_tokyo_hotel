@@ -68,13 +68,23 @@ class tokyo_hotel
 
   private function getUserNameFromDB($params)
   {
-    $stmt = $this->pdo->prepare('SELECT client_name FROM clients_data WHERE IDc=? LIMIT 1');
-    $stmt->execute([$params[0]]);
-    $result = array();
+    $stmt = $this->pdo->prepare('SELECT IDc FROM clients WHERE IDc=? AND user_hash=? LIMIT 1');
+    $stmt->execute([$params[0], $params[1]]);
+    $user_true = array();
     foreach ($stmt as $row) {
-      $result[] = $row;
+      $user_true[] = $row;
     }
-    return $result[0];
+    if (isset($user_true[0])) {
+      $stmt = $this->pdo->prepare('SELECT client_name FROM clients_data WHERE IDc=? LIMIT 1');
+      $stmt->execute([$params[0]]);
+      $result = array();
+      foreach ($stmt as $row) {
+        $result[] = $row;
+      }
+      return $result[0];
+    } else {
+      return 0;
+    }
   }
 
   private function updateHashIntoTables($params)
@@ -139,6 +149,8 @@ class tokyo_hotel
     $write = $login . ':' . $pass . "\r\n";
     fwrite($fileopen, $write);
     fclose($fileopen);
+
+    return $login;
   }
 
   private function insertClientDataByIDc($params)
@@ -193,6 +205,34 @@ class tokyo_hotel
     return $result;
   }
 
+  private function CheckAndRemoveOldBookFromDB()
+  {
+    $stmt = $this->pdo->prepare('SELECT IDc FROM booking_list WHERE (outDate < CURDATE()) AND (book_status = 1)');
+    $stmt->execute();
+    $result = array();
+    foreach ($stmt as $row) {
+      $result[] = $row;
+    }
+    foreach ($result as $row) {
+      $sql = "UPDATE clients SET user_password=?, user_hash=?, account_status=0 WHERE IDc=?";
+      $stmt = $this->pdo->prepare($sql);
+      $stmt->execute(['password_has_been_reset', '', $row['IDc']]);
+
+      $sql = "UPDATE booking_list SET book_status=? WHERE (outDate < CURDATE()) AND (book_status = 1)";
+      $stmt = $this->pdo->prepare($sql);
+      $stmt->execute(['0']);
+
+      static::appendLog('Сброшен бронь и аккаунт с ID = ' . $row['IDc'] . ' по истечению срока брони', 'SERVER');
+    }
+    return $result;
+  }
+
+  private function appendLogIntoDB($params)
+  {
+    $stmt = $this->pdo->prepare('INSERT INTO logs (a_date,  a_caption, a_initiator) VALUES (now(), ?, ?)');
+    $stmt->execute([$params[0], $params[1]]);
+  }
+
   protected function callMethod($method_name, $params = [])
   {
     return static::$method_name($params);
@@ -205,25 +245,27 @@ class tokyo_hotel
     return $data;
   }
 
-
-  public function getUserName($id)
+  public function getUserName($id, $hash)
   {
     $method_name = 'getUserNameFromDB';
-    $data = $this->callMethod($method_name, array($id));
+    $data = $this->callMethod($method_name, array($id, $hash));
     return $data;
   }
+
   public function updateHash($hash, $user_id)
   {
     $method_name = 'updateHashIntoTables';
     $data = $this->callMethod($method_name, array($hash, $user_id));
     return $data;
   }
+
   public function getRoomsTypes()
   {
     $method_name = 'getRoomsTypesDataFromDB';
     $data = $this->callMethod($method_name);
     return $data;
   }
+
   public function getRoomIDs($IDrt)
   {
     $method_name = 'getRoomsIDbyRoomTypeFromDB';
@@ -241,7 +283,8 @@ class tokyo_hotel
   public function createAccount()
   {
     $method_name = 'createNewClientAccount';
-    $this->callMethod($method_name);
+    $data = $this->callMethod($method_name);
+    return $data;
   }
 
   public function addBaseUserData($IDc, $clientName, $clientPhone)
@@ -274,5 +317,17 @@ class tokyo_hotel
     $method_name = 'getUserBookingDataFromDB';
     $data = $this->callMethod($method_name, array($uid));
     return $data;
+  }
+
+  public function removeOldBook()
+  {
+    $method_name = 'CheckAndRemoveOldBookFromDB';
+    $data = $this->callMethod($method_name);
+    return $data;
+  }
+  public function appendLog($caption, $initiator)
+  {
+    $method_name = 'appendLogIntoDB';
+    $this->callMethod($method_name, array($caption, $initiator));
   }
 }
