@@ -20,6 +20,7 @@ class User
     static::$UFam = $udata['client_fam'];
     static::$UPhone = $udata['client_phone'];
     static::$BookNumber = $udata['user_login'];
+    static::$BookingData = $con->getBookingData(static::$UID)[0];
   }
   static public function getUserName()
   {
@@ -40,5 +41,9 @@ class User
   static public function getUserID()
   {
     return static::$UID;
+  }
+  static public function getBookingData()
+  {
+    return static::$BookingData;
   }
 }

@@ -164,6 +164,35 @@ class tokyo_hotel
     $stmt->execute($params);
   }
 
+  private function getUserBookingDataFromDB($params)
+  {
+    $stmt = $this->pdo->prepare('SELECT `bl`.`IDr` AS `IDr`, `bl`.`comingDate` AS `comingDate`, `bl`.`outDate` AS `outDate` FROM `booking_list` `bl`  WHERE (`bl`.`IDc` = ?)');
+    $stmt->execute([$params[0]]);
+    $result = array();
+    foreach ($stmt as $row) {
+      $result[] = $row;
+    }
+
+    $stmt = $this->pdo->prepare('SELECT ll.IDliv_l FROM living_list ll WHERE ll.IDc = ? AND ll.IDr = ?');
+    $stmt->execute([$params[0], $result[0]['IDr']]);
+    $temp = array();
+    foreach ($stmt as $row) {
+      $result[] = $row;
+    }
+
+    if (isset($result[1])) {
+      $stmt = $this->pdo->prepare('SELECT roomNumber FROM rooms WHERE IDr = ?');
+      $stmt->execute([$result[0]['IDr']]);
+      foreach ($stmt as $row) {
+        $result[] = $row;
+      }
+      $result[0]['status'] = 'Вы зарегистрированы, ваша комната №' . $result[2]['roomNumber'];
+    } else {
+      $result[0]['status'] = 'Бронь активна';
+    }
+    return $result;
+  }
+
   protected function callMethod($method_name, $params = [])
   {
     return static::$method_name($params);
@@ -238,5 +267,12 @@ class tokyo_hotel
   {
     $method_name = 'editUserDataUpdateDB';
     $data = $this->callMethod($method_name, array($uname, $ufam, $uphone, $uid));
+  }
+
+  public function getBookingData($uid)
+  {
+    $method_name = 'getUserBookingDataFromDB';
+    $data = $this->callMethod($method_name, array($uid));
+    return $data;
   }
 }

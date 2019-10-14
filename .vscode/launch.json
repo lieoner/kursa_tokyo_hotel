@@ -23,7 +23,7 @@
       "type": "chrome",
       "request": "launch",
       "name": "Launch Chrome",
-      "url": "http://kursa",
+      "url": "http://kursa1",
       "webRoot": "${workspaceFolder}"
     },
   ]

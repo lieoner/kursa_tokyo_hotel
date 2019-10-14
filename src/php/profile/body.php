@@ -63,15 +63,19 @@
             <ul>
               <li class="row">
                 <div class="col-12 col-md-2">Статус брони</div>
-                <div class="col-12 col-md-6 book-status">...</div>
+                <div class="col-12 col-md-6 book-status"><?= User::getBookingData()['status']; ?></div>
               </li>
               <li class="row">
                 <div class="col-12 col-md-2">Дата заезда</div>
-                <div class="col-12 col-md-6 book-begin">...</div>
+                <div class="col-12 col-md-6 book-begin"><? $date =  explode(' ', User::getBookingData()['comingDate']);
+                                                        $date = explode('-', $date[0]);
+                                                        echo $date[2] . '.' . $date[1] . '.' . $date[0] ?></div>
               </li>
               <li class="row">
                 <div class="col-12 col-md-2">Дата отъезда</div>
-                <div class="col-12 col-md-6 book-end">...</div>
+                <div class="col-12 col-md-6 book-end"><? $date =  explode(' ', User::getBookingData()['outDate']);
+                                                      $date = explode('-', $date[0]);
+                                                      echo $date[2] . '.' . $date[1] . '.' . $date[0] ?></div>
               </li>
             </ul>
           </div>
