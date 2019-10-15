@@ -11,7 +11,7 @@
   require_once('core.php');
   require_once('profile/user.php');
   ?>
-  <script src="dist/js/bundle.js"></script>
+  <script src="dist/js/index-bundle.js"></script>
 
 
 </head>

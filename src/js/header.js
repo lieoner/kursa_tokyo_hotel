@@ -49,6 +49,7 @@
                 mask: '********',
             });
         }
+
         var request;
         const $form = login_form.find('form');
         $form.submit(function(event) {

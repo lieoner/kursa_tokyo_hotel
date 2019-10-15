@@ -2,10 +2,13 @@ const path = require('path');
 const webpack = require('webpack');
 
 module.exports = {
-    entry: './src/js/index.js',
+    entry: {
+        index: './src/js/index.js',
+        admin: './src/js/admin/admin-index.js',
+    },
 
     output: {
-        filename: 'js/bundle.js',
+        filename: 'js/[name]-bundle.js',
         path: path.resolve(__dirname, 'dist'),
     },
     plugins: [

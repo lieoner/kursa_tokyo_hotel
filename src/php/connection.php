@@ -34,12 +34,12 @@ class tokyo_hotel
   {
     throw new \Exception("Cannot unserialize a singleton.");
   }
-
   public function checkwork()
   {
     $res = 'ItsWork!';
     return $res;
   }
+
   private function genPass($length)
   {
     $token = "";
@@ -89,7 +89,11 @@ class tokyo_hotel
 
   private function updateHashIntoTables($params)
   {
-    $query = 'UPDATE clients SET user_hash=? WHERE IDc=?';
+    if (strcasecmp($params[2], 'clients') == 0) {
+      $query = 'UPDATE clients SET user_hash=? WHERE IDc=?';
+    } else if (strcasecmp($params[2], 'inside_persons') == 0) {
+      $query = 'UPDATE inside_persons SET user_hash=? WHERE IDip=?';
+    }
     $stmt = $this->pdo->prepare($query);
     $stmt->execute([$params[0], $params[1]]);
   }
@@ -222,7 +226,7 @@ class tokyo_hotel
       $stmt = $this->pdo->prepare($sql);
       $stmt->execute(['0']);
 
-      static::appendLog('Сброшен бронь и аккаунт с ID = ' . $row['IDc'] . ' по истечению срока брони', 'SERVER');
+      static::appendLog('Сброшен бронь и аккаунт с ID = ' . $row['IDc'] . ' по истечению срока брони', 1);
     }
     return $result;
   }
@@ -252,10 +256,10 @@ class tokyo_hotel
     return $data;
   }
 
-  public function updateHash($hash, $user_id)
+  public function updateHash($hash, $user_id, $table = 'clients')
   {
     $method_name = 'updateHashIntoTables';
-    $data = $this->callMethod($method_name, array($hash, $user_id));
+    $data = $this->callMethod($method_name, array($hash, $user_id, $table));
     return $data;
   }
 
@@ -329,5 +333,53 @@ class tokyo_hotel
   {
     $method_name = 'appendLogIntoDB';
     $this->callMethod($method_name, array($caption, $initiator));
+  }
+  ///////////////////////////////////ADMINKA//////////////////////////////////////
+
+  private function createNewAdminAccount($params)
+  {
+    $d = new DateTime();
+    $login = strval($d->format('myd') * $d->format('u'));
+    $token = "";
+    for ($i = 0; $i < 6; $i++) {
+      $token .= $login[strlen($login) - $i];
+    }
+    $login = $token;
+    $pass = $this->genPass(8);
+    $stmt = $this->pdo->prepare('INSERT INTO inside_persons (user_login,  user_password) VALUES (?, ?)');
+    $stmt->execute([$login, md5(md5($pass))]);
+    $fileopen = fopen("admins.txt", "a+");
+    $write = $login . ':' . $pass . "\r\n";
+    fwrite($fileopen, $write);
+    fclose($fileopen);
+
+    return $login;
+  }
+
+  private function authorizeAdminAccount($params)
+  {
+    $stmt = $this->pdo->prepare('SELECT IDip, user_password FROM inside_persons WHERE user_login=? LIMIT 1');
+    $stmt->execute([$params[0]]);
+    $result = array();
+    foreach ($stmt as $row) {
+      $result[] = $row;
+    }
+    return $result[0];
+  }
+
+  ////////////////////////////////////////////////////////////
+
+  public function createAdmin()
+  {
+    $method_name = 'createNewAdminAccount';
+    $data = $this->callMethod($method_name, array());
+    return $data;
+  }
+
+  public function authorizeAdmin($user_login)
+  {
+    $method_name = 'authorizeAdminAccount';
+    $data = $this->callMethod($method_name, array($user_login));
+    return $data;
   }
 }

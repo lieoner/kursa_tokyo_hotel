@@ -33,7 +33,7 @@ function tailCustom($filepath, $lines = 1, $adaptive = true)
 
 if (strcasecmp($_GET['action'], 'cronRemoveOldBook') == 0) :
   //%progdir%\modules\php\%phpdriver%\php-win.exe -c %progdir%\userdata\temp\config\php.ini -q -f %sitedir%\kursa\src\php\cron\cron.php из файла
-  // %progdir%\modules\wget\bin\wget.exe -q --no-cache http://kursa/src/php/ajax.php?action=cronRemoveOldBook -O %progdir%\userdata\temp\temp.txt po url
+  //%progdir%\modules\wget\bin\wget.exe -q --no-cache http://kursa/src/php/ajax.php?action=cronRemoveOldBook -O %progdir%\userdata\temp\temp.txt po url
 
   $log = $con->removeOldBook();
   $fileopen = fopen("kursa_logs.txt", "a+");
@@ -104,18 +104,18 @@ if (strcasecmp($_GET['action'], 'createAccount') == 0) :
   die();
 endif;
 
-if (strcasecmp($_GET['action'], 'login') == 0) :
-  function generateCode($length = 6)
-  {
-    $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHI JKLMNOPRQSTUVWXYZ0123456789";
-    $code = "";
-    $clen = strlen($chars) - 1;
-    while (strlen($code) < $length) {
-      $code .= $chars[mt_rand(0, $clen)];
-    }
-    return $code;
+function generateCode($length = 6)
+{
+  $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHI JKLMNOPRQSTUVWXYZ0123456789";
+  $code = "";
+  $clen = strlen($chars) - 1;
+  while (strlen($code) < $length) {
+    $code .= $chars[mt_rand(0, $clen)];
   }
+  return $code;
+}
 
+if (strcasecmp($_GET['action'], 'login') == 0) :
   $login  = str_replace(' ', '', $_POST['login']);
   $pass = md5(md5($_POST['pass']));
   $user = $con->getUserData($login);
@@ -172,4 +172,28 @@ endif;
 
 if (strcasecmp($_GET['action'], 'editUserData') == 0) :
   $con->editUserData($_POST['uid'], $_POST['uname'], $_POST['ufam'], $_POST['uphone']);
+endif;
+
+if (strcasecmp($_GET['action'], 'createNewAdmin') == 0) :
+//echo $con->createAdmin();
+endif;
+
+if (strcasecmp($_GET['action'], 'authorizeAdmin') == 0) :
+
+  $login  = str_replace(' ', '', $_POST['login']);
+  $pass = md5(md5($_POST['pass']));
+  $user = $con->authorizeAdmin($login);
+  if ($user['user_password'] === $pass) {
+    $hash = md5(generateCode(10));
+    $con->updateHash($hash, $user['IDc'], 'inside_persons');
+
+    $result = ['status' => true, 'user' => $user];
+    echo json_encode($result);
+    die();
+  }
+
+  $result = ['status' => false];
+  echo json_encode($result);
+  die();
+
 endif;
