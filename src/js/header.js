@@ -12,8 +12,7 @@
                 $('#login-form form').replaceWith(
                     'Привет, ' +
                         res.user_name +
-                        '<br> <a href="/profile.php?uid=' +
-                        res.UID +
+                        '<br> <a href="/profile.php' +
                         '">Личный кабинет</a> <br><a id="logout" href="/src/php/ajax.php?action=logout">Выйти</a>'
                 );
             } else {
@@ -23,6 +22,16 @@
                     }
                 }
             }
+            setTimeout(() => {
+                if (!$('#header #login-form').hasClass('active')) {
+                    if (
+                        document.location.pathname == '/' ||
+                        document.location.pathname == '/index.php'
+                    ) {
+                        $('#header #login-toggler').trigger('click');
+                    }
+                }
+            }, 1500);
         });
     }
 

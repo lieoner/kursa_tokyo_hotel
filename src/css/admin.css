@@ -1,3 +1,7 @@
 #auth {
   margin-top: 100px;
 }
+
+#main .message {
+  display: none;
+}

@@ -13,7 +13,7 @@ class User
   {
     $con = tokyo_hotel::getInstance();
     if (!isset(static::$UID)) :
-      static::$UID = $_GET['uid'];
+      static::$UID = $_COOKIE['id'];
     endif;
     $udata = $con->getUser(static::$UID)[0];
     static::$UName = $udata['client_name'];

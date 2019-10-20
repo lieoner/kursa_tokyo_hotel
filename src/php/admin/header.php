@@ -1,3 +1,4 @@
+<? session_start(); ?>
 <!DOCTYPE html>
 <html lang="ru">
 
@@ -9,7 +10,6 @@
   <?php
   require_once('src/php/connection.php');
   require_once('src/php/core.php');
-
   ?>
 
   <script src="dist/js/admin-bundle.js"></script>

@@ -34,7 +34,7 @@ class tokyo_hotel
   {
     throw new \Exception("Cannot unserialize a singleton.");
   }
-  public function checkwork()
+  public function test()
   {
     $res = 'ItsWork!';
     return $res;
@@ -66,10 +66,33 @@ class tokyo_hotel
     return $result[0];
   }
 
+  private function checkHashInTable($params)
+  {
+    if (strcasecmp($params[2], 'clients') == 0) {
+      $query = 'SELECT IDc FROM clients WHERE IDc=? and user_hash=? LIMIT 1';
+    } else if (strcasecmp($params[2], 'inside_persons') == 0) {
+      $query = 'SELECT IDip FROM inside_persons WHERE IDip=? and user_hash=? LIMIT 1';
+    }
+
+    $stmt = $this->pdo->prepare($query);
+    $stmt->execute([$params[0], $params[1]]);
+
+    $user_true = array();
+    foreach ($stmt as $row) {
+      $user_true[] = $row;
+    }
+
+    if (isset($user_true[0])) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   private function getUserNameFromDB($params)
   {
-    $stmt = $this->pdo->prepare('SELECT IDc FROM clients WHERE IDc=? AND user_hash=? LIMIT 1');
-    $stmt->execute([$params[0], $params[1]]);
+    $stmt = $this->pdo->prepare('SELECT IDc FROM clients WHERE IDc=? LIMIT 1');
+    $stmt->execute([$params[0]]);
     $user_true = array();
     foreach ($stmt as $row) {
       $user_true[] = $row;
@@ -249,10 +272,10 @@ class tokyo_hotel
     return $data;
   }
 
-  public function getUserName($id, $hash)
+  public function getUserName($id)
   {
     $method_name = 'getUserNameFromDB';
-    $data = $this->callMethod($method_name, array($id, $hash));
+    $data = $this->callMethod($method_name, array($id));
     return $data;
   }
 
@@ -380,6 +403,13 @@ class tokyo_hotel
   {
     $method_name = 'authorizeAdminAccount';
     $data = $this->callMethod($method_name, array($user_login));
+    return $data;
+  }
+
+  public function checkHash($uid, $hash, $table = 'clients')
+  {
+    $method_name = 'checkHashInTable';
+    $data = $this->callMethod($method_name, array($uid, $hash, $table));
     return $data;
   }
 }

@@ -1,4 +1,4 @@
-<div id="auth" class="container">
+<div id="auth" class="container active">
   <div class="row justify-content-center">
     <div id="login-form">
       <form>
@@ -16,7 +16,17 @@
           </div>
           <button type="submit" class="btn btn-primary">Войти</button>
         </fieldset>
+
+        <div class="valid-feedback">Почти, готово.</div>
+        <div class="invalid-feedback">Ошибка в пароле или логине. Уходи, хакер.</div>
       </form>
+    </div>
+  </div>
+</div>
+<div id="main" class="container">
+  <div class="row justify-content-center">
+    <div class="col-12 text-center message">
+      <legend>Вы авторизированы</legend>
     </div>
   </div>
 </div>
