@@ -72,10 +72,12 @@
             if ($form.find('#login').val().length != 11) {
                 $form.find('#login').addClass('is-invalid');
                 $form.find('#short-login-feedback').show(500);
+                return;
             }
             if ($form.find('#pass').val().length != 8) {
                 $form.find('#pass').addClass('is-invalid');
                 $form.find('#short-pass-feedback').show(500);
+                return;
             }
 
             var $inputs = $form.find('input, select, button, textarea');

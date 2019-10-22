@@ -1,7 +1,28 @@
+body {
+  min-height: 100vh;
+}
+
 #auth {
   margin-top: 100px;
 }
 
-#main .message {
+#admin-main {
+  margin-top: 40px;
+}
+
+#admin-main .admin-buttons {
   display: none;
+}
+
+#admin-main .is_auth {
+  display: none;
+}
+
+#admin-main .booking_confirm {
+  display: none;
+}
+
+.admin-buttons button {
+  margin: 10px;
+  min-width: -webkit-fill-available;
 }

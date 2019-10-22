@@ -20,8 +20,8 @@
   <section id="header">
     <header>
       <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <a class="navbar-brand" href="http://kursa/">
 
+        <a class="navbar-brand" href="http://kursa/">
           <div>
             <picture>
               <source srcset="src/image/dab.webp" type="image/webp">
@@ -35,8 +35,8 @@
               <img class="mirrorX" src="src/image/dab.png">
             </picture>
           </div>
-
         </a>
+
         <span>ADMINKA</span>
       </nav>
     </header>

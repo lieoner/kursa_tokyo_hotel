@@ -54,11 +54,11 @@
             </CustomProperties>
             <Location>
               <X>312 px</X>
-              <Y>251 px</Y>
+              <Y>260 px</Y>
             </Location>
             <Size>
               <Width>136 px</Width>
-              <Height>178 px</Height>
+              <Height>195 px</Height>
             </Size>
             <DbOid>
               <Path>tokyo_hotel.booking_list</Path>
@@ -77,11 +77,11 @@
             </CustomProperties>
             <Location>
               <X>282 px</X>
-              <Y>49 px</Y>
+              <Y>40 px</Y>
             </Location>
             <Size>
               <Width>198 px</Width>
-              <Height>144 px</Height>
+              <Height>161 px</Height>
             </Size>
             <DbOid>
               <Path>tokyo_hotel.clients</Path>
@@ -106,8 +106,8 @@
             <PortAnchors>
               <Port>
                 <Location>
-                  <X>68 px</X>
-                  <Y>0 px</Y>
+                  <X>70 px</X>
+                  <Y>2 px</Y>
                 </Location>
                 <Anchors>Left Right</Anchors>
                 <Align>Top</Align>
@@ -118,8 +118,8 @@
               </Port>
               <Port>
                 <Location>
-                  <X>98 px</X>
-                  <Y>0 px</Y>
+                  <X>100 px</X>
+                  <Y>162 px</Y>
                 </Location>
                 <Anchors>Left Right</Anchors>
                 <Align>Bottom</Align>
@@ -146,7 +146,7 @@
               <Port xsi:type="LinkPort">
                 <Location>
                   <X>0 px</X>
-                  <Y>29 px</Y>
+                  <Y>29.5 px</Y>
                 </Location>
                 <Anchors>None</Anchors>
                 <Align>Top</Align>
@@ -199,7 +199,7 @@
               <Port>
                 <Location>
                   <X>0 px</X>
-                  <Y>63.5 px</Y>
+                  <Y>63 px</Y>
                 </Location>
                 <Anchors>Top Bottom</Anchors>
                 <Align>Left</Align>
@@ -210,8 +210,8 @@
               </Port>
               <Port>
                 <Location>
-                  <X>0 px</X>
-                  <Y>72.5 px</Y>
+                  <X>196 px</X>
+                  <Y>81 px</Y>
                 </Location>
                 <Anchors>Top Bottom</Anchors>
                 <Align>Right</Align>
@@ -261,7 +261,7 @@
             </CustomProperties>
             <Location>
               <X>523 px</X>
-              <Y>268 px</Y>
+              <Y>286 px</Y>
             </Location>
             <Size>
               <Width>153 px</Width>
@@ -290,8 +290,8 @@
             <PortAnchors>
               <Port>
                 <Location>
-                  <X>0 px</X>
-                  <Y>89 px</Y>
+                  <X>136 px</X>
+                  <Y>98 px</Y>
                 </Location>
                 <Anchors>Top Bottom</Anchors>
                 <Align>Right</Align>
@@ -360,7 +360,7 @@
               <Port>
                 <Location>
                   <X>60 px</X>
-                  <Y>0 px</Y>
+                  <Y>126 px</Y>
                 </Location>
                 <Anchors>Left Right</Anchors>
                 <Align>Bottom</Align>
@@ -399,7 +399,7 @@
               <Port xsi:type="LinkPort">
                 <Location>
                   <X>0 px</X>
-                  <Y>-41.5 px</Y>
+                  <Y>-50.5 px</Y>
                 </Location>
                 <Anchors>None</Anchors>
                 <Align>Bottom</Align>
@@ -422,7 +422,7 @@
             </CustomProperties>
             <Location>
               <X>736 px</X>
-              <Y>260 px</Y>
+              <Y>278 px</Y>
             </Location>
             <Size>
               <Width>184 px</Width>
@@ -451,7 +451,7 @@
             <PortAnchors>
               <Port>
                 <Location>
-                  <X>0 px</X>
+                  <X>153 px</X>
                   <Y>72 px</Y>
                 </Location>
                 <Anchors>Top Bottom</Anchors>
@@ -543,7 +543,7 @@
             <PortAnchors>
               <Port>
                 <Location>
-                  <X>0 px</X>
+                  <X>183 px</X>
                   <Y>81 px</Y>
                 </Location>
                 <Anchors>Top Bottom</Anchors>
@@ -555,8 +555,8 @@
               </Port>
               <Port>
                 <Location>
-                  <X>0 px</X>
-                  <Y>72 px</Y>
+                  <X>1 px</X>
+                  <Y>81 px</Y>
                 </Location>
                 <Anchors>Top Bottom</Anchors>
                 <Align>Left</Align>
@@ -605,8 +605,8 @@
               <Parent>0</Parent>
             </CustomProperties>
             <Location>
-              <X>760 px</X>
-              <Y>40 px</Y>
+              <X>979 px</X>
+              <Y>286 px</Y>
             </Location>
             <Size>
               <Width>177 px</Width>
@@ -628,8 +628,8 @@
               <Parent>0</Parent>
             </CustomProperties>
             <Location>
-              <X>980 px</X>
-              <Y>50 px</Y>
+              <X>1216 px</X>
+              <Y>286 px</Y>
             </Location>
             <Size>
               <Width>187 px</Width>
@@ -658,8 +658,8 @@
             <PortAnchors>
               <Port>
                 <Location>
-                  <X>0 px</X>
-                  <Y>77 px</Y>
+                  <X>177 px</X>
+                  <Y>72 px</Y>
                 </Location>
                 <Anchors>Top Bottom</Anchors>
                 <Align>Right</Align>
@@ -671,7 +671,7 @@
               <Port>
                 <Location>
                   <X>0 px</X>
-                  <Y>67 px</Y>
+                  <Y>72 px</Y>
                 </Location>
                 <Anchors>Top Bottom</Anchors>
                 <Align>Left</Align>
@@ -697,7 +697,7 @@
             <PortAnchors>
               <Port xsi:type="LinkPort">
                 <Location>
-                  <X>-21.5 px</X>
+                  <X>-30 px</X>
                   <Y>0 px</Y>
                 </Location>
                 <Anchors>None</Anchors>
@@ -719,8 +719,8 @@
           <ScaleMode>Free</ScaleMode>
           <Scale>1</Scale>
           <Location>
-            <X>-178 px</X>
-            <Y>-134 px</Y>
+            <X>-50.5 px</X>
+            <Y>-56.75 px</Y>
           </Location>
         </ViewPort>
       </Model>

@@ -256,7 +256,7 @@ class tokyo_hotel
 
   private function appendLogIntoDB($params)
   {
-    $stmt = $this->pdo->prepare('INSERT INTO logs (a_date,  a_caption, a_initiator) VALUES (now(), ?, ?)');
+    $stmt = $this->pdo->prepare('INSERT INTO logs (a_date,  a_caption, IDip) VALUES (now(), ?, ?)');
     $stmt->execute([$params[0], $params[1]]);
   }
 
@@ -390,6 +390,31 @@ class tokyo_hotel
     return $result[0];
   }
 
+  private function selectBookingByNumber($params)
+  {
+    $stmt = $this->pdo->prepare('SELECT
+    clients.user_login AS bookNumber,
+    booking_list.comingDate AS comingDate,
+    booking_list.outDate AS outDate,
+    rooms.roomNumber AS roomNumber,
+    TO_DAYS(booking_list.outDate) - TO_DAYS(booking_list.comingDate) AS totalDaysCount,
+    room_types.r_typeCost * (TO_DAYS(booking_list.outDate) - TO_DAYS(booking_list.comingDate)) AS totalCost
+    FROM booking_list
+      INNER JOIN clients
+        ON booking_list.IDc = clients.IDc
+      INNER JOIN rooms
+        ON booking_list.IDr = rooms.IDr
+      INNER JOIN room_types
+        ON rooms.IDrt = room_types.IDrt
+    WHERE clients.user_login = ? LIMIT 1');
+    $stmt->execute([$params[0]]);
+    $result = array();
+    foreach ($stmt as $row) {
+      $result[] = $row;
+    }
+    return $result[0];
+  }
+
   ////////////////////////////////////////////////////////////
 
   public function createAdmin()
@@ -410,6 +435,13 @@ class tokyo_hotel
   {
     $method_name = 'checkHashInTable';
     $data = $this->callMethod($method_name, array($uid, $hash, $table));
+    return $data;
+  }
+
+  public function findBooking($book_number)
+  {
+    $method_name = 'selectBookingByNumber';
+    $data = $this->callMethod($method_name, array($book_number));
     return $data;
   }
 }

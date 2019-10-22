@@ -117,7 +117,7 @@ class AjaxRequester
     static::$con->addBaseUserData($client_id, $_POST['uname'], $_POST['uphone']);
     static::$con->bookRoom($_POST['free_roomID'], $client_id,  $_POST['begDate'], $_POST['endDate']);
 
-    echo json_encode($logpass);
+    //echo json_encode($logpass);
     die();
   }
 
@@ -233,6 +233,12 @@ class AjaxRequester
       }
     }
     echo false;
+    die();
+  }
+
+  static protected function selectBookByNumber()
+  {
+    echo json_encode(static::$con->findBooking(str_replace(' ', '', $_POST['book-number'])));
     die();
   }
 }
