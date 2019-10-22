@@ -114,7 +114,7 @@ class AjaxRequester
     $login = static::$con->createAccount();
     $client_id = static::$con->getUserData($login)['IDc'];
 
-    static::$con->addBaseUserData($client_id, $_POST['uname'], $_POST['uphone']);
+    static::$con->addBaseUserData($client_id, $_POST['uname'], $_POST['uphone'], $_POST['umail']);
     static::$con->bookRoom($_POST['free_roomID'], $client_id,  $_POST['begDate'], $_POST['endDate']);
 
     //echo json_encode($logpass);

@@ -44,17 +44,16 @@ import '../../css/admin.css';
             });
         }
 
-        let book_number_find_form = $('#find-book-form').find('form');
+        const book_number_find_form = $('#find-book-form').find('form');
         book_number_find_form.submit(function(e) {
             e.preventDefault();
             search_book_name($(this));
         });
 
-        const login_form = $('#auth #login-form');
-        let request;
-        const $form = login_form.find('form');
-        $form.submit(function(event) {
+        const $login_form = $('#auth #login-form').find('form');
+        $login_form.submit(function(event) {
             event.preventDefault();
+            let request;
             if (request) {
                 request.abort();
             }
@@ -65,8 +64,8 @@ import '../../css/admin.css';
                 .find('.valid-feedback')
                 .hide(200);
 
-            let $inputs = $form.find('input, select, button, textarea');
-            let serializedData = $form.serialize();
+            let $inputs = $login_form.find('input, select, button, textarea');
+            let serializedData = $login_form.serialize();
             $inputs.prop('disabled', true);
             let action = 'authorizeAdmin';
             request = $.ajax({
@@ -90,6 +89,21 @@ import '../../css/admin.css';
                     $inputs.prop('disabled', false);
                 }, 1000);
             });
+        });
+
+        $('#back_btn').click(function(e) {
+            e.preventDefault();
+            $('#back_btn').hide(500);
+            $('#admin-main .booking_confirm').hide(500);
+            $('#admin-main .admin-buttons').show(500);
+        });
+
+        $('div.register button').click(function(e) {
+            e.preventDefault();
+            $('#admin-main .admin-buttons').hide(500);
+            $('#admin-main .booking_confirm').show(500);
+
+            $('#back_btn').show(500);
         });
     });
 

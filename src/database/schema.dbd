@@ -518,7 +518,7 @@
             </Location>
             <Size>
               <Width>184 px</Width>
-              <Height>161 px</Height>
+              <Height>178 px</Height>
             </Size>
             <DbOid>
               <Path>tokyo_hotel.clients_data</Path>
@@ -543,8 +543,8 @@
             <PortAnchors>
               <Port>
                 <Location>
-                  <X>183 px</X>
-                  <Y>81 px</Y>
+                  <X>0 px</X>
+                  <Y>80.5 px</Y>
                 </Location>
                 <Anchors>Top Bottom</Anchors>
                 <Align>Right</Align>
@@ -555,8 +555,8 @@
               </Port>
               <Port>
                 <Location>
-                  <X>1 px</X>
-                  <Y>81 px</Y>
+                  <X>0 px</X>
+                  <Y>80.5 px</Y>
                 </Location>
                 <Anchors>Top Bottom</Anchors>
                 <Align>Left</Align>
@@ -719,8 +719,8 @@
           <ScaleMode>Free</ScaleMode>
           <Scale>1</Scale>
           <Location>
-            <X>-50.5 px</X>
-            <Y>-56.75 px</Y>
+            <X>-50 px</X>
+            <Y>-57 px</Y>
           </Location>
         </ViewPort>
       </Model>

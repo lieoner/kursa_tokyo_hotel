@@ -2,6 +2,19 @@ body {
   min-height: 100vh;
 }
 
+.active {
+  display: block;
+}
+
+#back_btn {
+  display: none;
+  margin-right: 15px;
+}
+
+#back_btn button {
+  font-size: xx-large;
+}
+
 #auth {
   margin-top: 100px;
 }
@@ -10,19 +23,19 @@ body {
   margin-top: 40px;
 }
 
-#admin-main .admin-buttons {
+div.admin-buttons {
   display: none;
 }
 
-#admin-main .is_auth {
-  display: none;
-}
-
-#admin-main .booking_confirm {
-  display: none;
-}
-
-.admin-buttons button {
+div.admin-buttons button {
   margin: 10px;
   min-width: -webkit-fill-available;
+}
+
+div.is_auth {
+  display: none;
+}
+
+div.booking_confirm {
+  display: none;
 }

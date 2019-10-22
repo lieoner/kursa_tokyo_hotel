@@ -21,7 +21,11 @@
     <header>
       <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
 
-        <a class="navbar-brand" href="http://kursa/">
+        <div id="back_btn" class="col-2 col-md-1">
+          <button type="button" class="btn btn-primary">←</button>
+        </div>
+
+        <a class="navbar-brand col-8 col-md-4" href="http://kursa/">
           <div>
             <picture>
               <source srcset="src/image/dab.webp" type="image/webp">
@@ -37,7 +41,7 @@
           </div>
         </a>
 
-        <span>ADMINKA</span>
+        <span class="col-12 col-md-1 text-center">ADMINKA</span>
       </nav>
     </header>
   </section>

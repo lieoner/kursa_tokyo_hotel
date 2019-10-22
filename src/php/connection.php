@@ -182,8 +182,8 @@ class tokyo_hotel
 
   private function insertClientDataByIDc($params)
   {
-    $stmt = $this->pdo->prepare('INSERT INTO clients_data (IDc,  client_name, client_phone) VALUES (?, ?, ?)');
-    $stmt->execute([$params[0], $params[1], $params[2]]);
+    $stmt = $this->pdo->prepare('INSERT INTO clients_data (IDc,  client_name, client_phone, client_email) VALUES (?, ?, ?, ?)');
+    $stmt->execute([$params[0], $params[1], $params[2], $params[3]]);
   }
 
   private function getUserByID($params)
@@ -314,10 +314,10 @@ class tokyo_hotel
     return $data;
   }
 
-  public function addBaseUserData($IDc, $clientName, $clientPhone)
+  public function addBaseUserData($IDc, $clientName, $clientPhone, $clientEmail)
   {
     $method_name = 'insertClientDataByIDc';
-    $this->callMethod($method_name, array($IDc, $clientName, $clientPhone));
+    $this->callMethod($method_name, array($IDc, $clientName, $clientPhone, $clientEmail));
   }
 
   public function bookRoom($freeroomID, $client_id, $startDate, $endDate)
@@ -415,6 +415,29 @@ class tokyo_hotel
     return $result[0];
   }
 
+  private function selectBookingForConfirming()
+  {
+    $query = 'SELECT
+    nearest_booking.bookNumber AS bookNumber,
+    nearest_booking.comingDate AS comingDate,
+    nearest_booking.outDate AS outDate,
+    nearest_booking.roomNumber AS roomNumber,
+    nearest_booking.totalCost AS totalCost,
+    nearest_booking.totalDaysCount AS totalDaysCount
+    FROM nearest_booking
+      LEFT OUTER JOIN living_list
+        ON nearest_booking.IDc = living_list.IDc
+    WHERE ISNULL(living_list.IDc)';
+
+    $stmt = $this->pdo->prepare($query);
+    $stmt->execute();
+    $result = array();
+    foreach ($stmt as $row) {
+      $result[] = $row;
+    }
+    return $result;
+  }
+
   ////////////////////////////////////////////////////////////
 
   public function createAdmin()
@@ -442,6 +465,12 @@ class tokyo_hotel
   {
     $method_name = 'selectBookingByNumber';
     $data = $this->callMethod($method_name, array($book_number));
+    return $data;
+  }
+  public function findNearestBooking()
+  {
+    $method_name = 'selectBookingForConfirming';
+    $data = $this->callMethod($method_name, array());
     return $data;
   }
 }
