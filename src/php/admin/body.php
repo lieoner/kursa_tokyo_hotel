@@ -68,18 +68,18 @@
 
     <div class="col-12 booking_confirm">
       <div class="row justify-content-center">
+
+        <label for="book-number" class="col-2 col-form-label text-right">Номер брони:</label>
+        <div id="find-book-table" class="col-8 row">
+          <input type="text" class="form-control col-10" id="book-number" name="book-number" placeholder="000 000 000" autofocus>
+          <button type="button" class="btn btn-secondary btn-sm col-1 book-table-refresh">↻</button>
+        </div>
+
+        <div class="book-confirmed alert alert-dismissible alert-success">
+          <strong>Заселение подтверждено</strong>
+        </div>
+
         <?
-        /* 
-        array (size=7)
-          0 => 
-            array (size=6)
-              'bookNumber' => string '675036040' (length=9)
-              'comingDate' => string '2019-10-16 00:00:00' (length=19)
-              'outDate' => string '2019-11-10 00:00:00' (length=19)
-              'roomNumber' => int 10
-              'totalCost' => float 1500
-              'totalDaysCount' => int 25 
-        */
         $nearest_bookings = $con->findNearestBooking();
 
         function convert_sqlDate_to_normalDate($sql_date)
@@ -87,7 +87,7 @@
           return date('d.m.Y', strtotime($sql_date));
         }
         ?>
-        <table class="table table-hover">
+        <table class="table table-hover book-table">
           <thead>
             <tr>
               <th scope="col">Номер брони</th>
@@ -101,17 +101,35 @@
           <tbody>
             <? foreach ($nearest_bookings as $key => $booking) {
               ?>
-              <tr>
-                <td><?= $booking['bookNumber'] ?></td>
-                <td><?= convert_sqlDate_to_normalDate($booking['comingDate']) ?></td>
-                <td><?= convert_sqlDate_to_normalDate($booking['outDate']) ?></td>
-                <td><?= $booking['roomNumber'] ?></td>
-                <td><?= $booking['totalDaysCount'] ?></td>
-                <td><?= $booking['totalCost'] ?></td>
+              <tr data-client-id=<?= $booking['IDc'] ?> data-room-id=<?= $booking['IDr'] ?>>
+                <td class="bookNumber" data-book-number=<?= $booking['bookNumber'] ?>><?= $booking['bookNumber'] ?></td>
+                <td class="comingDate" data-coming-date=<?= explode(' ', $booking['comingDate'])[0] ?>><?= convert_sqlDate_to_normalDate($booking['comingDate']) ?></td>
+                <td class="outDate" data-out-date=<?= explode(' ', $booking['outDate'])[0] ?>><?= convert_sqlDate_to_normalDate($booking['outDate']) ?></td>
+                <td class="roomNumber" data-room-number=<?= $booking['roomNumber'] ?>><?= $booking['roomNumber'] ?></td>
+                <td class="totalDaysCount" data-total-days-count=<?= $booking['totalDaysCount'] ?>><?= $booking['totalDaysCount'] ?></td>
+                <td class="totalCost" data-total-сost=<?= $booking['totalCost'] ?>><?= $booking['totalCost'] ?></td>
               </tr>
             <? } ?>
           </tbody>
         </table>
+
+        <div class="modal">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Подтвердить заселение</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary">Да</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
 

@@ -91,14 +91,24 @@ class tokyo_hotel
 
   private function getUserNameFromDB($params)
   {
-    $stmt = $this->pdo->prepare('SELECT IDc FROM clients WHERE IDc=? LIMIT 1');
+    if ($params[1] == 'client') {
+      $first_query = 'SELECT IDc FROM clients WHERE IDc=? LIMIT 1';
+    } else if ($params[1] == 'personal') {
+      $first_query = 'SELECT IDip FROM inside_persons WHERE IDip=? LIMIT 1';
+    }
+    $stmt = $this->pdo->prepare($first_query);
     $stmt->execute([$params[0]]);
     $user_true = array();
     foreach ($stmt as $row) {
       $user_true[] = $row;
     }
     if (isset($user_true[0])) {
-      $stmt = $this->pdo->prepare('SELECT client_name FROM clients_data WHERE IDc=? LIMIT 1');
+      if ($params[1] == 'client') {
+        $second_query = 'SELECT client_name FROM clients_data WHERE IDc=? LIMIT 1';
+      } else if ($params[1] == 'personal') {
+        $second_query = 'SELECT person_name, person_fam FROM inside_persons_data WHERE IDip=? LIMIT 1';
+      }
+      $stmt = $this->pdo->prepare($second_query);
       $stmt->execute([$params[0]]);
       $result = array();
       foreach ($stmt as $row) {
@@ -272,10 +282,10 @@ class tokyo_hotel
     return $data;
   }
 
-  public function getUserName($id)
+  public function getUserName($id, $who = "client")
   {
     $method_name = 'getUserNameFromDB';
-    $data = $this->callMethod($method_name, array($id));
+    $data = $this->callMethod($method_name, array($id, $who));
     return $data;
   }
 
@@ -423,7 +433,9 @@ class tokyo_hotel
     nearest_booking.outDate AS outDate,
     nearest_booking.roomNumber AS roomNumber,
     nearest_booking.totalCost AS totalCost,
-    nearest_booking.totalDaysCount AS totalDaysCount
+    nearest_booking.totalDaysCount AS totalDaysCount,
+    nearest_booking.IDr AS IDr,
+    nearest_booking.IDc AS IDc
     FROM nearest_booking
       LEFT OUTER JOIN living_list
         ON nearest_booking.IDc = living_list.IDc
@@ -436,6 +448,18 @@ class tokyo_hotel
       $result[] = $row;
     }
     return $result;
+  }
+
+  private function insertBookDataIntoLivingList($params)
+  {
+    $query = 'INSERT INTO living_list (IDc,  IDr) VALUES (?, ?)';
+    $stmt = $this->pdo->prepare($query);
+    try {
+      $stmt->execute([$params[0], $params[1]]);
+      return true;
+    } catch (\Throwable $th) {
+      return false;
+    }
   }
 
   ////////////////////////////////////////////////////////////
@@ -471,6 +495,13 @@ class tokyo_hotel
   {
     $method_name = 'selectBookingForConfirming';
     $data = $this->callMethod($method_name, array());
+    return $data;
+  }
+
+  public function confirmBook($client_id, $room_id)
+  {
+    $method_name = 'insertBookDataIntoLivingList';
+    $data = $this->callMethod($method_name, array($client_id, $room_id));
     return $data;
   }
 }

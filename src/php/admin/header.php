@@ -21,11 +21,11 @@
     <header>
       <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
 
-        <div id="back_btn" class="col-2 col-md-1">
+        <div id="back_btn" class="col-2 col-sm-1">
           <button type="button" class="btn btn-primary">←</button>
         </div>
 
-        <a class="navbar-brand col-8 col-md-4" href="http://kursa/">
+        <a class="navbar-brand col-8 col-sm-4" href="http://kursa/">
           <div>
             <picture>
               <source srcset="src/image/dab.webp" type="image/webp">
@@ -41,7 +41,10 @@
           </div>
         </a>
 
-        <span class="col-12 col-md-1 text-center">ADMINKA</span>
+        <div class="col-12 col-sm-3 text-left">
+          <div>ADMINKA</div>
+          <div id="is-login"></div>
+        </div>
       </nav>
     </header>
   </section>

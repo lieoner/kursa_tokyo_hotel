@@ -235,10 +235,65 @@ class AjaxRequester
     echo false;
     die();
   }
+  static protected function getAdminName()
+  {
+    session_start();
+    if (isset($_SESSION['admins'])) {
+      $admin_id_hash =  $_SESSION['admins'];
+      $admin_name = static::$con->getUserName($admin_id_hash['aid'], 'personal');
+      echo json_encode($admin_name);
+      die();
+    }
+    echo false;
+    die();
+  }
 
   static protected function selectBookByNumber()
   {
     echo json_encode(static::$con->findBooking(str_replace(' ', '', $_POST['book-number'])));
     die();
+  }
+
+  static protected function getNearestBookingTable()
+  {
+    $nearest_bookings = static::$con->findNearestBooking();
+
+    function convert_sqlDate_to_normalDate($sql_date)
+    {
+      return date('d.m.Y', strtotime($sql_date));
+    }
+    foreach ($nearest_bookings as $key => $booking) {
+      ?>
+      <tr data-client-id=<?= $booking['IDc'] ?> data-room-id=<?= $booking['IDr'] ?>>
+        <td class="bookNumber" data-book-number=<?= $booking['bookNumber'] ?>><?= $booking['bookNumber'] ?></td>
+        <td class="comingDate" data-coming-date=<?= explode(' ', $booking['comingDate'])[0] ?>><?= convert_sqlDate_to_normalDate($booking['comingDate']) ?></td>
+        <td class="outDate" data-out-date=<?= explode(' ', $booking['outDate'])[0] ?>><?= convert_sqlDate_to_normalDate($booking['outDate']) ?></td>
+        <td class="roomNumber" data-room-number=<?= $booking['roomNumber'] ?>><?= $booking['roomNumber'] ?></td>
+        <td class="totalDaysCount" data-total-days-count=<?= $booking['totalDaysCount'] ?>><?= $booking['totalDaysCount'] ?></td>
+        <td class="totalCost" data-total-сost=<?= $booking['totalCost'] ?>><?= $booking['totalCost'] ?></td>
+      </tr>
+<? }
+    die();
+  }
+
+  static protected function confirmBook()
+  {
+    session_start();
+    if (isset($_SESSION['admins'])) {
+      $admin_id_hash =  $_SESSION['admins'];
+      $result = static::$con->confirmBook($_POST['client_id'], $_POST['room_id']);
+      if ($result) {
+        static::appendLog('Подтверждено заселение клиента ID = ' . $_POST['client_id'] . ' в комнату ID = ' . $_POST['room_id'], $admin_id_hash['aid']);
+      }
+    } else {
+      $result = 0;
+    }
+    echo $result;
+    die();
+  }
+
+  static protected function appendLog($caption, $initiator)
+  {
+    static::$con->appendLog($caption, $initiator);
   }
 }
