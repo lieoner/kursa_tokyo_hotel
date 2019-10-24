@@ -6,6 +6,7 @@ import 'jquery.cookie/jquery.cookie.js';
 import 'bootstrap-datepicker';
 import 'bootstrap-datepicker/js/locales/bootstrap-datepicker.ru';
 
+import './admin-register.js';
 import '../../css/theme.css';
 import '../../css/style.css';
 import '../../css/admin.css';
@@ -40,8 +41,8 @@ import '../../css/admin.css';
     $(document).ready(function() {
         //$('body').on('contextmenu', false);
 
-        if (document.getElementById('book-number')) {
-            IMask(document.getElementById('book-number'), {
+        if ($('.book-number')) {
+            IMask($('.book-number'), {
                 mask: '000 000 000',
             });
         }
@@ -70,12 +71,12 @@ import '../../css/admin.css';
             let serializedData = $login_form.serialize();
             $inputs.prop('disabled', true);
             let action = 'authorizeAdmin';
+
             request = $.ajax({
                 url: 'src/php/ajax.php?action=' + action,
                 type: 'post',
                 data: serializedData,
             });
-
             request.done(function(response) {
                 check_login();
                 setTimeout(() => {
@@ -91,74 +92,6 @@ import '../../css/admin.css';
                     $inputs.prop('disabled', false);
                 }, 1000);
             });
-        });
-
-        function afterConfirmBook() {
-            $('div.booking_confirm div.modal').hide();
-            $('table.book-table tbody tr.table-success').addClass('table-active');
-            $('table.book-table tbody tr.table-success').removeClass('table-success');
-            setTimeout(() => {
-                $('div.booking_confirm div.book-confirmed').show(500);
-                setTimeout(() => {
-                    $('div.booking_confirm div.book-confirmed').hide(1000);
-                }, 1000);
-            }, 200);
-        }
-
-        $(
-            'div.booking_confirm div.modal .btn-secondary, div.booking_confirm div.modal .close'
-        ).click(function(e) {
-            e.preventDefault();
-            $('div.booking_confirm div.modal').hide();
-        });
-        $('div.booking_confirm .btn-primary').click(function(e) {
-            e.preventDefault();
-            let request;
-            if (request) {
-                request.abort();
-            }
-            let client_id = $('table.book-table tbody tr.table-success').data('clientId');
-            let room_id = $('table.book-table tbody tr.table-success').data('roomId');
-
-            let serializedData = 'client_id=' + client_id + '&room_id=' + room_id;
-            let action = 'confirmBook';
-            request = $.ajax({
-                url: 'src/php/ajax.php?action=' + action,
-                type: 'post',
-                data: serializedData,
-            });
-            request.done(function(response) {
-                if (response) {
-                    afterConfirmBook();
-                    updateNearestBookList();
-                }
-            });
-        });
-
-        mainTriggers();
-        tableTriggers();
-
-        $('div.booking_confirm .book-table-refresh').click(updateNearestBookList);
-
-        $('div.booking_confirm #find-book-table input').keyup(function(e) {
-            let input_val = $(this).val();
-            if (input_val.length == 0) {
-                $('table.book-table tbody tr').show(400);
-            } else {
-                $('table.book-table tbody tr').each(function(index, element) {
-                    if (
-                        !$(element)
-                            .find('.bookNumber')
-                            .data('bookNumber')
-                            .toString()
-                            .match(input_val.replace(' ', ''))
-                    ) {
-                        $(element).hide(400);
-                    } else {
-                        $(element).show(400);
-                    }
-                });
-            }
         });
     });
 
@@ -182,56 +115,6 @@ import '../../css/admin.css';
         });
     }
 
-    function mainTriggers() {
-        $('#back_btn').click(function(e) {
-            e.preventDefault();
-            $('#back_btn').hide(500);
-            //BACKBUTTON
-            $('#admin-main .booking_confirm').hide(500);
-            $('#admin-main .admin-buttons').show(500);
-        });
-        $('div.register button').click(function(e) {
-            e.preventDefault();
-            $('#admin-main .admin-buttons').hide(500);
-            //CONFIRM
-            $('#admin-main .booking_confirm').show(500);
-            $('#back_btn').show(500);
-        });
-        $('div.payment button').click(function(e) {
-            e.preventDefault();
-            $('#admin-main .admin-buttons').hide(500);
-            //PAYMENT
-            $('#back_btn').show(500);
-        });
-        $('div.statistics button').click(function(e) {
-            e.preventDefault();
-            $('#admin-main .admin-buttons').hide(500);
-            //STATISTIC
-            $('#back_btn').show(500);
-        });
-        $('div.logs button').click(function(e) {
-            e.preventDefault();
-            $('#admin-main .admin-buttons').hide(500);
-            //LOGS
-            $('#back_btn').show(500);
-        });
-    }
-    function tableTriggers() {
-        $('tbody tr').click(function(e) {
-            e.preventDefault();
-            $('table.book-table tbody tr').removeClass('table-active');
-            $('table.book-table tbody tr').removeClass('table-success');
-            $(this).addClass('table-active');
-        });
-        $('tbody tr').dblclick(function(e) {
-            e.preventDefault();
-            $('table.book-table tbody tr').removeClass('table-active');
-            $('table.book-table tbody tr').removeClass('table-success');
-            $(this).addClass('table-success');
-            $('div.booking_confirm div.modal').show();
-        });
-    }
-
     function search_book_name($form) {
         let request;
         if (request) {
@@ -249,13 +132,11 @@ import '../../css/admin.css';
             afterAjax();
             return;
         }
-
         request = $.ajax({
             url: 'src/php/ajax.php?action=' + action,
             type: 'post',
             data: serializedData,
         });
-
         request.done(function(response) {
             console.log(JSON.parse(response));
             afterAjax();
@@ -271,26 +152,9 @@ import '../../css/admin.css';
         }
     }
 
-    function updateNearestBookList() {
-        let request;
-        if (request) {
-            request.abort();
-        }
-        let action = 'getNearestBookingTable';
-        request = $.ajax({
-            url: 'src/php/ajax.php?action=' + action,
-            type: 'post',
-        });
-
-        request.done(function(response) {
-            $('table.book-table tbody').html(response);
-            tableTriggers();
-        });
-    }
-
     function start_admin_module() {
         $('#auth').hide(500);
         $('#admin-main .admin-buttons').show(500);
-        //$('#admin-main .booking_confirm').show(600);
+        //$('#admin-main .register-content').show(600);
     }
 })(jQuery);

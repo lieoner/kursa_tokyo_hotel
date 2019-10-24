@@ -66,12 +66,12 @@
       </div>
     </div>
 
-    <div class="col-12 booking_confirm">
+    <div class="col-12 register-content">
       <div class="row justify-content-center">
 
-        <label for="book-number" class="col-2 col-form-label text-right">Номер брони:</label>
+        <label for="table-book-number" class="col-2 col-form-label text-right">Номер брони:</label>
         <div id="find-book-table" class="col-8 row">
-          <input type="text" class="form-control col-10" id="book-number" name="book-number" placeholder="000 000 000" autofocus>
+          <input type="text" class="form-control col-10 book-number" id="table-book-number" name="book-number" placeholder="000 000 000" autofocus>
           <button type="button" class="btn btn-secondary btn-sm col-1 book-table-refresh">↻</button>
         </div>
 
@@ -132,6 +132,10 @@
 
       </div>
     </div>
+    <div class="col-12 logs-content">
+      <div class="row justify-content-center">
 
+      </div>
+    </div>
   </div>
 </div>

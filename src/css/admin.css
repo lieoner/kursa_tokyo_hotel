@@ -40,11 +40,11 @@ div.is_auth {
   display: none;
 }
 
-div.booking_confirm {
+div.register-content {
   display: none;
 }
 
-div.booking_confirm .book-table-refresh {
+div.register-content .book-table-refresh {
   margin-left: 10px;
   font-size: large;
 }
@@ -53,7 +53,7 @@ div.booking_confirm .book-table-refresh {
   margin-bottom: 40px;
 }
 
-div.booking_confirm div.book-confirmed {
+div.register-content div.book-confirmed {
   width: -webkit-fill-available;
   text-align: center;
 }
