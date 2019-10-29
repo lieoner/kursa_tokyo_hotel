@@ -4,11 +4,12 @@
 <DatabaseProject Version="1.0.1" Guid="f425c3e4-ae3b-426c-9279-3903b2594169">
   <Provider Guid="59f90733-4d68-4fdf-82a7-f0fcbf5460aa" />
   <Include>
+    <File RelPath="" Link=".\notebook.dbd" />
     <File RelPath="" Link=".\schema.dbd" />
   </Include>
   <Configurations Active="По умолчанию">
     <Configuration Name="По умолчанию" CheckReferences="True" IgnoreErrors="False" OutputPath="" Target="" OutputType="SingleFile" KeepOriginalObjects="True" RecreateObjects="False" RecreateDatabase="False" ServerVersion="5.5.25" Database="" UseRegions="False" FullPaths="False" Definer="CURRENT_USER" ScriptDelimiter="$$" StorageEngine="INNODB" Collation="latin1_swedish_ci" ConvertToLowercase="True" DefinerEffect="Keep" InnoDbDefaultRowFormat="dynamic">
-      <Connection Name="localhost" Category="00000000-0000-0000-0000-000000000000" ConnectionString="User Id=root;Host=localhost;Character Set=AUTO" />
+      <Connection Name="localhost" Category="00000000-0000-0000-0000-000000000000" ConnectionString="User Id=root;Host=localhost;Character Set=utf8" />
       <Build />
     </Configuration>
   </Configurations>
