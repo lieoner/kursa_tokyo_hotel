@@ -30,3 +30,22 @@
 .edit-data {
   display: none;
 }
+
+.service-btn {
+  margin-top: 30px;
+}
+
+.service-content {
+  display: none;
+}
+
+.service-content>div {
+  display: none;
+}
+
+.inc-cnt, .sub-cnt, .cnt {
+  margin-left: unset!important;
+  margin-bottom: unset!important;
+  font-size: 12px;
+  padding: 0.5em;
+}

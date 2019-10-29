@@ -46,6 +46,18 @@ class AjaxRequester
     return trim($output);
   }
 
+
+  static protected function generateCode($length = 6)
+  {
+    $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHI JKLMNOPRQSTUVWXYZ0123456789";
+    $code = "";
+    $clen = strlen($chars) - 1;
+    while (strlen($code) < $length) {
+      $code .= $chars[mt_rand(0, $clen)];
+    }
+    return $code;
+  }
+
   static protected function cronRemoveOldBook()
   {
     //%progdir%\modules\php\%phpdriver%\php-win.exe -c %progdir%\userdata\temp\config\php.ini -q -f %sitedir%\kursa\src\php\cron\cron.php из файла
@@ -121,24 +133,13 @@ class AjaxRequester
     die();
   }
 
-  static protected function generateCode($length = 6)
-  {
-    $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHI JKLMNOPRQSTUVWXYZ0123456789";
-    $code = "";
-    $clen = strlen($chars) - 1;
-    while (strlen($code) < $length) {
-      $code .= $chars[mt_rand(0, $clen)];
-    }
-    return $code;
-  }
-
   static protected function login()
   {
     $login  = str_replace(' ', '', $_POST['login']);
     $pass = md5(md5($_POST['pass']));
     $user = static::$con->getUserData($login);
     if ($user['user_password'] === $pass) {
-      $hash = md5(generateCode(10));
+      $hash = md5(static::generateCode(10));
       static::$con->updateHash($hash, $user['IDc']);
 
       setcookie("id", $user['IDc'], time() + 60 * 60 * 24 * 30, '/', '');
@@ -178,11 +179,11 @@ class AjaxRequester
   {
     if (isset($_COOKIE['id'])) {
       unset($_COOKIE['id']);
-      setcookie("id", "", time() - 3600);
+      setcookie("id", "", time() - 3600, '/', '');
     }
     if (isset($_COOKIE['hash'])) {
       unset($_COOKIE['hash']);
-      setcookie("hash", "", time() - 3600);
+      setcookie("hash", "", time() - 3600, '/', '');
     }
     $result = ['status' => true];
     header("Location: ../../index.php");
@@ -295,5 +296,16 @@ class AjaxRequester
   static protected function appendLog($caption, $initiator)
   {
     static::$con->appendLog($caption, $initiator);
+  }
+
+  static protected function alogout()
+  {
+    session_start();
+    if (isset($_SESSION['admins'])) {
+      unset($_SESSION['admins']);
+    }
+    $result = ['status' => true];
+    header("Location: ../../admin.php");
+    die();
   }
 }

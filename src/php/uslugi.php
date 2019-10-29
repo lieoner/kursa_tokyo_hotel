@@ -13,26 +13,16 @@
       <div id="uslugi-data" class="col-12">
         <div id="eat" class="owl-carousel">
           <?php
-          $directory = "src/image/eat";    // Папка с изображениями
-          $allowed_types = array("jpg", "png", "gif");  //разрешеные типы изображений
-          $file_parts = array();
-          $ext = "";
-          $title = "";
-          $i = 0;
-          //пробуем открыть папку
-          $dir_handle = @opendir($directory) or die("Ошибка при открытии папки !!!");
-          while ($file = readdir($dir_handle)) {
-            if ($file == "." || $file == "..") continue;
-            $file_parts = explode(".", $file);
-            $ext = strtolower(array_pop($file_parts));
-
-
-            if (in_array($ext, $allowed_types)) {
-              echo '<div class="card border-secondary mb-3"><div class="card-body"><img src="' . $directory . '/' . $file . '" class="pimg" title="' . $file . '" /></div><div class="card-header">' . $file . '</div></div>';
-              $i++;
-            }
+          $eats = $con->getEat();
+          foreach ($eats as $eat) {
+            echo '<div class="card border-secondary mb-3">
+                      <div class="card-body">
+                        <img src="' . $eat['simgpath'] . '" class="pimg" title="' . $eat['sname'] . '" />
+                      </div>
+                      <div class="card-header row"><div class="col-9">' . $eat['sname'] . '</div><div class="col-3">' . $eat['scost'] . 'р</div></div>
+                    </div>';
           }
-          closedir($dir_handle); ?>
+          ?>
         </div>
         <div id="bar" class="col-12">
           <div class="card border-secondary mb-3">

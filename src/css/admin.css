@@ -11,6 +11,10 @@ body {
   margin-right: 15px;
 }
 
+#alogout {
+  display: none;
+}
+
 #back_btn button {
   font-size: xx-large;
 }
@@ -56,4 +60,8 @@ div.register-content .book-table-refresh {
 div.register-content div.book-confirmed {
   width: -webkit-fill-available;
   text-align: center;
+}
+
+div.logs-content {
+  display: none;
 }

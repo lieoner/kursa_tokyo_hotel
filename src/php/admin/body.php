@@ -78,10 +78,8 @@
         <div class="book-confirmed alert alert-dismissible alert-success">
           <strong>Заселение подтверждено</strong>
         </div>
-
         <?
         $nearest_bookings = $con->findNearestBooking();
-
         function convert_sqlDate_to_normalDate($sql_date)
         {
           return date('d.m.Y', strtotime($sql_date));
@@ -99,17 +97,7 @@
             </tr>
           </thead>
           <tbody>
-            <? foreach ($nearest_bookings as $key => $booking) {
-              ?>
-              <tr data-client-id=<?= $booking['IDc'] ?> data-room-id=<?= $booking['IDr'] ?>>
-                <td class="bookNumber" data-book-number=<?= $booking['bookNumber'] ?>><?= $booking['bookNumber'] ?></td>
-                <td class="comingDate" data-coming-date=<?= explode(' ', $booking['comingDate'])[0] ?>><?= convert_sqlDate_to_normalDate($booking['comingDate']) ?></td>
-                <td class="outDate" data-out-date=<?= explode(' ', $booking['outDate'])[0] ?>><?= convert_sqlDate_to_normalDate($booking['outDate']) ?></td>
-                <td class="roomNumber" data-room-number=<?= $booking['roomNumber'] ?>><?= $booking['roomNumber'] ?></td>
-                <td class="totalDaysCount" data-total-days-count=<?= $booking['totalDaysCount'] ?>><?= $booking['totalDaysCount'] ?></td>
-                <td class="totalCost" data-total-сost=<?= $booking['totalCost'] ?>><?= $booking['totalCost'] ?></td>
-              </tr>
-            <? } ?>
+
           </tbody>
         </table>
 
@@ -132,10 +120,12 @@
 
       </div>
     </div>
+
     <div class="col-12 logs-content">
       <div class="row justify-content-center">
-
+        asfsafs
       </div>
     </div>
+
   </div>
 </div>

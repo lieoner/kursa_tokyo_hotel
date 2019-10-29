@@ -2,22 +2,29 @@
   <?php
   User::loadUser();
   ?>
-  <div class="container-fluid profile">
+  <div class="container profile">
     <h2 class="text-center">Профиль № <?= User::getBookNumber() ?></h2>
     <div class="row">
+
       <div class="col-12 col-md-3">
         <div class="list-group">
           <div class="list-group-item label">
             Личный кабинет
           </div>
-          <a href="#" class="list-group-item list-group-item-action active" data-val="1">Профиль
+          <a href="#" class="list-group-item list-group-item-action" data-val="1">Профиль
           </a>
           <a href="#" class="list-group-item list-group-item-action" data-val="2">Информация о брони
           </a>
+          <a href="#" class="list-group-item list-group-item-action active" data-val="3">Доп. услуги
+          </a>
+          <a href="#" class="list-group-item list-group-item-action" data-val="4">Предварительный счет
+          </a>
         </div>
       </div>
+
       <div class="col-12 col-md-9">
-        <div class="item-data active col-12" data-val="1">
+
+        <div class="item-data col-12" data-val="1">
           <div class="static-data">
             <ul>
               <li class="row">
@@ -58,6 +65,7 @@
             </form>
           </div>
         </div>
+
         <div class="item-data" data-val="2">
           <div class="booking-data">
             <ul>
@@ -67,19 +75,81 @@
               </li>
               <li class="row">
                 <div class="col-12 col-md-2">Дата заезда</div>
-                <div class="col-12 col-md-6 book-begin"><? $date =  explode(' ', User::getBookingData()['comingDate']);
-                                                        $date = explode('-', $date[0]);
-                                                        echo $date[2] . '.' . $date[1] . '.' . $date[0] ?></div>
+                <div class="col-12 col-md-6 book-begin"><?= date('d.m.Y', strtotime(User::getBookingData()['comingDate'])); ?></div>
               </li>
               <li class="row">
                 <div class="col-12 col-md-2">Дата отъезда</div>
-                <div class="col-12 col-md-6 book-end"><? $date =  explode(' ', User::getBookingData()['outDate']);
-                                                      $date = explode('-', $date[0]);
-                                                      echo $date[2] . '.' . $date[1] . '.' . $date[0] ?></div>
+                <div class="col-12 col-md-6 book-end"><?= date('d.m.Y', strtotime(User::getBookingData()['outDate'])); ?></div>
               </li>
             </ul>
           </div>
         </div>
+
+
+        <div class="item-data active" data-val="3">
+          <div class="service-data col-12">
+
+            <div class="service-btn row">
+              <button type="button" class="btn btn-outline-primary col-3 btn-lg" data-type="eat">Еда/Вода<br>(в номер)</button>
+              <button type="button" class="btn btn-outline-primary col-3 btn-lg" data-type="travel">Экскурсии</button>
+              <button type="button" class="btn btn-outline-primary col-3 btn-lg " data-type="other">Другое</button>
+            </div>
+
+            <div class="service-content row">
+              <div class="col-12 eat">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th scope="col">Превью</th>
+                      <th scope="col">Название</th>
+                      <th scope="col">Кол-во</th>
+                      <th scope="col">Цена</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php
+                    $eats = $con->getEat();
+                    foreach ($eats as $eat) {
+                      ?>
+                      <tr>
+                        <td>
+                          <img class="col-9" src="<?= $eat['simgpath'] ?>" class="pimg" title="<?= $eat['sname'] ?>" />
+                        </td>
+                        <td>
+                          <p class="text-primary"> <?= $eat['sname'] ?></p>
+                        </td>
+                        <td>
+                          <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-sm btn-outline-primary col-4 sub-cnt">-</button>
+                            <input class="form-control form-control-sm col-4 text-center cnt" type="text" value="1" readonly="">
+                            <button type="button" class="btn btn-sm btn-outline-primary col-4 inc-cnt">+</button>
+                          </div>
+                        </td>
+                        <td>
+                          <p class="text-primary"> <?= $eat['scost'] ?> руб.</p>
+                        </td>
+                      </tr>
+                    <?
+                    }
+                    ?>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="col-12 travel">ТРАВЕЛ</div>
+
+              <div class="col-12 other">ОТХЕР</div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="item-data" data-val="4">
+          <div class="cost-data">
+            <!-- smthg -->
+          </div>
+        </div>
+
       </div>
     </div>
   </div>

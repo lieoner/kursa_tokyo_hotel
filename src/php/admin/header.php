@@ -41,9 +41,12 @@
           </div>
         </a>
 
-        <div class="col-12 col-sm-3 text-left">
+        <div class="col-12 col-sm-6 text-left">
           <div>ADMINKA</div>
           <div id="is-login"></div>
+        </div>
+        <div id="alogout" class="col-12 col-sm-3">
+          <a href="http://kursa/src/php/ajax.php?action=alogout" class="btn btn-primary" role="button">Выйти</a>
         </div>
       </nav>
     </header>

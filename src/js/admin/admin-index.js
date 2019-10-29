@@ -6,7 +6,8 @@ import 'jquery.cookie/jquery.cookie.js';
 import 'bootstrap-datepicker';
 import 'bootstrap-datepicker/js/locales/bootstrap-datepicker.ru';
 
-import './admin-register.js';
+var register_script = require('./admin-register.js');
+var logs_script = require('./admin-logs.js');
 import '../../css/theme.css';
 import '../../css/style.css';
 import '../../css/admin.css';
@@ -36,13 +37,13 @@ import '../../css/admin.css';
             }
         });
     }
-    check_login();
 
     $(document).ready(function() {
+        check_login();
         //$('body').on('contextmenu', false);
 
-        if ($('.book-number')) {
-            IMask($('.book-number'), {
+        if ($('.book-number')[0]) {
+            IMask($('.book-number')[0], {
                 mask: '000 000 000',
             });
         }
@@ -95,6 +96,47 @@ import '../../css/admin.css';
         });
     });
 
+    function mainTriggers() {
+        $('#back_btn').click(function(e) {
+            e.preventDefault();
+            $('#back_btn').hide(500);
+            //BACKBUTTON
+            $('#admin-main .register-content').hide(500);
+            $('#admin-main .payment-content').hide(500);
+            $('#admin-main .statistic-content').hide(500);
+            $('#admin-main .logs-content').hide(500);
+            $('#admin-main .admin-buttons').show(500);
+        });
+        $('div.register button').click(function(e) {
+            e.preventDefault();
+            $('#admin-main .admin-buttons').hide(500);
+            //CONFIRM
+            $('#admin-main .register-content').show(500);
+            $('#back_btn').show(500);
+        });
+        $('div.payment button').click(function(e) {
+            e.preventDefault();
+            $('#admin-main .admin-buttons').hide(500);
+            $('#admin-main .payment-content').show(500);
+            //PAYMENT
+            $('#back_btn').show(500);
+        });
+        $('div.statistics button').click(function(e) {
+            e.preventDefault();
+            $('#admin-main .admin-buttons').hide(500);
+            $('#admin-main .statistic-content').show(500);
+            //STATISTIC
+            $('#back_btn').show(500);
+        });
+        $('div.logs button').click(function(e) {
+            e.preventDefault();
+            $('#admin-main .admin-buttons').hide(500);
+            //LOGS
+            $('#admin-main .logs-content').show(500);
+            $('#back_btn').show(500);
+        });
+    }
+
     function whoAuthorize() {
         let request;
         if (request) {
@@ -112,6 +154,7 @@ import '../../css/admin.css';
                 'logged as ' + admin.person_name + ' ' + admin.person_fam
             );
             $('#header #is-login').show(500);
+            $('#header #alogout').show(500);
         });
     }
 
@@ -154,6 +197,9 @@ import '../../css/admin.css';
 
     function start_admin_module() {
         $('#auth').hide(500);
+        mainTriggers();
+        register_script.main();
+        logs_script.main();
         $('#admin-main .admin-buttons').show(500);
         //$('#admin-main .register-content').show(600);
     }

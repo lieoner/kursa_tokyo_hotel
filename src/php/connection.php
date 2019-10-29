@@ -270,6 +270,17 @@ class tokyo_hotel
     $stmt->execute([$params[0], $params[1]]);
   }
 
+  private function getServiceByIDst($params)
+  {
+    $stmt = $this->pdo->prepare('SELECT sname, scost, simgpath FROM services WHERE IDst = ?');
+    $stmt->execute([$params[0]]);
+    $temp = array();
+    foreach ($stmt as $row) {
+      $result[] = $row;
+    }
+    return $result;
+  }
+
   protected function callMethod($method_name, $params = [])
   {
     return static::$method_name($params);
@@ -362,6 +373,15 @@ class tokyo_hotel
     $data = $this->callMethod($method_name);
     return $data;
   }
+
+  public function getEat()
+  {
+    $method_name = 'getServiceByIDst';
+    $idst = 1;
+    $data = $this->callMethod($method_name, array($idst));
+    return $data;
+  }
+
   public function appendLog($caption, $initiator)
   {
     $method_name = 'appendLogIntoDB';
