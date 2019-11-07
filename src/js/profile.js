@@ -52,6 +52,9 @@
 })(jQuery);
 
 function serviceTriggers() {
+    checkCart();
+    cartTriggers();
+
     $('.service-btn button').click(function(e) {
         e.preventDefault();
         $('.service-content>div').hide();
@@ -64,9 +67,11 @@ function serviceTriggers() {
         $('.service-content').show(500);
     });
 
-    $('div.eat .sub-cnt').each(function(index, element) {
+    $('.service-content .sub-cnt').each(function(index, element) {
         $(element).click(function(e) {
             e.preventDefault();
+            e.stopPropagation();
+            $(element).prop('disabled', true);
             let count = $(this)
                 .next()
                 .val();
@@ -78,11 +83,26 @@ function serviceTriggers() {
             $(this)
                 .next()
                 .val(count);
+
+            var service = $(this).parents('tr');
+            if (service.hasClass('table-active')) {
+                cartUpdate(service.data('service-id'), service.find('input.cnt').val());
+            } else {
+                service.trigger('click');
+            }
         });
     });
-    $('div.eat .inc-cnt').each(function(index, element) {
+    $('.service-content input.cnt').each(function(index, element) {
         $(element).click(function(e) {
             e.preventDefault();
+            e.stopPropagation();
+        });
+    });
+    $('.service-content .inc-cnt').each(function(index, element) {
+        $(element).click(function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $(element).prop('disabled', true);
             let count = $(this)
                 .prev()
                 .val();
@@ -94,15 +114,139 @@ function serviceTriggers() {
             $(this)
                 .prev()
                 .val(count);
+
+            var service = $(this).parents('tr');
+
+            if (service.hasClass('table-active')) {
+                cartUpdate(service.data('service-id'), service.find('input.cnt').val());
+            } else {
+                service.trigger('click');
+            }
         });
     });
 
-    $('div.eat table tbody tr').click(function(e) {
+    $('.service-content table tbody tr').click(function(e) {
         e.preventDefault();
         if ($(this).hasClass('table-active')) {
             $(this).removeClass('table-active');
+            cartRemove($(this).data('service-id'));
         } else {
             $(this).addClass('table-active');
+            cartAdd(
+                $(this).data('service-id'),
+                $(this)
+                    .find('input.cnt')
+                    .val()
+            );
+        }
+
+        if ($('.service-content table tbody tr.table-active').length == 0) {
+            $('.total-service').hide(500);
+        } else {
+            $('.total-service').show(500);
         }
     });
+
+    $('.cart-confirm').click(function(e) {
+        e.preventDefault();
+        var request;
+        var action = 'confirmCart';
+        request = $.ajax({
+            url: 'src/php/ajax.php?action=' + action,
+            type: 'post',
+        });
+
+        request.done(function(response) {
+            checkCart();
+            cartTriggers();
+        });
+    });
+
+    function cartTriggers() {
+        $('.total-service .cart-item .btn').click(function(e) {
+            e.preventDefault();
+            var serviceID = $(this)
+                .parents('.cart-item')
+                .data('service-id');
+            $('.service-content tr[data-service-id=' + serviceID + ']').trigger('click');
+            $('.service-content tr[data-service-id=' + serviceID + ']')
+                .find('.cnt')
+                .val(1);
+            $(this)
+                .parents('.cart-item')
+                .remove();
+        });
+    }
+
+    function checkCart() {
+        var request;
+        var action = 'checkCart';
+        request = $.ajax({
+            url: 'src/php/ajax.php?action=' + action,
+            type: 'post',
+        });
+
+        request.done(function(response) {
+            if (response != 0) {
+                $('.total-service').show();
+                $('.total-service ul.list-group').html(response);
+                $('.cart-item').each(function(index, element) {
+                    var serviceID = $(element).data('service-id');
+                    var count = $(element)
+                        .find('.count')
+                        .html()
+                        .split(' ')[0];
+                    $('.service-content tr[data-service-id=' + serviceID + ']').addClass(
+                        'table-active'
+                    );
+                    $('.service-content tr[data-service-id=' + serviceID + ']')
+                        .find('.cnt')
+                        .val(count);
+                });
+            } else {
+                $('.total-service').hide(500);
+                $('.total-service ul.list-group').html('');
+                $('.service-content tr[data-service-id]').removeClass('table-active');
+                $('.service-content tr[data-service-id]')
+                    .find('.cnt')
+                    .val(1);
+            }
+            cartTriggers();
+        });
+    }
+
+    function cartAdd(serviceID, count) {
+        var request;
+        var action = 'cartAddService';
+        var serializedData = 'serviceID=' + serviceID + '&serviceCount=' + count;
+        request = $.ajax({
+            url: 'src/php/ajax.php?action=' + action,
+            type: 'post',
+            data: serializedData,
+        });
+
+        request.done(function(response) {
+            $('.total-service ul.list-group').html(response);
+            $('.inc-cnt, .sub-cnt').prop('disabled', false);
+            cartTriggers();
+        });
+    }
+    function cartUpdate(serviceID, count) {
+        cartAdd(serviceID, count);
+    }
+    function cartRemove(serviceID) {
+        var request;
+        var action = 'cartRemoveService';
+        var serializedData = 'serviceID=' + serviceID;
+        request = $.ajax({
+            url: 'src/php/ajax.php?action=' + action,
+            type: 'post',
+            data: serializedData,
+        });
+
+        request.done(function(response) {
+            $('.total-service ul.list-group').html(response);
+            cartTriggers();
+        });
+    }
 }

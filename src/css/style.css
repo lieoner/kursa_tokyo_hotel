@@ -162,9 +162,8 @@ img {
   overflow: hidden;
 }
 
-.card {
+#uslugi-data .card {
   box-shadow: inset 2px 2px 12px rgba(167, 167, 167, 0.4);
-  ;
 }
 
 .alert {

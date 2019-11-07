@@ -308,4 +308,102 @@ class AjaxRequester
     header("Location: ../../admin.php");
     die();
   }
+
+  static protected function getHtmlCart($cart)
+  {
+    $output = '';
+    foreach ($cart as $key => $value) {
+      $output .=
+        '<li class="cart-item list-group-item" data-service-id="' . $key . '">
+          <div class="row">
+            <div class="col-10">
+              <h6 class="card-title">' . $cart[$key]['name'] . '</h6>
+              <p class="card-text">
+                <span class="count">' . $cart[$key]['count'] . ' шт.</span>
+                <span class="cost">' . $cart[$key]['cost'] * $cart[$key]['count'] . ' руб.</span>
+              </p>
+            </div>
+            <div class="col-2"><button type="button" class="btn btn-secondary btn-sm">X</button></div>
+          </div>
+        </li>';
+    }
+    return $output;
+  }
+
+
+
+  static protected function checkCart()
+  {
+    session_start();
+    if (isset($_SESSION['cart'])) {
+      $output = static::getHtmlCart($_SESSION['cart']);
+    } else {
+      $output = 0;
+    }
+    echo $output;
+    die;
+  }
+  static protected function cartAddService()
+  {
+    session_start();
+    if (isset($_SESSION['services'])) {
+      $services = $_SESSION['services'];
+    } else {
+      $_SESSION['services'] = static::$con->getServices();
+      $services = $_SESSION['services'];
+    }
+    $key = array_search($_POST['serviceID'], array_column($services, 'IDs'));
+    if (isset($_SESSION['cart'])) {
+      $cart = $_SESSION['cart'];
+    } else {
+      $cart = array();
+    }
+
+    $cart[$_POST['serviceID']] = [
+      'id' => $_POST['serviceID'],
+      'name' => $services[$key]['sname'],
+      'count' => $_POST['serviceCount'],
+      'cost' => $services[$key]['scost'],
+    ];
+    $output = static::getHtmlCart($cart);
+    echo $output;
+    $_SESSION['cart'] = $cart;
+    die();
+  }
+
+  static protected function cartRemoveService()
+  {
+    session_start();
+    if (isset($_SESSION['cart'][$_POST['serviceID']])) {
+      unset($_SESSION['cart'][$_POST['serviceID']]);
+    }
+    $output = static::getHtmlCart($_SESSION['cart']);
+    echo $output;
+    die();
+  }
+  static protected function clearCart()
+  {
+    session_start();
+    if (isset($_SESSION['cart'])) {
+      unset($_SESSION['cart']);
+    }
+  }
+  static protected function confirmCart()
+  {
+    session_start();
+    if (isset($_COOKIE['id'])) {
+      if (isset($_SESSION['cart'])) {
+        $cart = $_SESSION['cart'];
+        $params = array();
+        $i = 0;
+        $params['uid'] = $_COOKIE['id'];
+        foreach ($cart as $key => $value) {
+          $params['items'][$i]['IDs'] = $cart[$key]['id'];
+          $params['items'][$i++]['sbCount'] = $cart[$key]['count'];
+        }
+        static::$con->confirmService($params);
+        static::clearCart();
+      }
+    }
+  }
 }

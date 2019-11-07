@@ -224,7 +224,6 @@ class tokyo_hotel
 
     $stmt = $this->pdo->prepare('SELECT ll.IDliv_l FROM living_list ll WHERE ll.IDc = ? AND ll.IDr = ?');
     $stmt->execute([$params[0], $result[0]['IDr']]);
-    $temp = array();
     foreach ($stmt as $row) {
       $result[] = $row;
     }
@@ -236,8 +235,10 @@ class tokyo_hotel
         $result[] = $row;
       }
       $result[0]['status'] = 'Вы зарегистрированы, ваша комната №' . $result[2]['roomNumber'];
+      $result[0]['bool_status'] = 1;
     } else {
       $result[0]['status'] = 'Бронь активна';
+      $result[0]['bool_status'] = 0;
     }
     return $result;
   }
@@ -272,9 +273,17 @@ class tokyo_hotel
 
   private function getServiceByIDst($params)
   {
-    $stmt = $this->pdo->prepare('SELECT sname, scost, simgpath FROM services WHERE IDst = ?');
+    $stmt = $this->pdo->prepare('SELECT IDs, sname, scost, simgpath FROM services WHERE IDst = ?');
     $stmt->execute([$params[0]]);
-    $temp = array();
+    foreach ($stmt as $row) {
+      $result[] = $row;
+    }
+    return $result;
+  }
+  private function getAllServices()
+  {
+    $stmt = $this->pdo->prepare('SELECT IDs, sname, scost, simgpath FROM services');
+    $stmt->execute();
     foreach ($stmt as $row) {
       $result[] = $row;
     }
@@ -374,10 +383,24 @@ class tokyo_hotel
     return $data;
   }
 
+  public function getServices()
+  {
+    $method_name = 'getAllServices';
+    $data = $this->callMethod($method_name, array());
+    return $data;
+  }
+
   public function getEat()
   {
     $method_name = 'getServiceByIDst';
     $idst = 1;
+    $data = $this->callMethod($method_name, array($idst));
+    return $data;
+  }
+  public function getTravel()
+  {
+    $method_name = 'getServiceByIDst';
+    $idst = 3;
     $data = $this->callMethod($method_name, array($idst));
     return $data;
   }
@@ -522,6 +545,39 @@ class tokyo_hotel
   {
     $method_name = 'insertBookDataIntoLivingList';
     $data = $this->callMethod($method_name, array($client_id, $room_id));
+    return $data;
+  }
+
+  private function confirmServiceQueries($params)
+  {
+    $stmt = $this->pdo->prepare('SELECT IDliv_l FROM living_list WHERE IDc=? LIMIT 1');
+    $stmt->execute([$params[0]]);
+    $result = array();
+    foreach ($stmt as $row) {
+      $result[] = $row;
+    }
+    $IDliv_l = $result[0]['IDliv_l'];
+
+    $sql = 'INSERT INTO service_bills (IDs, IDliv_l, sbCount, sbDate) VALUES ';
+    $insertQuery = array();
+    $insertData = array();
+    foreach ($params[1] as $record) {
+      $insertQuery[] = '(?,?,?,now())';
+      $insertData[] = $record['IDs'];
+      $insertData[] = $IDliv_l;
+      $insertData[] = $record['sbCount'];
+    }
+    if (!empty($insertQuery)) {
+      $sql .= implode(', ', $insertQuery);
+      $stmt = $this->pdo->prepare($sql);
+      $stmt->execute($insertData);
+    }
+  }
+
+  public function confirmService($params)
+  {
+    $method_name = 'confirmServiceQueries';
+    $data = $this->callMethod($method_name, array($params['uid'], $params['items']));
     return $data;
   }
 }

@@ -19,7 +19,7 @@
                       <div class="card-body">
                         <img src="' . $eat['simgpath'] . '" class="pimg" title="' . $eat['sname'] . '" />
                       </div>
-                      <div class="card-header row"><div class="col-9">' . $eat['sname'] . '</div><div class="col-3">' . $eat['scost'] . 'р</div></div>
+                      <div class="card-header"><div class="row"><div class="col-9">' . $eat['sname'] . '</div><div class="col-3">' . $eat['scost'] . 'р</div></div></div>
                     </div>';
           }
           ?>

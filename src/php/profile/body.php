@@ -17,8 +17,32 @@
           </a>
           <a href="#" class="list-group-item list-group-item-action active" data-val="3">Доп. услуги
           </a>
-          <a href="#" class="list-group-item list-group-item-action" data-val="4">Предварительный счет
-          </a>
+        </div>
+
+        <div class="total-service card border-primary mb-3">
+          <div class="card-header ">
+            <div class="row">
+              <div class="col-6">Выбранные услуги</div>
+              <div class="col-6">
+                <button type="button" class="cart-confirm btn btn-primary btn-sm">Подтвердить</button>
+              </div>
+            </div>
+          </div>
+          <ul class="list-group list-group-flush"></ul>
+        </div>
+
+        <div class="total-offer card border-secondary mb-3">
+          <div class="card-header">Предварительный счет</div>
+          <div class="card-body">
+            <h6 class="card-title">Проживание</h6>
+            <p class="card-text">smthg руб</p>
+            <h6 class="card-title">Услуги</h6>
+            <p class="card-text">smthg руб</p>
+          </div>
+          <div class="card-footer text-muted">
+            <h5 class="card-title">Итого</h5>
+            <p class="card-text">smthg руб</p>
+          </div>
         </div>
       </div>
 
@@ -85,71 +109,104 @@
           </div>
         </div>
 
+        <? if (User::getBookingData()['bool_status'] == 1) {
+          ?>
+          <div class="item-data active" data-val="3">
+            <div class="service-data col-12">
 
-        <div class="item-data active" data-val="3">
-          <div class="service-data col-12">
-
-            <div class="service-btn row">
-              <button type="button" class="btn btn-outline-primary col-3 btn-lg" data-type="eat">Еда/Вода<br>(в номер)</button>
-              <button type="button" class="btn btn-outline-primary col-3 btn-lg" data-type="travel">Экскурсии</button>
-              <button type="button" class="btn btn-outline-primary col-3 btn-lg " data-type="other">Другое</button>
-            </div>
-
-            <div class="service-content row">
-              <div class="col-12 eat">
-                <table class="table table-hover">
-                  <thead>
-                    <tr>
-                      <th scope="col">Превью</th>
-                      <th scope="col">Название</th>
-                      <th scope="col">Кол-во</th>
-                      <th scope="col">Цена</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <?php
-                    $eats = $con->getEat();
-                    foreach ($eats as $eat) {
-                      ?>
-                      <tr>
-                        <td>
-                          <img class="col-9" src="<?= $eat['simgpath'] ?>" class="pimg" title="<?= $eat['sname'] ?>" />
-                        </td>
-                        <td>
-                          <p class="text-primary"> <?= $eat['sname'] ?></p>
-                        </td>
-                        <td>
-                          <div class="btn-group" role="group">
-                            <button type="button" class="btn btn-sm btn-outline-primary col-4 sub-cnt">-</button>
-                            <input class="form-control form-control-sm col-4 text-center cnt" type="text" value="1" readonly="">
-                            <button type="button" class="btn btn-sm btn-outline-primary col-4 inc-cnt">+</button>
-                          </div>
-                        </td>
-                        <td>
-                          <p class="text-primary"> <?= $eat['scost'] ?> руб.</p>
-                        </td>
-                      </tr>
-                    <?
-                    }
-                    ?>
-                  </tbody>
-                </table>
+              <div class="service-btn row">
+                <button type="button" class="btn btn-outline-primary col-3 btn-lg" data-type="eat">Еда/Вода<br>(в номер)</button>
+                <button type="button" class="btn btn-outline-primary col-3 btn-lg" data-type="travel">Экскурсии</button>
+                <button type="button" class="btn btn-outline-primary col-3 btn-lg " data-type="other">Другое</button>
               </div>
 
-              <div class="col-12 travel">ТРАВЕЛ</div>
+              <div class="service-content row">
+                <div class="col-12 eat">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col">Превью</th>
+                        <th scope="col">Название</th>
+                        <th scope="col">Кол-во</th>
+                        <th scope="col">Цена</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php
+                        $eats = $con->getEat();
+                        foreach ($eats as $eat) {
+                          ?>
+                        <tr data-service-id=<?= $eat['IDs'] ?>>
+                          <td>
+                            <img class="col-9" src="<?= $eat['simgpath'] ?>" class="pimg" title="<?= $eat['sname'] ?>" />
+                          </td>
+                          <td>
+                            <p class="text-primary"> <?= $eat['sname'] ?></p>
+                          </td>
+                          <td>
+                            <div class="btn-group" role="group">
+                              <button type="button" class="btn btn-sm btn-outline-primary col-4 sub-cnt">-</button>
+                              <input class="form-control form-control-sm col-4 text-center cnt" type="text" value=1 readonly="">
+                              <button type="button" class="btn btn-sm btn-outline-primary col-4 inc-cnt">+</button>
+                            </div>
+                          </td>
+                          <td>
+                            <p class="text-primary"> <?= $eat['scost'] ?> руб.</p>
+                          </td>
+                        </tr>
+                      <?
+                        }
+                        ?>
+                    </tbody>
+                  </table>
+                </div>
 
-              <div class="col-12 other">ОТХЕР</div>
+                <div class="col-12 travel">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col">Превью</th>
+                        <th scope="col">Название</th>
+                        <th scope="col">Кол-во</th>
+                        <th scope="col">Цена</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php
+                        $travels = $con->getTravel();
+                        foreach ($travels as $travel) {
+                          ?>
+                        <tr data-service-id=<?= $travel['IDs'] ?>>
+                          <td>
+                            <img class="col-9" src="<?= $travel['simgpath'] ?>" class="pimg" title="<?= $travel['sname'] ?>" />
+                          </td>
+                          <td class="label">
+                            <p class="text-primary"> <?= $travel['sname'] ?></p>
+                          </td>
+                          <td>
+                            <div class="btn-group" role="group">
+                              <button type="button" class="btn btn-sm btn-outline-primary col-4 sub-cnt">-</button>
+                              <input class="form-control form-control-sm col-4 text-center cnt" type="text" value=1 readonly="">
+                              <button type="button" class="btn btn-sm btn-outline-primary col-4 inc-cnt">+</button>
+                            </div>
+                          </td>
+                          <td>
+                            <p class="text-primary"> <?= $travel['scost'] ?> руб.</p>
+                          </td>
+                        </tr>
+                      <?
+                        }
+                        ?>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div class="col-12 other">Менеджеры ведут разработку новых услуг, скоро будут...</div>
+              </div>
+
             </div>
-
           </div>
-        </div>
-
-        <div class="item-data" data-val="4">
-          <div class="cost-data">
-            <!-- smthg -->
-          </div>
-        </div>
-
+        <? } ?>
       </div>
     </div>
   </div>

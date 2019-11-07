@@ -49,3 +49,27 @@
   font-size: 12px;
   padding: 0.5em;
 }
+
+.profile .card {
+  margin-top: 20px;
+}
+
+.total-service {
+  display: none;
+}
+
+.total-service .cart-item .btn {
+  margin-left: -20px;
+}
+
+.total-service .cart-item .cost {
+  margin-left: 40px;
+}
+
+.total-service .cart-item .card-title {
+  font-size: 11px;
+}
+
+.travel .label {
+  font-size: 20px;
+}
