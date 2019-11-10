@@ -790,7 +790,7 @@
               <Port xsi:type="LinkPort">
                 <Location>
                   <X>-30 px</X>
-                  <Y>6.10351560226263E-06 px</Y>
+                  <Y>6.10351571594947E-06 px</Y>
                 </Location>
                 <Anchors>None</Anchors>
                 <Align>Right</Align>
@@ -1268,7 +1268,7 @@
             </CustomProperties>
             <Location>
               <X>1485 px</X>
-              <Y>281 px</Y>
+              <Y>298 px</Y>
             </Location>
             <Size>
               <Width>166 px</Width>
@@ -1286,7 +1286,7 @@
             </CustomProperties>
             <Location>
               <X>1265 px</X>
-              <Y>281 px</Y>
+              <Y>298 px</Y>
             </Location>
             <Size>
               <Width>171 px</Width>
@@ -1308,7 +1308,7 @@
             </Location>
             <Size>
               <Width>257 px</Width>
-              <Height>208 px</Height>
+              <Height>225 px</Height>
             </Size>
             <DbOid>
               <Path>tokyo_hotel.human_view_service_queries</Path>
@@ -1320,8 +1320,8 @@
           <ScaleMode>Free</ScaleMode>
           <Scale>0.506873369</Scale>
           <Location>
-            <X>-618.508666992188 px</X>
-            <Y>16.2989501953125 px</Y>
+            <X>-619.484113921996 px</X>
+            <Y>-47.349102548979 px</Y>
           </Location>
         </ViewPort>
       </Model>

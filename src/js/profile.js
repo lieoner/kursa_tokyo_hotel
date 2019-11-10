@@ -53,6 +53,7 @@
 
 function serviceTriggers() {
     checkCart();
+    getTotal();
     cartTriggers();
 
     $('.service-btn button').click(function(e) {
@@ -162,6 +163,16 @@ function serviceTriggers() {
         });
     });
 
+    $('.show_cost_info').click(function(e) {
+        e.preventDefault();
+        $('.modal.cost_info').show();
+    });
+
+    $('.modal.cost_info .close').click(function(e) {
+        e.preventDefault();
+        $('.modal.cost_info').hide();
+    });
+
     function cartTriggers() {
         $('.total-service .cart-item .btn').click(function(e) {
             e.preventDefault();
@@ -212,6 +223,35 @@ function serviceTriggers() {
                     .val(1);
             }
             cartTriggers();
+        });
+    }
+
+    function getTotal(params) {
+        var request;
+        var action = 'getTotalCost';
+
+        request = $.ajax({
+            url: 'src/php/ajax.php?action=' + action,
+            type: 'post',
+        });
+
+        request.done(function(response) {
+            totalCost = JSON.parse(response);
+            $('.living-cost').html(totalCost.living.cost);
+            $('.living-days').html(totalCost.living.daysCount + ' дн.');
+            $('.service-cost').html(totalCost.service.cost);
+            $('.total-cost').html(totalCost.total.cost);
+            totalCost.service.items.forEach(element => {
+                $('.service-more').append(
+                    '<div class="col-6 h6" style="padding-left:35px">' + element.name + '</div>'
+                );
+                $('.service-more').append('<div class="col-2">' + element.count + ' шт.</div>');
+                $('.service-more').append(
+                    '<div class="col-2 text-right h5">' +
+                        element.cost * element.count +
+                        '</div><div class="col-2">руб.</div>'
+                );
+            });
         });
     }
 

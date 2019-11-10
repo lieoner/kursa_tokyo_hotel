@@ -45,7 +45,7 @@
             $(this).addClass('selectedRoom');
         });
 
-        $('.modal .close').click(function() {
+        $('#catalog .modal .close').click(function() {
             $('#book-form')
                 .find('input, select, button, textarea')
                 .prop('disabled', false);
@@ -220,7 +220,7 @@
                     });
                     request.done(function(response) {
                         request = false;
-                        $('.modal .close').trigger('click');
+                        $('#catalog .modal .close').trigger('click');
                         $('.booked').show(500);
                         setTimeout(() => {
                             $('.booked').hide(500);

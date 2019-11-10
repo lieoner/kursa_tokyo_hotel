@@ -505,6 +505,53 @@ class tokyo_hotel
     }
   }
 
+  private function confirmServiceQueries($params)
+  {
+    $stmt = $this->pdo->prepare('SELECT IDliv_l FROM living_list WHERE IDc=? LIMIT 1');
+    $stmt->execute([$params[0]]);
+    $result = array();
+    foreach ($stmt as $row) {
+      $result[] = $row;
+    }
+    $IDliv_l = $result[0]['IDliv_l'];
+
+    $sql = 'INSERT INTO service_bills (IDs, IDliv_l, sbCount, sbDate) VALUES ';
+    $insertQuery = array();
+    $insertData = array();
+    foreach ($params[1] as $record) {
+      $insertQuery[] = '(?,?,?,now())';
+      $insertData[] = $record['IDs'];
+      $insertData[] = $IDliv_l;
+      $insertData[] = $record['sbCount'];
+    }
+    if (!empty($insertQuery)) {
+      $sql .= implode(', ', $insertQuery);
+      $stmt = $this->pdo->prepare($sql);
+      $stmt->execute($insertData);
+    }
+  }
+
+  private function getLivingBillFromDB($params)
+  {
+    $stmt = $this->pdo->prepare('SELECT * FROM nearest_booking WHERE IDc=? LIMIT 1');
+    $stmt->execute([$params[0]]);
+    $result = array();
+    foreach ($stmt as $row) {
+      $result[] = $row;
+    }
+    return $result[0];
+  }
+
+  private function getServiceBillFromDB($params)
+  {
+    $stmt = $this->pdo->prepare('SELECT * FROM human_view_service_queries WHERE IDc=? and sbStatus = 1');
+    $stmt->execute([$params[0]]);
+    $result = array();
+    foreach ($stmt as $row) {
+      $result[] = $row;
+    }
+    return $result;
+  }
   ////////////////////////////////////////////////////////////
 
   public function createAdmin()
@@ -548,36 +595,25 @@ class tokyo_hotel
     return $data;
   }
 
-  private function confirmServiceQueries($params)
-  {
-    $stmt = $this->pdo->prepare('SELECT IDliv_l FROM living_list WHERE IDc=? LIMIT 1');
-    $stmt->execute([$params[0]]);
-    $result = array();
-    foreach ($stmt as $row) {
-      $result[] = $row;
-    }
-    $IDliv_l = $result[0]['IDliv_l'];
-
-    $sql = 'INSERT INTO service_bills (IDs, IDliv_l, sbCount, sbDate) VALUES ';
-    $insertQuery = array();
-    $insertData = array();
-    foreach ($params[1] as $record) {
-      $insertQuery[] = '(?,?,?,now())';
-      $insertData[] = $record['IDs'];
-      $insertData[] = $IDliv_l;
-      $insertData[] = $record['sbCount'];
-    }
-    if (!empty($insertQuery)) {
-      $sql .= implode(', ', $insertQuery);
-      $stmt = $this->pdo->prepare($sql);
-      $stmt->execute($insertData);
-    }
-  }
-
   public function confirmService($params)
   {
     $method_name = 'confirmServiceQueries';
     $data = $this->callMethod($method_name, array($params['uid'], $params['items']));
     return $data;
+  }
+
+  public function getBill($forWhat, $uid)
+  {
+    if (strcasecmp($forWhat, 'living') == 0) {
+      $method_name = 'getLivingBillFromDB';
+      $data = $this->callMethod($method_name, array($uid));
+      return $data;
+    } else if (strcasecmp($forWhat, 'service') == 0) {
+      $method_name = 'getServiceBillFromDB';
+      $data = $this->callMethod($method_name, array($uid));
+      return $data;
+    } else {
+      return 0;
+    }
   }
 }

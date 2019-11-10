@@ -35,13 +35,57 @@
           <div class="card-header">Предварительный счет</div>
           <div class="card-body">
             <h6 class="card-title">Проживание</h6>
-            <p class="card-text">smthg руб</p>
+            <p class="card-text"><span class="living-cost">0</span><span> руб.</span></p>
             <h6 class="card-title">Услуги</h6>
-            <p class="card-text">smthg руб</p>
+            <p class="card-text"><span class="service-cost">0</span><span> руб.</span></p>
+            <p class="card-text text-right"> <a href="#" class="show_cost_info btn btn-primary btn-sm">Подробнее</a></p>
           </div>
+
+          <div class="modal cost_info">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Предварительный счет</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="row">
+                        <div class="col-6 h5">Проживание</div>
+                        <div class="living-days col-2">0</div>
+                        <div class="living-cost col-2 text-right h5">0</div>
+                        <div class="col-2"> руб.</div>
+                      </div>
+                    </div>
+                    <div class="col-12" style="margin-top:20px;">
+                      <div class="row service-more">
+                        <div class="col-6 h5">Услуги</div>
+                        <div class="col-2"></div>
+                        <div class="service-cost col-2 text-right h5">0</div>
+                        <div class="col-2"> руб.</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <div class="col-12">
+                    <h5>Итого</h5>
+                    <div class=" row">
+                      <div class="total-cost col-9 h1 text-right">0</div>
+                      <div class="col-3 h3">руб.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div class="card-footer text-muted">
             <h5 class="card-title">Итого</h5>
-            <p class="card-text">smthg руб</p>
+            <p class="card-text"><span class="total-cost">0</span><span> руб.</span></p>
           </div>
         </div>
       </div>

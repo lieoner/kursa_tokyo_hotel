@@ -67,7 +67,7 @@ class AjaxRequester
     $fileopen = fopen("kursa_logs.txt", "a+");
     $d = new DateTime();
     $date = strval($d->format('H:i:s m.d.y'));
-    $write = $date . ' Я сделал крон из ajax.php' . "\r\n";
+    $write = $date . ' Я сделал крон (деактивировал устаревшие брони) из ajax.php' . "\r\n";
     fwrite($fileopen, $write);
     fclose($fileopen);
   }
@@ -330,8 +330,6 @@ class AjaxRequester
     return $output;
   }
 
-
-
   static protected function checkCart()
   {
     session_start();
@@ -341,8 +339,9 @@ class AjaxRequester
       $output = 0;
     }
     echo $output;
-    die;
+    die();
   }
+
   static protected function cartAddService()
   {
     session_start();
@@ -381,13 +380,16 @@ class AjaxRequester
     echo $output;
     die();
   }
+
   static protected function clearCart()
   {
     session_start();
     if (isset($_SESSION['cart'])) {
       unset($_SESSION['cart']);
     }
+    die();
   }
+
   static protected function confirmCart()
   {
     session_start();
@@ -405,5 +407,34 @@ class AjaxRequester
         static::clearCart();
       }
     }
+    die();
+  }
+
+  static protected function getTotalCost()
+  {
+    $uid = 0;
+    if (isset($_GET['uid'])) {
+      $uid = $_GET['uid'];
+    } else if (isset($_COOKIE['id'])) {
+      $uid = $_COOKIE['id'];
+    }
+    if ($uid == 0) {
+      echo $uid;
+      die();
+    }
+    $totalLivingBill = static::$con->getBill('living', $uid);
+    $totalServicesBill = static::$con->getBill('service', $uid);
+    $totalServiceBill = array();
+    $totalCost = 0;
+    foreach ($totalServicesBill as $i => $value) {
+      $totalServiceBill['items'][$i]['name'] = $totalServicesBill[$i]['sName'];
+      $totalServiceBill['items'][$i]['count'] = $totalServicesBill[$i]['sbCount'];
+      $totalServiceBill['items'][$i]['cost'] = $totalServicesBill[$i]['sCost'];
+      $totalCost += $totalServicesBill[$i]['sCost'] * $totalServicesBill[$i]['sbCount'];
+    }
+    $totalServiceBill['cost'] = $totalCost;
+    $totalCost += $totalLivingBill['totalCost'];
+    echo json_encode(['living' => ['daysCount' => $totalLivingBill['totalDaysCount'], 'cost' => $totalLivingBill['totalCost']], 'service' => $totalServiceBill, 'total' => ['cost' => $totalCost]]);
+    die();
   }
 }
