@@ -57,7 +57,7 @@ function register() {
                         .find('.bookNumber')
                         .data('bookNumber')
                         .toString()
-                        .match(input_val.replace(' ', ''))
+                        .match(input_val.replace(/ /g, ''))
                 ) {
                     $(element).hide(400);
                 } else {

@@ -241,17 +241,19 @@ function serviceTriggers() {
             $('.living-days').html(totalCost.living.daysCount + ' дн.');
             $('.service-cost').html(totalCost.service.cost);
             $('.total-cost').html(totalCost.total.cost);
-            totalCost.service.items.forEach(element => {
-                $('.service-more').append(
-                    '<div class="col-6 h6" style="padding-left:35px">' + element.name + '</div>'
-                );
-                $('.service-more').append('<div class="col-2">' + element.count + ' шт.</div>');
-                $('.service-more').append(
-                    '<div class="col-2 text-right h5">' +
-                        element.cost * element.count +
-                        '</div><div class="col-2">руб.</div>'
-                );
-            });
+            if (totalCost.service.cost != 0) {
+                totalCost.service.items.forEach(element => {
+                    $('.service-more').append(
+                        '<div class="col-6 h6" style="padding-left:35px">' + element.name + '</div>'
+                    );
+                    $('.service-more').append('<div class="col-2">' + element.count + ' шт.</div>');
+                    $('.service-more').append(
+                        '<div class="col-2 text-right h5">' +
+                            element.cost * element.count +
+                            '</div><div class="col-2">руб.</div>'
+                    );
+                });
+            }
         });
     }
 

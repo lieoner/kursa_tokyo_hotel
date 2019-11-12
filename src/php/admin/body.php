@@ -52,6 +52,10 @@
           <button type="button" class="btn btn-outline-primary btn-lg">Регистрация</button>
         </div>
 
+        <div class="col-12 text-center service">
+          <button type="button" class="btn btn-outline-primary btn-lg">Услуги</button>
+        </div>
+
         <div class="col-12 text-center payment">
           <button type="button" class="btn btn-outline-primary btn-lg">Оплата</button>
         </div>
@@ -78,13 +82,6 @@
         <div class="book-confirmed alert alert-dismissible alert-success">
           <strong>Заселение подтверждено</strong>
         </div>
-        <?
-        $nearest_bookings = $con->findNearestBooking();
-        function convert_sqlDate_to_normalDate($sql_date)
-        {
-          return date('d.m.Y', strtotime($sql_date));
-        }
-        ?>
         <table class="table table-hover book-table">
           <thead>
             <tr>
@@ -123,9 +120,69 @@
 
     <div class="col-12 logs-content">
       <div class="row justify-content-center">
-        asfsafs
+        <table class="table table-hover logs-table">
+          <thead>
+            <tr>
+              <th scope="col" class="operation-label">Операция
+                <div class="dropdown-menu">
+                  <? $operations = $con->getOperationTypes();
+                  ?>
+                  <a class="dropdown-item" href="#" data-operation-id=<?= 'all' ?>>Все</a>
+                  <?
+                  foreach ($operations as $operation) {
+                    ?>
+                    <a class="dropdown-item" href="#" data-operation-id=<?= $operation['IDop'] ?>><?= $operation['opName'] ?></a>
+                  <?
+                  } ?>
+                </div>
+              </th>
+              <th scope="col">Сообщение</th>
+              <th scope="col">Инициатор</th>
+              <th scope="col">Дата</th>
+            </tr>
+          </thead>
+          <tbody>
+
+          </tbody>
+        </table>
       </div>
     </div>
 
+    <div class="col-12 service-content">
+      <div class="service-roomNumber" style="margin-top:20px;">
+        <div class="row justify-content-center">
+          <div id="find-service-table" class="col-8 row">
+            <input type="text" class="form-control col-7 book-number" id="service-table-book_number" name="book-number" placeholder="000 000 000" autofocus>
+            <div class="btn-group sbStatusGroup" role="group">
+              <button id="sbStatusBtnGroup" type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Статус услуги</button>
+              <div class="dropdown-menu" aria-labelledby="sbStatusBtnGroup" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 48px, 0px);">
+                <a class="dropdown-item active" href="#" data-query-status="all">Все</a>
+                <a class="dropdown-item" href="#" data-query-status="0">Заявки</a>
+                <a class="dropdown-item" href="#" data-query-status="1">Предоставленные</a>
+              </div>
+            </div>
+            <button type="button" class="btn btn-secondary btn-sm col-1 service-table-refresh">↻</button>
+          </div>
+        </div>
+      </div>
+      <div class="service-table" style="margin-top:20px;">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">Название услуги</th>
+              <th scope="col">Кол-во</th>
+              <th scope="col">Дата заявки</th>
+              <th scope="col">Дата выполнения</th>
+              <th scope="col">Стоимость</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
   </div>
+
+</div>
 </div>

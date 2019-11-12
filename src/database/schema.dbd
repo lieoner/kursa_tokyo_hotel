@@ -54,7 +54,7 @@
             </CustomProperties>
             <Location>
               <X>292 px</X>
-              <Y>860 px</Y>
+              <Y>1050 px</Y>
             </Location>
             <Size>
               <Width>189 px</Width>
@@ -77,7 +77,7 @@
             </CustomProperties>
             <Location>
               <X>285 px</X>
-              <Y>642 px</Y>
+              <Y>832 px</Y>
             </Location>
             <Size>
               <Width>202 px</Width>
@@ -107,7 +107,7 @@
               <Port>
                 <Location>
                   <X>95.75 px</X>
-                  <Y>1.22500000000014 px</Y>
+                  <Y>1.15000000000009 px</Y>
                 </Location>
                 <Anchors>Left Right</Anchors>
                 <Align>Top</Align>
@@ -119,7 +119,7 @@
               <Port>
                 <Location>
                   <X>102.75 px</X>
-                  <Y>160.375 px</Y>
+                  <Y>160.3 px</Y>
                 </Location>
                 <Anchors>Left Right</Anchors>
                 <Align>Bottom</Align>
@@ -169,7 +169,7 @@
             </CustomProperties>
             <Location>
               <X>556 px</X>
-              <Y>657 px</Y>
+              <Y>847 px</Y>
             </Location>
             <Size>
               <Width>120 px</Width>
@@ -199,7 +199,7 @@
               <Port>
                 <Location>
                   <X>0.274999999999977 px</X>
-                  <Y>65.1250000000001 px</Y>
+                  <Y>65.0500000000001 px</Y>
                 </Location>
                 <Anchors>Top Bottom</Anchors>
                 <Align>Left</Align>
@@ -211,7 +211,7 @@
               <Port>
                 <Location>
                   <X>201.725 px</X>
-                  <Y>80.1250000000001 px</Y>
+                  <Y>80.0500000000001 px</Y>
                 </Location>
                 <Anchors>Top Bottom</Anchors>
                 <Align>Right</Align>
@@ -238,7 +238,7 @@
               <Port xsi:type="LinkPort">
                 <Location>
                   <X>34.5 px</X>
-                  <Y>1.13686837721616E-13 px</Y>
+                  <Y>1.22070313182121E-05 px</Y>
                 </Location>
                 <Anchors>None</Anchors>
                 <Align>Left</Align>
@@ -261,7 +261,7 @@
             </CustomProperties>
             <Location>
               <X>540 px</X>
-              <Y>886 px</Y>
+              <Y>1075 px</Y>
             </Location>
             <Size>
               <Width>153 px</Width>
@@ -291,7 +291,7 @@
               <Port>
                 <Location>
                   <X>189.375 px</X>
-                  <Y>97.5250000000001 px</Y>
+                  <Y>97.45 px</Y>
                 </Location>
                 <Anchors>Top Bottom</Anchors>
                 <Align>Right</Align>
@@ -303,7 +303,7 @@
               <Port>
                 <Location>
                   <X>0.225000000000023 px</X>
-                  <Y>71.5250000000001 px</Y>
+                  <Y>72.45 px</Y>
                 </Location>
                 <Anchors>Top Bottom</Anchors>
                 <Align>Left</Align>
@@ -330,7 +330,7 @@
               <Port xsi:type="LinkPort">
                 <Location>
                   <X>-29.5 px</X>
-                  <Y>-2.44140624090505E-05 px</Y>
+                  <Y>4.88281250454747E-05 px</Y>
                 </Location>
                 <Anchors>None</Anchors>
                 <Align>Right</Align>
@@ -360,7 +360,7 @@
               <Port>
                 <Location>
                   <X>59.125 px</X>
-                  <Y>126.65 px</Y>
+                  <Y>126.575 px</Y>
                 </Location>
                 <Anchors>Left Right</Anchors>
                 <Align>Bottom</Align>
@@ -372,7 +372,7 @@
               <Port>
                 <Location>
                   <X>75.125 px</X>
-                  <Y>-0.699999999999932 px</Y>
+                  <Y>0.225000000000136 px</Y>
                 </Location>
                 <Anchors>Left Right</Anchors>
                 <Align>Top</Align>
@@ -399,7 +399,7 @@
               <Port xsi:type="LinkPort">
                 <Location>
                   <X>0 px</X>
-                  <Y>-51 px</Y>
+                  <Y>-50.5 px</Y>
                 </Location>
                 <Anchors>None</Anchors>
                 <Align>Bottom</Align>
@@ -422,7 +422,7 @@
             </CustomProperties>
             <Location>
               <X>752 px</X>
-              <Y>877 px</Y>
+              <Y>1067 px</Y>
             </Location>
             <Size>
               <Width>205 px</Width>
@@ -452,7 +452,7 @@
               <Port>
                 <Location>
                   <X>152.7 px</X>
-                  <Y>71.5250000000001 px</Y>
+                  <Y>72.45 px</Y>
                 </Location>
                 <Anchors>Top Bottom</Anchors>
                 <Align>Right</Align>
@@ -464,7 +464,7 @@
               <Port>
                 <Location>
                   <X>-0.450000000000045 px</X>
-                  <Y>80.5250000000001 px</Y>
+                  <Y>80.45 px</Y>
                 </Location>
                 <Anchors>Top Bottom</Anchors>
                 <Align>Left</Align>
@@ -491,7 +491,7 @@
               <Port xsi:type="LinkPort">
                 <Location>
                   <X>-29.5 px</X>
-                  <Y>-2.44140624090505E-05 px</Y>
+                  <Y>4.88281250454747E-05 px</Y>
                 </Location>
                 <Anchors>None</Anchors>
                 <Align>Right</Align>
@@ -514,7 +514,7 @@
             </CustomProperties>
             <Location>
               <X>40 px</X>
-              <Y>632 px</Y>
+              <Y>822 px</Y>
             </Location>
             <Size>
               <Width>188 px</Width>
@@ -544,7 +544,7 @@
               <Port>
                 <Location>
                   <X>187.25 px</X>
-                  <Y>90.1250000000001 px</Y>
+                  <Y>90.0500000000001 px</Y>
                 </Location>
                 <Anchors>Top Bottom</Anchors>
                 <Align>Right</Align>
@@ -556,7 +556,7 @@
               <Port>
                 <Location>
                   <X>1.10000000000002 px</X>
-                  <Y>80.1250000000001 px</Y>
+                  <Y>80.0500000000001 px</Y>
                 </Location>
                 <Anchors>Top Bottom</Anchors>
                 <Align>Left</Align>
@@ -583,7 +583,7 @@
               <Port xsi:type="LinkPort">
                 <Location>
                   <X>-28.5 px</X>
-                  <Y>1.13686837721616E-13 px</Y>
+                  <Y>1.22070313182121E-05 px</Y>
                 </Location>
                 <Anchors>None</Anchors>
                 <Align>Right</Align>
@@ -606,11 +606,11 @@
             </CustomProperties>
             <Location>
               <X>1027 px</X>
-              <Y>40 px</Y>
+              <Y>206 px</Y>
             </Location>
             <Size>
               <Width>175 px</Width>
-              <Height>144 px</Height>
+              <Height>161 px</Height>
             </Size>
             <DbOid>
               <Path>tokyo_hotel.logs</Path>
@@ -629,7 +629,7 @@
             </CustomProperties>
             <Location>
               <X>1014 px</X>
-              <Y>244 px</Y>
+              <Y>425 px</Y>
             </Location>
             <Size>
               <Width>201 px</Width>
@@ -659,7 +659,7 @@
               <Port>
                 <Location>
                   <X>85.6750000000002 px</X>
-                  <Y>144.45 px</Y>
+                  <Y>160.35 px</Y>
                 </Location>
                 <Anchors>Left Right</Anchors>
                 <Align>Bottom</Align>
@@ -671,7 +671,7 @@
               <Port>
                 <Location>
                   <X>98.6750000000002 px</X>
-                  <Y>-0.699999999999932 px</Y>
+                  <Y>0.200000000000045 px</Y>
                 </Location>
                 <Anchors>Left Right</Anchors>
                 <Align>Top</Align>
@@ -698,7 +698,7 @@
               <Port xsi:type="LinkPort">
                 <Location>
                   <X>-4.88281248181011E-05 px</X>
-                  <Y>-30 px</Y>
+                  <Y>-29 px</Y>
                 </Location>
                 <Anchors>None</Anchors>
                 <Align>Bottom</Align>
@@ -721,7 +721,7 @@
             </CustomProperties>
             <Location>
               <X>757 px</X>
-              <Y>235 px</Y>
+              <Y>417 px</Y>
             </Location>
             <Size>
               <Width>197 px</Width>
@@ -751,7 +751,7 @@
               <Port>
                 <Location>
                   <X>197.85 px</X>
-                  <Y>80.5250000000001 px</Y>
+                  <Y>80.4250000000001 px</Y>
                 </Location>
                 <Anchors>Top Bottom</Anchors>
                 <Align>Right</Align>
@@ -763,7 +763,7 @@
               <Port>
                 <Location>
                   <X>-0.299999999999955 px</X>
-                  <Y>71.5250000000001 px</Y>
+                  <Y>72.4250000000001 px</Y>
                 </Location>
                 <Anchors>Top Bottom</Anchors>
                 <Align>Left</Align>
@@ -790,7 +790,7 @@
               <Port xsi:type="LinkPort">
                 <Location>
                   <X>-30 px</X>
-                  <Y>6.10351571594947E-06 px</Y>
+                  <Y>1.22070312045253E-05 px</Y>
                 </Location>
                 <Anchors>None</Anchors>
                 <Align>Right</Align>
@@ -831,11 +831,11 @@
             </CustomProperties>
             <Location>
               <X>1030 px</X>
-              <Y>632 px</Y>
+              <Y>813 px</Y>
             </Location>
             <Size>
               <Width>165 px</Width>
-              <Height>178 px</Height>
+              <Height>195 px</Height>
             </Size>
             <DbOid>
               <Path>tokyo_hotel.service_bills</Path>
@@ -861,7 +861,7 @@
               <Port>
                 <Location>
                   <X>-0.25 px</X>
-                  <Y>90.1250000000001 px</Y>
+                  <Y>99.0500000000001 px</Y>
                 </Location>
                 <Anchors>Top Bottom</Anchors>
                 <Align>Left</Align>
@@ -873,7 +873,7 @@
               <Port>
                 <Location>
                   <X>120.65 px</X>
-                  <Y>65.1250000000001 px</Y>
+                  <Y>65.0500000000001 px</Y>
                 </Location>
                 <Anchors>Top Bottom</Anchors>
                 <Align>Right</Align>
@@ -900,7 +900,7 @@
               <Port xsi:type="LinkPort">
                 <Location>
                   <X>177 px</X>
-                  <Y>1.13686837721616E-13 px</Y>
+                  <Y>1.22070313182121E-05 px</Y>
                 </Location>
                 <Anchors>None</Anchors>
                 <Align>Left</Align>
@@ -923,7 +923,7 @@
             </CustomProperties>
             <Location>
               <X>1033 px</X>
-              <Y>1089 px</Y>
+              <Y>1287 px</Y>
             </Location>
             <Size>
               <Width>163 px</Width>
@@ -946,7 +946,7 @@
             </CustomProperties>
             <Location>
               <X>1016 px</X>
-              <Y>869 px</Y>
+              <Y>1067 px</Y>
             </Location>
             <Size>
               <Width>196 px</Width>
@@ -976,7 +976,7 @@
               <Port>
                 <Location>
                   <X>96.6750000000002 px</X>
-                  <Y>160.75 px</Y>
+                  <Y>160.7 px</Y>
                 </Location>
                 <Anchors>Left Right</Anchors>
                 <Align>Bottom</Align>
@@ -988,7 +988,7 @@
               <Port>
                 <Location>
                   <X>79.6750000000002 px</X>
-                  <Y>-0.399999999999864 px</Y>
+                  <Y>-0.450000000000045 px</Y>
                 </Location>
                 <Anchors>Left Right</Anchors>
                 <Align>Top</Align>
@@ -1045,7 +1045,7 @@
               <Port>
                 <Location>
                   <X>82.6750000000002 px</X>
-                  <Y>178.4 px</Y>
+                  <Y>195.35 px</Y>
                 </Location>
                 <Anchors>Left Right</Anchors>
                 <Align>Bottom</Align>
@@ -1057,7 +1057,7 @@
               <Port>
                 <Location>
                   <X>96.6750000000002 px</X>
-                  <Y>0.250000000000114 px</Y>
+                  <Y>0.200000000000045 px</Y>
                 </Location>
                 <Anchors>Left Right</Anchors>
                 <Align>Top</Align>
@@ -1107,7 +1107,7 @@
             </CustomProperties>
             <Location>
               <X>1035 px</X>
-              <Y>446 px</Y>
+              <Y>628 px</Y>
             </Location>
             <Size>
               <Width>159 px</Width>
@@ -1137,7 +1137,7 @@
               <Port>
                 <Location>
                   <X>77.6750000000002 px</X>
-                  <Y>126.325 px</Y>
+                  <Y>126.225 px</Y>
                 </Location>
                 <Anchors>Left Right</Anchors>
                 <Align>Bottom</Align>
@@ -1149,7 +1149,7 @@
               <Port>
                 <Location>
                   <X>82.6750000000002 px</X>
-                  <Y>-0.824999999999932 px</Y>
+                  <Y>0.0750000000000455 px</Y>
                 </Location>
                 <Anchors>Left Right</Anchors>
                 <Align>Top</Align>
@@ -1176,7 +1176,7 @@
               <Port xsi:type="LinkPort">
                 <Location>
                   <X>-4.88281248181011E-05 px</X>
-                  <Y>-29.5 px</Y>
+                  <Y>-29 px</Y>
                 </Location>
                 <Anchors>None</Anchors>
                 <Align>Bottom</Align>
@@ -1206,7 +1206,7 @@
               <Port>
                 <Location>
                   <X>77.6750000000002 px</X>
-                  <Y>0.60000000000008 px</Y>
+                  <Y>0.5 px</Y>
                 </Location>
                 <Anchors>Left Right</Anchors>
                 <Align>Top</Align>
@@ -1218,7 +1218,7 @@
               <Port>
                 <Location>
                   <X>98.6750000000002 px</X>
-                  <Y>143.75 px</Y>
+                  <Y>144.65 px</Y>
                 </Location>
                 <Anchors>Left Right</Anchors>
                 <Align>Bottom</Align>
@@ -1245,7 +1245,7 @@
               <Port xsi:type="LinkPort">
                 <Location>
                   <X>-4.88281248181011E-05 px</X>
-                  <Y>29 px</Y>
+                  <Y>29.5 px</Y>
                 </Location>
                 <Anchors>None</Anchors>
                 <Align>Top</Align>
@@ -1268,7 +1268,7 @@
             </CustomProperties>
             <Location>
               <X>1485 px</X>
-              <Y>298 px</Y>
+              <Y>332 px</Y>
             </Location>
             <Size>
               <Width>166 px</Width>
@@ -1286,7 +1286,7 @@
             </CustomProperties>
             <Location>
               <X>1265 px</X>
-              <Y>298 px</Y>
+              <Y>332 px</Y>
             </Location>
             <Size>
               <Width>171 px</Width>
@@ -1308,20 +1308,130 @@
             </Location>
             <Size>
               <Width>257 px</Width>
-              <Height>225 px</Height>
+              <Height>259 px</Height>
             </Size>
             <DbOid>
               <Path>tokyo_hotel.human_view_service_queries</Path>
               <TypeName>View</TypeName>
             </DbOid>
           </Model>
+          <Model xsi:type="TableModel">
+            <CustomProperties>
+              <OID>83</OID>
+              <Parent>0</Parent>
+            </CustomProperties>
+            <Location>
+              <X>1032 px</X>
+              <Y>40 px</Y>
+            </Location>
+            <Size>
+              <Width>161 px</Width>
+              <Height>107 px</Height>
+            </Size>
+            <DbOid>
+              <Path>tokyo_hotel.operations</Path>
+              <TypeName>Table</TypeName>
+            </DbOid>
+            <Compartments>
+              <ConstraintsCollapsed>True</ConstraintsCollapsed>
+              <IndexesCollapsed>True</IndexesCollapsed>
+              <TriggersCollapsed>True</TriggersCollapsed>
+            </Compartments>
+          </Model>
+          <Model xsi:type="RelationLinkModel">
+            <CustomProperties>
+              <OID>84</OID>
+              <Comment>85</Comment>
+              <OutModel>37</OutModel>
+              <InModel>83</InModel>
+              <OutPort>86</OutPort>
+              <InPort>87</InPort>
+              <Parent>0</Parent>
+            </CustomProperties>
+            <PortAnchors>
+              <Port>
+                <Location>
+                  <X>85.6750000000002 px</X>
+                  <Y>-0.149999999999977 px</Y>
+                </Location>
+                <Anchors>Left Right</Anchors>
+                <Align>Top</Align>
+                <CustomProperties>
+                  <OID>86</OID>
+                  <PortType>FloatAnchor</PortType>
+                </CustomProperties>
+              </Port>
+              <Port>
+                <Location>
+                  <X>80.6750000000002 px</X>
+                  <Y>107 px</Y>
+                </Location>
+                <Anchors>Left Right</Anchors>
+                <Align>Bottom</Align>
+                <CustomProperties>
+                  <OID>87</OID>
+                  <PortType>FloatAnchor</PortType>
+                </CustomProperties>
+              </Port>
+            </PortAnchors>
+            <IsManuallyRouted>false</IsManuallyRouted>
+            <DbOid>
+              <Path>tokyo_hotel.logs.FK_logs_IDop</Path>
+              <TypeName>ForeignKey</TypeName>
+            </DbOid>
+          </Model>
+          <Model xsi:type="RelationCommentModel">
+            <CustomProperties>
+              <OID>85</OID>
+              <HolderModel>84</HolderModel>
+              <Port>88</Port>
+              <Parent>0</Parent>
+            </CustomProperties>
+            <PortAnchors>
+              <Port xsi:type="LinkPort">
+                <Location>
+                  <X>-4.88281248181011E-05 px</X>
+                  <Y>29.5 px</Y>
+                </Location>
+                <Anchors>None</Anchors>
+                <Align>Top</Align>
+                <CustomProperties>
+                  <OID>88</OID>
+                  <PortType>FixedAnchor</PortType>
+                </CustomProperties>
+                <LinkPortAnchor>OutPoint</LinkPortAnchor>
+              </Port>
+            </PortAnchors>
+            <CommentOffset>
+              <X>22 px</X>
+              <Y>2 px</Y>
+            </CommentOffset>
+          </Model>
+          <Model xsi:type="ViewModel">
+            <CustomProperties>
+              <OID>89</OID>
+              <Parent>0</Parent>
+            </CustomProperties>
+            <Location>
+              <X>1815 px</X>
+              <Y>40 px</Y>
+            </Location>
+            <Size>
+              <Width>179 px</Width>
+              <Height>157 px</Height>
+            </Size>
+            <DbOid>
+              <Path>tokyo_hotel.human_view_logs</Path>
+              <TypeName>View</TypeName>
+            </DbOid>
+          </Model>
         </Children>
         <ViewPort>
           <ScaleMode>Free</ScaleMode>
-          <Scale>0.506873369</Scale>
+          <Scale>1</Scale>
           <Location>
-            <X>-619.484113921996 px</X>
-            <Y>-47.349102548979 px</Y>
+            <X>302 px</X>
+            <Y>353 px</Y>
           </Location>
         </ViewPort>
       </Model>

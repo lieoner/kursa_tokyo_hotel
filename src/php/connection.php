@@ -260,7 +260,7 @@ class tokyo_hotel
       $stmt = $this->pdo->prepare($sql);
       $stmt->execute(['0']);
 
-      static::appendLog('Сброшен бронь и аккаунт с ID = ' . $row['IDc'] . ' по истечению срока брони', 1);
+      static::appendLog('Сброшен бронь и аккаунт с ID = ' . $row['IDc'] . ' по истечению срока брони', 1, 2);
     }
     return $result;
   }
@@ -405,7 +405,7 @@ class tokyo_hotel
     return $data;
   }
 
-  public function appendLog($caption, $initiator)
+  public function appendLog($caption, $initiator, $operation_id = 5)
   {
     $method_name = 'appendLogIntoDB';
     $this->callMethod($method_name, array($caption, $initiator));
@@ -515,7 +515,7 @@ class tokyo_hotel
     }
     $IDliv_l = $result[0]['IDliv_l'];
 
-    $sql = 'INSERT INTO service_bills (IDs, IDliv_l, sbCount, sbDate) VALUES ';
+    $sql = 'INSERT INTO service_bills (IDs, IDliv_l, sbCount, sbCreateDate) VALUES ';
     $insertQuery = array();
     $insertData = array();
     foreach ($params[1] as $record) {
@@ -544,7 +544,42 @@ class tokyo_hotel
 
   private function getServiceBillFromDB($params)
   {
-    $stmt = $this->pdo->prepare('SELECT * FROM human_view_service_queries WHERE IDc=? and sbStatus = 1');
+    if ($params[0] == 'all' && $params[1] == 'all') {
+      $stmt = $this->pdo->prepare('SELECT * FROM human_view_service_queries');
+      $stmt->execute();
+    } else if ($params[0] != 'all' && $params[1] != 'all') {
+      $stmt = $this->pdo->prepare('SELECT * FROM human_view_service_queries WHERE IDc=? and sbStatus = ?');
+      $stmt->execute([$params[0], $params[1]]);
+    } else if ($params[0] == 'all' && $params[1] != 'all') {
+      $stmt = $this->pdo->prepare('SELECT * FROM human_view_service_queries WHERE sbStatus = ?');
+      $stmt->execute([$params[1]]);
+    } else if ($params[0] != 'all' && $params[1] == 'all') {
+      $stmt = $this->pdo->prepare('SELECT * FROM human_view_service_queries WHERE IDc=?');
+      $stmt->execute([$params[0]]);
+    } else {
+      return 0;
+    }
+
+    $result = array();
+    foreach ($stmt as $row) {
+      $result[] = $row;
+    }
+    return $result;
+  }
+
+  private function getAllLogsFromDB($params)
+  {
+    $stmt = $this->pdo->prepare('SELECT * FROM human_view_logs');
+    $stmt->execute();
+    $result = array();
+    foreach ($stmt as $row) {
+      $result[] = $row;
+    }
+    return $result;
+  }
+  private function getFiltredLogsFromDB($params)
+  {
+    $stmt = $this->pdo->prepare('SELECT * FROM human_view_logs WHERE IDop=?');
     $stmt->execute([$params[0]]);
     $result = array();
     foreach ($stmt as $row) {
@@ -552,6 +587,19 @@ class tokyo_hotel
     }
     return $result;
   }
+
+  private function getOperationTypesFromDB($params)
+  {
+    $stmt = $this->pdo->prepare('SELECT * FROM operations');
+    $stmt->execute([]);
+    $result = array();
+    foreach ($stmt as $row) {
+      $result[] = $row;
+    }
+    return $result;
+  }
+
+
   ////////////////////////////////////////////////////////////
 
   public function createAdmin()
@@ -602,7 +650,7 @@ class tokyo_hotel
     return $data;
   }
 
-  public function getBill($forWhat, $uid)
+  public function getBill($forWhat, $uid = 'all', $sbStatus = 1)
   {
     if (strcasecmp($forWhat, 'living') == 0) {
       $method_name = 'getLivingBillFromDB';
@@ -610,10 +658,29 @@ class tokyo_hotel
       return $data;
     } else if (strcasecmp($forWhat, 'service') == 0) {
       $method_name = 'getServiceBillFromDB';
-      $data = $this->callMethod($method_name, array($uid));
+      $data = $this->callMethod($method_name, array($uid, $sbStatus));
       return $data;
     } else {
       return 0;
     }
+  }
+
+  public function getLogs($tab = 'all')
+  {
+    if (strcasecmp($tab, 'all') == 0) {
+      $method_name = 'getAllLogsFromDB';
+      $data = $this->callMethod($method_name, array());
+      return $data;
+    } else {
+      $method_name = 'getFiltredLogsFromDB';
+      $data = $this->callMethod($method_name, array($tab));
+      return $data;
+    }
+  }
+  public function getOperationTypes()
+  {
+    $method_name = 'getOperationTypesFromDB';
+    $data = $this->callMethod($method_name, array());
+    return $data;
   }
 }

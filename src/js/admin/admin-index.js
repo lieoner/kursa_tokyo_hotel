@@ -8,6 +8,7 @@ import 'bootstrap-datepicker/js/locales/bootstrap-datepicker.ru';
 
 var register_script = require('./admin-register.js');
 var logs_script = require('./admin-logs.js');
+var service_script = require('./admin-service.js');
 import '../../css/theme.css';
 import '../../css/style.css';
 import '../../css/admin.css';
@@ -42,11 +43,11 @@ import '../../css/admin.css';
         check_login();
         //$('body').on('contextmenu', false);
 
-        if ($('.book-number')[0]) {
-            IMask($('.book-number')[0], {
+        $('.book-number').each(function(index, element) {
+            IMask($(element)[0], {
                 mask: '000 000 000',
             });
-        }
+        });
 
         const book_number_find_form = $('#find-book-form').find('form');
         book_number_find_form.submit(function(e) {
@@ -105,6 +106,7 @@ import '../../css/admin.css';
             $('#admin-main .payment-content').hide(500);
             $('#admin-main .statistic-content').hide(500);
             $('#admin-main .logs-content').hide(500);
+            $('#admin-main .service-content').hide(500);
             $('#admin-main .admin-buttons').show(500);
         });
         $('div.register button').click(function(e) {
@@ -133,6 +135,13 @@ import '../../css/admin.css';
             $('#admin-main .admin-buttons').hide(500);
             //LOGS
             $('#admin-main .logs-content').show(500);
+            $('#back_btn').show(500);
+        });
+        $('div.service button').click(function(e) {
+            e.preventDefault();
+            $('#admin-main .admin-buttons').hide(500);
+            //service
+            $('#admin-main .service-content').show(500);
             $('#back_btn').show(500);
         });
     }
@@ -200,6 +209,7 @@ import '../../css/admin.css';
         mainTriggers();
         register_script.main();
         logs_script.main();
+        service_script.main();
         $('#admin-main .admin-buttons').show(500);
         //$('#admin-main .register-content').show(600);
     }

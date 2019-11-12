@@ -3,7 +3,7 @@ body {
 }
 
 .active {
-  display: block;
+  display: block!important;
 }
 
 #back_btn {
@@ -48,7 +48,7 @@ div.register-content {
   display: none;
 }
 
-div.register-content .book-table-refresh {
+div.register-content .book-table-refresh, .service-table-refresh, .sbStatusGroup {
   margin-left: 10px;
   font-size: large;
 }
@@ -64,4 +64,16 @@ div.register-content div.book-confirmed {
 
 div.logs-content {
   display: none;
+}
+
+div.service-content {
+  display: none;
+}
+
+thead th {
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  top: unset;
 }
