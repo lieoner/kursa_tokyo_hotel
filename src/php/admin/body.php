@@ -152,8 +152,8 @@
       <div class="service-roomNumber" style="margin-top:20px;">
         <div class="row justify-content-center">
           <div id="find-service-table" class="col-8 row">
-            <input type="text" class="form-control col-7 book-number" id="service-table-book_number" name="book-number" placeholder="000 000 000" autofocus>
-            <div class="btn-group sbStatusGroup" role="group">
+            <input type="text" class="form-control col-6 book-number" id="service-table-book_number" name="book-number" placeholder="000 000 000" autofocus>
+            <div class="btn-group sbStatusGroup col-2" role="group">
               <button id="sbStatusBtnGroup" type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Статус услуги</button>
               <div class="dropdown-menu" aria-labelledby="sbStatusBtnGroup" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 48px, 0px);">
                 <a class="dropdown-item active" href="#" data-query-status="all">Все</a>
@@ -162,17 +162,36 @@
               </div>
             </div>
             <button type="button" class="btn btn-secondary btn-sm col-1 service-table-refresh">↻</button>
+            <button type="button" class="btn btn-primary btn-sm col-2 service-table-confirmSolve">Подтвердить выполнение</button>
           </div>
         </div>
       </div>
+
+      <div class="modal">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Подтвердить предоставление услуг</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary">Да</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="service-table" style="margin-top:20px;">
         <table class="table table-hover">
           <thead>
             <tr>
-              <th scope="col">Название услуги</th>
-              <th scope="col">Кол-во</th>
-              <th scope="col">Дата заявки</th>
-              <th scope="col">Дата выполнения</th>
+              <th scope="col">№ брони</th>
+              <th scope="col">№ комнаты</th>
+              <th scope="col">Активных заявок</th>
+              <th scope="col">Заявок всего</th>
               <th scope="col">Стоимость</th>
             </tr>
           </thead>

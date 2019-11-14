@@ -53,6 +53,10 @@ div.register-content .book-table-refresh, .service-table-refresh, .sbStatusGroup
   font-size: large;
 }
 
+.service-table-confirmSolve {
+  display: none;
+}
+
 #find-book-table {
   margin-bottom: 40px;
 }
@@ -76,4 +80,8 @@ thead th {
 
 .dropdown-menu {
   top: unset;
+}
+
+.service-data {
+  display: none;
 }

@@ -599,6 +599,27 @@ class tokyo_hotel
     return $result;
   }
 
+  private function insertServiceSolveAndUpdateSolveTime($params)
+  {
+    $sql = 'INSERT INTO service_queries (IDsb, IDip) VALUES ';
+    $insertQuery = array();
+    $insertData = array();
+    foreach ($params[1] as $record) {
+      $insertQuery[] = '(?,?)';
+      $insertData[] = $record;
+      $insertData[] = $params[0];
+    }
+    if (!empty($insertQuery)) {
+      $sql .= implode(', ', $insertQuery);
+      $stmt = $this->pdo->prepare($sql);
+      $stmt->execute($insertData);
+    }
+    foreach ($params[1] as $record) {
+      $sql = 'UPDATE service_bills SET sbResolveDate=now(), sbStatus=1 WHERE IDsb=?';
+      $stmt = $this->pdo->prepare($sql);
+      $stmt->execute([$record]);
+    }
+  }
 
   ////////////////////////////////////////////////////////////
 
@@ -682,5 +703,11 @@ class tokyo_hotel
     $method_name = 'getOperationTypesFromDB';
     $data = $this->callMethod($method_name, array());
     return $data;
+  }
+
+  public function confirmServiceSolve($aid, $sbid_array)
+  {
+    $method_name = 'insertServiceSolveAndUpdateSolveTime';
+    $this->callMethod($method_name, array($aid, $sbid_array));
   }
 }

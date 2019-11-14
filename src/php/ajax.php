@@ -461,38 +461,35 @@ class AjaxRequester
         <td class="ipName" data-initiator-id=<?= $log['IDip'] ?>><?= $log['ipName'] ?></td>
         <td class="a_date" data-log-date=<?= explode(' ', $log['a_date'])[0] ?>><?= static::convert_sqlDate_to_normalDate($log['a_date'], 'long') ?></td>
       </tr>
-    <? }
-        die();
-      }
-      static protected function getServiceByBookNumberAndStatus()
-      {
-        session_start();
-        if (!isset($_SESSION['admins'])) {
-          echo 0;
-          die();
-        }
-        if ($_POST['book_number'] == 'all') {
-          $uid = 'all';
-        } else {
-          $uid = static::$con->getUserData($_POST['book_number'])['IDc'];
-        }
-        $serviceQueries = static::$con->getBill('service', $uid, $_POST['status']);
-        foreach ($serviceQueries as $query) {
-          if ($query['sbStatus'] == 0) {
-            $solvStatus = 'unsolved table-info';
-          } else {
-            $solvStatus = 'solved table-success';
-          }
-          ?>
-      <tr class="<?= $solvStatus ?>" data-query-id=<?= $query['IDsb'] ?>>
-        <td class="sName" data-service-id=<?= $query['IDs'] ?>><?= $query['sName'] ?></td>
-        <td class="sbCount"><?= $query['sbCount'] ?></td>
-        <td class="sbCreateDate" data-queryCreate-date=<?= explode(' ', $query['sbCreateDate'])[0] ?>><?= static::convert_sqlDate_to_normalDate($query['sbCreateDate'], 'long') ?></td>
-        <td class="sbResolveDate" data-queryResolve-date=<?= explode(' ', $query['sbResolveDate'])[0] ?>><?= static::convert_sqlDate_to_normalDate($query['sbResolveDate'], 'long') ?></td>
-        <td class="totalCost"><?= $query['totalCost'] ?></td>
-      </tr>
-<?
+<? }
+    die();
+  }
+  static protected function getServiceByBookNumberAndStatus()
+  {
+    session_start();
+    if (!isset($_SESSION['admins'])) {
+      echo 0;
+      die();
     }
+    if ($_POST['book_number'] == 'all') {
+      $uid = 'all';
+    } else {
+      $uid = static::$con->getUserData($_POST['book_number'])['IDc'];
+    }
+    $serviceQueries = static::$con->getBill('service', $uid, $_POST['status']);
+
+    echo json_encode($serviceQueries);
+    die();
+  }
+
+  static protected function confirmServiceSolve()
+  {
+    session_start();
+    if (!isset($_SESSION['admins'])) {
+      echo 0;
+      die();
+    }
+    static::$con->confirmServiceSolve($_SESSION['admins']['aid'], json_decode($_POST['sbid_array']));
     die();
   }
 }
