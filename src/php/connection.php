@@ -267,8 +267,8 @@ class tokyo_hotel
 
   private function appendLogIntoDB($params)
   {
-    $stmt = $this->pdo->prepare('INSERT INTO logs (a_date,  a_caption, IDip) VALUES (now(), ?, ?)');
-    $stmt->execute([$params[0], $params[1]]);
+    $stmt = $this->pdo->prepare('INSERT INTO logs (a_date,  a_caption, IDip, IDop) VALUES (now(), ?, ?, ?)');
+    $stmt->execute([$params[0], $params[1], $params[2]]);
   }
 
   private function getServiceByIDst($params)
@@ -408,7 +408,7 @@ class tokyo_hotel
   public function appendLog($caption, $initiator, $operation_id = 5)
   {
     $method_name = 'appendLogIntoDB';
-    $this->callMethod($method_name, array($caption, $initiator));
+    $this->callMethod($method_name, array($caption, $initiator, $operation_id));
   }
   ///////////////////////////////////ADMINKA//////////////////////////////////////
 

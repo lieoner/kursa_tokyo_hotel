@@ -490,6 +490,10 @@ class AjaxRequester
       die();
     }
     static::$con->confirmServiceSolve($_SESSION['admins']['aid'], json_decode($_POST['sbid_array']));
+    $sbids = json_decode($_POST['sbid_array']);
+    foreach ($sbids as $sbid) {
+      static::$con->appendLog('Предоставлена услуга ID = ' . $sbid, $_SESSION['admins']['aid'], 4);
+    }
     die();
   }
 }
