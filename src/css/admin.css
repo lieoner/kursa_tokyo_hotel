@@ -48,7 +48,7 @@ div.register-content {
   display: none;
 }
 
-div.register-content .book-table-refresh, .service-table-refresh, .sbStatusGroup {
+div.register-content .book-table-refresh, .payment-table-refresh, .service-table-refresh, .sbStatusGroup {
   margin-left: 10px;
   font-size: large;
 }
@@ -57,7 +57,7 @@ div.register-content .book-table-refresh, .service-table-refresh, .sbStatusGroup
   display: none;
 }
 
-#find-book-table {
+#find-book-table, #find-payment-table {
   margin-bottom: 40px;
 }
 
@@ -74,6 +74,14 @@ div.service-content {
   display: none;
 }
 
+div.payment-content {
+  display: none;
+}
+
+div.statistic-content {
+  display: none;
+}
+
 thead th {
   cursor: pointer;
 }
@@ -84,4 +92,25 @@ thead th {
 
 .service-data {
   display: none;
+}
+
+.statistic-content .graphtype .btn {
+  margin-top: 20px;
+}
+
+.statistic-content .jumbotron {
+  display: none;
+  z-index: 999;
+  position: absolute;
+  width: 100%;
+  top: -50px;
+  height: 700px;
+}
+
+.statistic-content .graph {
+  margin-top: 20px;
+}
+
+.statistic-content .graph #chart {
+  margin: auto;
 }
