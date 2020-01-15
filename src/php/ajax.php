@@ -77,7 +77,7 @@ class AjaxRequester
     $log = static::$con->removeOldBook();
     $fileopen = fopen("kursa_logs.txt", "a+");
     $d = new DateTime();
-    $date = strval($d->format('H:i:s m.d.y'));
+    $date = strval($d->format('H:i:s d.m.y'));
     $write = $date . ' Я сделал крон (деактивировал устаревшие брони) из ajax.php' . "\r\n";
     fwrite($fileopen, $write);
     fclose($fileopen);
@@ -268,10 +268,10 @@ class AjaxRequester
 
   static protected function getNearestBookingTable()
   {
-    $nearest_logs = static::$con->findNearestBooking();
-    foreach ($nearest_logs as $key => $log) {
-      ?>
-      <tr data-client-id=<?= $log['IDc'] ?> data-room-id=<?= $log['IDr'] ?>>
+    $nearest_books = static::$con->findNearestBooking();
+    foreach ($nearest_books as $key => $log) {
+?>
+      <tr class="<? if (explode(' ', $log['comingDate'])[0] <= date("Y-m-d")) { ?>table-info<? } ?>" data-client-id=<?= $log['IDc'] ?> data-room-id=<?= $log['IDr'] ?>>
         <td class="bookNumber" data-book-number=<?= $log['bookNumber'] ?>><?= $log['bookNumber'] ?></td>
         <td class="comingDate" data-coming-date=<?= explode(' ', $log['comingDate'])[0] ?>><?= static::convert_sqlDate_to_normalDate($log['comingDate']) ?></td>
         <td class="outDate" data-out-date=<?= explode(' ', $log['outDate'])[0] ?>><?= static::convert_sqlDate_to_normalDate($log['outDate']) ?></td>
@@ -280,48 +280,83 @@ class AjaxRequester
         <td class="totalCost" data-total-сost=<?= $log['totalCost'] ?>><?= $log['totalCost'] ?></td>
       </tr>
     <?
-        }
-        die();
-      }
+    }
+    die();
+  }
 
-      static protected function confirmBook()
-      {
-        session_start();
-        if (isset($_SESSION['admins'])) {
-          $admin_id_hash =  $_SESSION['admins'];
-          $result = static::$con->confirmBook($_POST['client_id'], $_POST['room_id']);
-          if ($result) {
-            static::appendLog('Подтверждено заселение клиента ID = ' . $_POST['client_id'] . ' в комнату ID = ' . $_POST['room_id'], $admin_id_hash['aid'], 1);
-          }
-        } else {
-          $result = 0;
-        }
-        echo $result;
-        die();
-      }
+  static protected function getTotalCostTable()
+  {
+    $totalCostRows = static::$con->getAllUsersTotalCost();
+    foreach ($totalCostRows as $key => $log) {
+    ?>
+      <tr data-client-id=<?= $log['IDc'] ?> data-livl-id=<?= $log['IDliv_l'] ?>>
+        <td class="bookNumber" data-book-number=<?= $log['bookNumber'] ?>><?= $log['bookNumber'] ?></td>
+        <td class="roomNumber" data-room-number=<?= $log['roomNumber'] ?>><?= $log['roomNumber'] ?></td>
+        <td class="totalDaysCount" data-total-days-count=<?= $log['totalDaysCount'] ?>><?= $log['totalDaysCount'] ?></td>
+        <td class="serviceCost" data-service-сost=<?= $log['serviceCost'] ?>><?= $log['serviceCost'] ?></td>
+        <td class="livingCost" data-living-сost=<?= $log['totalCost'] ?>><?= $log['totalCost'] ?></td>
+        <td class="totalCost" data-total-сost=<?= $log['totalCost'] + $log['serviceCost'] ?>><?= $log['totalCost'] + $log['serviceCost']  ?></td>
+      </tr>
+    <?
+    }
+    die();
+  }
 
-      static protected function appendLog($caption, $initiator)
-      {
-        static::$con->appendLog($caption, $initiator);
-      }
+  static protected function confirmPayment()
+  {
+    session_start();
+    if (isset($_SESSION['admins'])) {
+      $admin_id = $_SESSION['admins']['aid'];
+      $totalCostRows = static::$con->getAllUsersTotalCost();
+      $key = array_search($_POST['id'], array_column($totalCostRows, 'IDc'));
+      $userTotalCost = $totalCostRows[$key];
+      $result = static::$con->confirmPayment($userTotalCost, $admin_id);
+    } else {
+      $result = 0;
+    }
+    echo $result;
+    die();
+  }
 
-      static protected function alogout()
-      {
-        session_start();
-        if (isset($_SESSION['admins'])) {
-          unset($_SESSION['admins']);
-        }
-        $result = ['status' => true];
-        header("Location: ../../admin.php");
-        die();
-      }
 
-      static protected function getHtmlCart($cart)
-      {
-        $output = '';
-        foreach ($cart as $key => $value) {
-          $output .=
-            '<li class="cart-item list-group-item" data-service-id="' . $key . '">
+  static protected function confirmBook()
+  {
+    session_start();
+    if (isset($_SESSION['admins'])) {
+      $admin_id_hash =  $_SESSION['admins'];
+      $result = static::$con->confirmBook($_POST['client_id'], $_POST['room_id']);
+      if ($result) {
+        static::appendLog('Подтверждено заселение клиента ID = ' . $_POST['client_id'] . ' в комнату ID = ' . $_POST['room_id'], $admin_id_hash['aid'], 1);
+      }
+    } else {
+      $result = 0;
+    }
+    echo $result;
+    die();
+  }
+
+  static protected function appendLog($caption, $initiator)
+  {
+    static::$con->appendLog($caption, $initiator);
+  }
+
+  static protected function alogout()
+  {
+    session_start();
+    if (isset($_SESSION['admins'])) {
+      unset($_SESSION['admins']);
+    }
+    $result = ['status' => true];
+    header("Location: ../../admin.php");
+    die();
+  }
+
+  static protected function getHtmlCart($cart)
+  {
+    $output = '';
+    foreach ($cart as $key => $value) {
+      $output .=
+        '<li class="cart-item list-group-item" data-service-id="' . $key . '">
           <div class="row">
             <div class="col-10">
               <h6 class="card-title">' . $cart[$key]['name'] . '</h6>
@@ -333,128 +368,128 @@ class AjaxRequester
             <div class="col-2"><button type="button" class="btn btn-secondary btn-sm">X</button></div>
           </div>
         </li>';
+    }
+    return $output;
+  }
+
+  static protected function checkCart()
+  {
+    session_start();
+    if (isset($_SESSION['cart'])) {
+      $output = static::getHtmlCart($_SESSION['cart']);
+    } else {
+      $output = 0;
+    }
+    echo $output;
+    die();
+  }
+
+  static protected function cartAddService()
+  {
+    session_start();
+    if (isset($_SESSION['services'])) {
+      $services = $_SESSION['services'];
+    } else {
+      $_SESSION['services'] = static::$con->getServices();
+      $services = $_SESSION['services'];
+    }
+    $key = array_search($_POST['serviceID'], array_column($services, 'IDs'));
+    if (isset($_SESSION['cart'])) {
+      $cart = $_SESSION['cart'];
+    } else {
+      $cart = array();
+    }
+
+    $cart[$_POST['serviceID']] = [
+      'id' => $_POST['serviceID'],
+      'name' => $services[$key]['sname'],
+      'count' => $_POST['serviceCount'],
+      'cost' => $services[$key]['scost'],
+    ];
+    $output = static::getHtmlCart($cart);
+    echo $output;
+    $_SESSION['cart'] = $cart;
+    die();
+  }
+
+  static protected function cartRemoveService()
+  {
+    session_start();
+    if (isset($_SESSION['cart'][$_POST['serviceID']])) {
+      unset($_SESSION['cart'][$_POST['serviceID']]);
+    }
+    $output = static::getHtmlCart($_SESSION['cart']);
+    echo $output;
+    die();
+  }
+
+  static protected function clearCart()
+  {
+    session_start();
+    if (isset($_SESSION['cart'])) {
+      unset($_SESSION['cart']);
+    }
+    die();
+  }
+
+  static protected function confirmCart()
+  {
+    session_start();
+    if (isset($_COOKIE['id'])) {
+      if (isset($_SESSION['cart'])) {
+        $cart = $_SESSION['cart'];
+        $params = array();
+        $i = 0;
+        $params['uid'] = $_COOKIE['id'];
+        foreach ($cart as $key => $value) {
+          $params['items'][$i]['IDs'] = $cart[$key]['id'];
+          $params['items'][$i++]['sbCount'] = $cart[$key]['count'];
         }
-        return $output;
+        static::$con->confirmService($params);
+        static::clearCart();
       }
+    }
+    die();
+  }
 
-      static protected function checkCart()
-      {
-        session_start();
-        if (isset($_SESSION['cart'])) {
-          $output = static::getHtmlCart($_SESSION['cart']);
-        } else {
-          $output = 0;
-        }
-        echo $output;
-        die();
-      }
+  static protected function getTotalCost()
+  {
+    $uid = 0;
+    if (isset($_GET['uid'])) {
+      $uid = $_GET['uid'];
+    } else if (isset($_COOKIE['id'])) {
+      $uid = $_COOKIE['id'];
+    }
+    if ($uid == 0) {
+      echo $uid;
+      die();
+    }
+    $totalLivingBill = static::$con->getBill('living', $uid);
+    $totalServicesBill = static::$con->getBill('service', $uid);
+    $totalServiceBill = array();
+    $totalCost = 0;
+    foreach ($totalServicesBill as $i => $value) {
+      $totalServiceBill['items'][$i]['name'] = $totalServicesBill[$i]['sName'];
+      $totalServiceBill['items'][$i]['count'] = $totalServicesBill[$i]['sbCount'];
+      $totalServiceBill['items'][$i]['cost'] = $totalServicesBill[$i]['sCost'];
+      $totalCost += $totalServicesBill[$i]['sCost'] * $totalServicesBill[$i]['sbCount'];
+    }
+    $totalServiceBill['cost'] = $totalCost;
+    $totalCost += $totalLivingBill['totalCost'];
+    echo json_encode(['living' => ['daysCount' => $totalLivingBill['totalDaysCount'], 'cost' => $totalLivingBill['totalCost']], 'service' => $totalServiceBill, 'total' => ['cost' => $totalCost]]);
+    die();
+  }
 
-      static protected function cartAddService()
-      {
-        session_start();
-        if (isset($_SESSION['services'])) {
-          $services = $_SESSION['services'];
-        } else {
-          $_SESSION['services'] = static::$con->getServices();
-          $services = $_SESSION['services'];
-        }
-        $key = array_search($_POST['serviceID'], array_column($services, 'IDs'));
-        if (isset($_SESSION['cart'])) {
-          $cart = $_SESSION['cart'];
-        } else {
-          $cart = array();
-        }
-
-        $cart[$_POST['serviceID']] = [
-          'id' => $_POST['serviceID'],
-          'name' => $services[$key]['sname'],
-          'count' => $_POST['serviceCount'],
-          'cost' => $services[$key]['scost'],
-        ];
-        $output = static::getHtmlCart($cart);
-        echo $output;
-        $_SESSION['cart'] = $cart;
-        die();
-      }
-
-      static protected function cartRemoveService()
-      {
-        session_start();
-        if (isset($_SESSION['cart'][$_POST['serviceID']])) {
-          unset($_SESSION['cart'][$_POST['serviceID']]);
-        }
-        $output = static::getHtmlCart($_SESSION['cart']);
-        echo $output;
-        die();
-      }
-
-      static protected function clearCart()
-      {
-        session_start();
-        if (isset($_SESSION['cart'])) {
-          unset($_SESSION['cart']);
-        }
-        die();
-      }
-
-      static protected function confirmCart()
-      {
-        session_start();
-        if (isset($_COOKIE['id'])) {
-          if (isset($_SESSION['cart'])) {
-            $cart = $_SESSION['cart'];
-            $params = array();
-            $i = 0;
-            $params['uid'] = $_COOKIE['id'];
-            foreach ($cart as $key => $value) {
-              $params['items'][$i]['IDs'] = $cart[$key]['id'];
-              $params['items'][$i++]['sbCount'] = $cart[$key]['count'];
-            }
-            static::$con->confirmService($params);
-            static::clearCart();
-          }
-        }
-        die();
-      }
-
-      static protected function getTotalCost()
-      {
-        $uid = 0;
-        if (isset($_GET['uid'])) {
-          $uid = $_GET['uid'];
-        } else if (isset($_COOKIE['id'])) {
-          $uid = $_COOKIE['id'];
-        }
-        if ($uid == 0) {
-          echo $uid;
-          die();
-        }
-        $totalLivingBill = static::$con->getBill('living', $uid);
-        $totalServicesBill = static::$con->getBill('service', $uid);
-        $totalServiceBill = array();
-        $totalCost = 0;
-        foreach ($totalServicesBill as $i => $value) {
-          $totalServiceBill['items'][$i]['name'] = $totalServicesBill[$i]['sName'];
-          $totalServiceBill['items'][$i]['count'] = $totalServicesBill[$i]['sbCount'];
-          $totalServiceBill['items'][$i]['cost'] = $totalServicesBill[$i]['sCost'];
-          $totalCost += $totalServicesBill[$i]['sCost'] * $totalServicesBill[$i]['sbCount'];
-        }
-        $totalServiceBill['cost'] = $totalCost;
-        $totalCost += $totalLivingBill['totalCost'];
-        echo json_encode(['living' => ['daysCount' => $totalLivingBill['totalDaysCount'], 'cost' => $totalLivingBill['totalCost']], 'service' => $totalServiceBill, 'total' => ['cost' => $totalCost]]);
-        die();
-      }
-
-      static protected function getLogs()
-      {
-        session_start();
-        if (!isset($_SESSION['admins'])) {
-          echo 0;
-          die();
-        }
-        $logs = static::$con->getLogs($_POST['tab']);
-        foreach ($logs as $key => $log) {
-          ?>
+  static protected function getLogs()
+  {
+    session_start();
+    if (!isset($_SESSION['admins'])) {
+      echo 0;
+      die();
+    }
+    $logs = static::$con->getLogs($_POST['tab']);
+    foreach ($logs as $key => $log) {
+    ?>
       <tr data-log-id=<?= $log['log_id'] ?>>
         <td class="opName" data-operation-id=<?= $log['IDop'] ?>><?= $log['opName'] ?></td>
         <td class="a_caption"><?= $log['a_caption'] ?></td>

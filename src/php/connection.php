@@ -29,7 +29,8 @@ class tokyo_hotel
     return self::$instance;
   }
   private function __clone()
-  { }
+  {
+  }
   public function __wakeup()
   {
     throw new \Exception("Cannot unserialize a singleton.");
@@ -245,7 +246,11 @@ class tokyo_hotel
 
   private function CheckAndRemoveOldBookFromDB()
   {
-    $stmt = $this->pdo->prepare('SELECT IDc FROM booking_list WHERE (outDate < CURDATE()) AND (book_status = 1)');
+    $stmt = $this->pdo->prepare('SELECT booking_list.IDc AS IDc FROM booking_list
+    LEFT OUTER JOIN living_list ON booking_list.IDc = living_list.IDc 
+    WHERE ISNULL(living_list.IDc)
+      AND booking_list.book_status = 1
+      AND CURDATE() > booking_list.comingDate + INTERVAL 2 DAY');
     $stmt->execute();
     $result = array();
     foreach ($stmt as $row) {
@@ -256,14 +261,25 @@ class tokyo_hotel
       $stmt = $this->pdo->prepare($sql);
       $stmt->execute(['password_has_been_reset', '', $row['IDc']]);
 
-      $sql = "UPDATE booking_list SET book_status=? WHERE (outDate < CURDATE()) AND (book_status = 1)";
+      $sql = "UPDATE booking_list SET book_status=? WHERE (IDc=?) AND (book_status = 1)";
       $stmt = $this->pdo->prepare($sql);
-      $stmt->execute(['0']);
+      $stmt->execute(['0', $row['IDc']]);
 
       static::appendLog('Сброшен бронь и аккаунт с ID = ' . $row['IDc'] . ' по истечению срока брони', 1, 2);
     }
     return $result;
   }
+  private function resetBookFromDB($params)
+  {
+    $sql = "UPDATE clients SET user_password=?, user_hash=?, account_status=0 WHERE IDc=?";
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->execute(['password_has_been_reset', '', $params[0]]);
+
+    $sql = "UPDATE booking_list SET book_status=? WHERE IDc=?";
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->execute(['0', $params[0]]);
+  }
+
 
   private function appendLogIntoDB($params)
   {
@@ -492,6 +508,26 @@ class tokyo_hotel
     }
     return $result;
   }
+  private function selectBookingForPayment()
+  {
+    $query = 'SELECT * FROM human_view_total_cost';
+    $stmt = $this->pdo->prepare($query);
+    $stmt->execute();
+    $result = array();
+    foreach ($stmt as $row) {
+      $query = 'SELECT serviceTotalCostSum FROM total_service_cost WHERE IDc=' . $row['IDc'];
+      $res = $this->pdo->prepare($query);
+      $res->execute();
+      foreach ($res as $rec) {
+        $row['serviceCost'] = floatval($rec['serviceTotalCostSum']);
+      }
+      if (empty($row['serviceCost'])) {
+        $row['serviceCost'] = 0;
+      }
+      $result[] = $row;
+    }
+    return $result;
+  }
 
   private function insertBookDataIntoLivingList($params)
   {
@@ -621,6 +657,11 @@ class tokyo_hotel
     }
   }
 
+  private function insertToServiceBills($params)
+  {
+    $stmt = $this->pdo->prepare('INSERT INTO total_bills (IDip,  IDliv_l, tbLivingCost, tbLivingDaysCount, tbServiceCost) VALUES (?, ?, ?, ?, ?)');
+    $stmt->execute([$params[0], $params[1], $params[2], $params[3],  $params[4]]);
+  }
   ////////////////////////////////////////////////////////////
 
   public function createAdmin()
@@ -709,5 +750,21 @@ class tokyo_hotel
   {
     $method_name = 'insertServiceSolveAndUpdateSolveTime';
     $this->callMethod($method_name, array($aid, $sbid_array));
+  }
+
+  public function getAllUsersTotalCost()
+  {
+    $method_name = 'selectBookingForPayment';
+    $data = $this->callMethod($method_name, array());
+    return $data;
+  }
+
+  public function confirmPayment($user_total, $admin_id)
+  {
+    $method_name = 'insertToServiceBills';
+    $this->callMethod($method_name, array($admin_id, $user_total['IDliv_l'], $user_total['totalCost'], $user_total['totalDaysCount'], $user_total['serviceCost']));
+    static::resetBookFromDB(array($user_total['IDc']));
+    static::appendLog('Сброшен бронь и аккаунт с ID = ' . $user_total['IDc'] . ', оплата подтверждена', $admin_id, 3);
+    return 1;
   }
 }
