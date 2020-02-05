@@ -767,4 +767,61 @@ class tokyo_hotel
     static::appendLog('Сброшен бронь и аккаунт с ID = ' . $user_total['IDc'] . ', оплата подтверждена', $admin_id, 3);
     return 1;
   }
+
+  public function getTop($interval = 'week', $what_top = 'services')
+  {
+    switch ($what_top) {
+      case 'services':
+        $method_name = 'getTopServiceDB';
+        break;
+      case 'numbers':
+        $method_name = 'getTopNumbersDB';
+        break;
+    }
+    $data = $this->callMethod($method_name, array($interval));
+    return $data;
+  }
+
+  private function getTopServiceDB($params)
+  {
+    $stmt = $this->pdo->prepare('SELECT 
+    services.sName AS Name,
+    SUM(service_bills.sbCount) AS Count
+    FROM service_bills
+    INNER JOIN services
+      ON service_bills.IDs = services.IDs
+      AND service_bills.IDs = services.IDs
+    WHERE service_bills.sbStatus = 1
+      AND service_bills.sbCreateDate BETWEEN CURDATE() - INTERVAL 1 ' . $params[0] . ' AND CURDATE()
+    GROUP BY service_bills.IDs,
+           services.sName');
+    $stmt->execute();
+    $result = array();
+    foreach ($stmt as $row) {
+      $result[] = $row;
+    }
+    return $result;
+  }
+
+  private function getTopNumbersDB($params)
+  {
+    $stmt = $this->pdo->prepare('SELECT
+    COUNT(living_list.IDr) AS Count,
+    room_types.r_typeName AS Name
+    FROM living_list
+      INNER JOIN rooms
+        ON living_list.IDr = rooms.IDr
+      INNER JOIN room_types
+        ON rooms.IDrt = room_types.IDrt
+      INNER JOIN total_bills
+        ON total_bills.IDliv_l = living_list.IDliv_l
+    WHERE total_bills.tbPayDate BETWEEN CURDATE() - INTERVAL 1 ' . $params[0] . ' AND CURDATE()
+    GROUP BY room_types.r_typeName');
+    $stmt->execute();
+    $result = array();
+    foreach ($stmt as $row) {
+      $result[] = $row;
+    }
+    return $result;
+  }
 }

@@ -238,7 +238,7 @@
 
     <div class="col-12 statistic-content">
       <div class="row justify-content-center">
-        <div class="btn-group-vertical graphtype col-12" data-toggle="buttons">
+        <div class="btn-group-vertical graphtype col-12">
           <button type="button" class="btn btn-outline-primary btn-lg top-service-btn">Самая популярная услуга</button>
           <button type="button" class="btn btn-outline-primary btn-lg profit-btn">Доход за период</button>
           <button type="button" class="btn btn-outline-primary btn-lg top-number-btn">Самый популярный класс номеров</button>
@@ -247,7 +247,10 @@
           <div class="col-12"><button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button></div>
-          <div class="graph col-12"><canvas id="chart" width="1000" height="600"></canvas></div>
+          <div class="graph col-12">
+
+            <canvas id="chart" width="1000" height="600"></canvas>
+          </div>
         </div>
 
       </div>

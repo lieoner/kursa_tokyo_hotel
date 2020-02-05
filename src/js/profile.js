@@ -236,7 +236,7 @@ function serviceTriggers() {
         });
 
         request.done(function(response) {
-            totalCost = JSON.parse(response);
+            let totalCost = JSON.parse(response);
             $('.living-cost').html(totalCost.living.cost);
             $('.living-days').html(totalCost.living.daysCount + ' дн.');
             $('.service-cost').html(totalCost.service.cost);

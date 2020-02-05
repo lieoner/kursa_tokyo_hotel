@@ -318,6 +318,25 @@ class AjaxRequester
     die();
   }
 
+  static protected function getTop()
+  {
+    session_start();
+    if (isset($_SESSION['admins'])) {
+      $interval = 'week';
+      $what_top = 'services';
+      if (isset($_GET['interval'])) {
+        $interval = $_GET['interval'];
+      }
+      if (isset($_GET['what_top'])) {
+        $what_top = $_GET['what_top'];
+      }
+      $result = static::$con->getTop($interval, $what_top);
+    } else {
+      $result = 0;
+    }
+    echo json_encode($result);
+    die();
+  }
 
   static protected function confirmBook()
   {
