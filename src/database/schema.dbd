@@ -698,7 +698,7 @@
               <Port xsi:type="LinkPort">
                 <Location>
                   <X>29 px</X>
-                  <Y>-1.22070312045253E-05 px</Y>
+                  <Y>-1.22070312613687E-05 px</Y>
                 </Location>
                 <Anchors>None</Anchors>
                 <Align>Left</Align>
@@ -1391,7 +1391,7 @@
               <Port xsi:type="LinkPort">
                 <Location>
                   <X>-29 px</X>
-                  <Y>-1.22070312045253E-05 px</Y>
+                  <Y>-1.22070312613687E-05 px</Y>
                 </Location>
                 <Anchors>None</Anchors>
                 <Align>Right</Align>
@@ -1432,11 +1432,11 @@
             </CustomProperties>
             <Location>
               <X>501 px</X>
-              <Y>217 px</Y>
+              <Y>209 px</Y>
             </Location>
             <Size>
               <Width>229 px</Width>
-              <Height>229 px</Height>
+              <Height>246 px</Height>
             </Size>
             <DbOid>
               <Path>tokyo_hotel.total_bills</Path>
@@ -1462,7 +1462,7 @@
               <Port>
                 <Location>
                   <X>114.125 px</X>
-                  <Y>229.6 px</Y>
+                  <Y>245.625 px</Y>
                 </Location>
                 <Anchors>Left Right</Anchors>
                 <Align>Bottom</Align>
@@ -1501,7 +1501,7 @@
               <Port xsi:type="LinkPort">
                 <Location>
                   <X>0 px</X>
-                  <Y>-117.5 px</Y>
+                  <Y>-113 px</Y>
                 </Location>
                 <Anchors>None</Anchors>
                 <Align>Bottom</Align>
@@ -1567,7 +1567,7 @@
               <Port>
                 <Location>
                   <X>229.15 px</X>
-                  <Y>114.575 px</Y>
+                  <Y>122.575 px</Y>
                 </Location>
                 <Anchors>Top Bottom</Anchors>
                 <Align>Right</Align>

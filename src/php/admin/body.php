@@ -248,7 +248,17 @@
               <span aria-hidden="true">&times;</span>
             </button></div>
           <div class="graph col-12">
-
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+              <label class="btn btn-primary btn-sm">
+                <input type="radio" name="options" id="day" autocomplete="off"> неделя
+              </label>
+              <label class="btn btn-primary btn-sm">
+                <input type="radio" name="options" id="month" autocomplete="off"> месяц
+              </label>
+              <label class="btn btn-primary active btn-sm">
+                <input type="radio" name="options" id="year" autocomplete="off" checked=""> год
+              </label>
+            </div>
             <canvas id="chart" width="1000" height="600"></canvas>
           </div>
         </div>

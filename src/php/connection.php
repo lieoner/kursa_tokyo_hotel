@@ -777,9 +777,28 @@ class tokyo_hotel
       case 'numbers':
         $method_name = 'getTopNumbersDB';
         break;
+      case 'profit':
+        $method_name = 'getProfitDB';
+        break;
     }
     $data = $this->callMethod($method_name, array($interval));
     return $data;
+  }
+
+  private function getProfitDB($params)
+  {
+    $stmt = $this->pdo->prepare('SELECT
+    total_bills.tbPayDateDay AS Name,
+    SUM(total_bills.tbTotalCost) AS Count
+    FROM total_bills
+    WHERE total_bills.tbPayDateDay BETWEEN CURDATE() - INTERVAL 1 ' . $params[0] . ' AND CURDATE()
+    GROUP BY total_bills.tbPayDateDay');
+    $stmt->execute();
+    $result = array();
+    foreach ($stmt as $row) {
+      $result[] = $row;
+    }
+    return $result;
   }
 
   private function getTopServiceDB($params)

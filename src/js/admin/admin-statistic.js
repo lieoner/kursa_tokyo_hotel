@@ -4,7 +4,6 @@ function statistic() {
             e.preventDefault();
             $('div.statistic-content .btn').removeClass('active');
             $('.statistic-content .jumbotron').hide();
-            $('.graph .btn-group').remove();
         });
 
         $('div.statistic-content .btn').click(function(e) {
@@ -12,6 +11,7 @@ function statistic() {
             $('.statistic-content .jumbotron ').show();
         });
         var ctx = $('#chart');
+
         var chart = new Chart(ctx, {
             type: 'bar',
 
@@ -30,27 +30,30 @@ function statistic() {
             options: { responsive: false },
         });
 
-        var drawGraph = function(dataset, graphName) {
+        var drawGraph = function(dataset, graphName, graphType) {
+            chart.clear();
+
             let labels = [];
             let dataVals = [];
             dataset.forEach(element => {
                 labels.push(element.Name);
                 dataVals.push(element.Count);
             });
+            chart.data.datasets[0].type = graphType;
             chart.data.labels = labels;
             chart.data.datasets[0].label = graphName;
             chart.data.datasets[0].data = dataVals;
             chart.update();
         };
 
-        var getTop = function(interval, what_top) {
+        var getTop = function(interval, what_top, graph_type) {
             $.ajax({
                 type: 'GET',
                 url:
                     'src/php/ajax.php?action=getTop&interval=' + interval + '&what_top=' + what_top,
                 dataType: 'json',
                 success: function(response) {
-                    drawGraph(response, 'Топ ' + what_top);
+                    drawGraph(response, 'Топ ' + what_top, graph_type);
                 },
             });
         };
@@ -59,29 +62,23 @@ function statistic() {
             $('.statistic-content')
                 .find('.top-service-btn')
                 .on('click', function() {
-                    getTop('year', 'services');
-                    ctx.before(`<div class="btn-group btn-group-toggle" data-toggle="buttons">
-                        <label class="btn btn-primary btn-sm">
-                        <input type="radio" name="options" id="day" autocomplete="off"> неделя
-                        </label>
-                        <label class="btn btn-primary btn-sm">
-                        <input type="radio" name="options" id="month" autocomplete="off"> месяц
-                        </label>
-                        <label class="btn btn-primary active btn-sm">
-                        <input type="radio" name="options" id="year" autocomplete="off" checked=""> год
-                        </label>
-                        </div>`);
-                });
-
-            $('.statistic-content')
-                .find('.btn-group-toggle .btn')
-                .on('click', function() {
-                    getTop(
-                        $(this)
-                            .find('input')
-                            .attr('id'),
-                        'services'
-                    );
+                    getTop('year', 'services', 'bar');
+                    $('.statistic-content')
+                        .find('.btn-group-toggle .btn')
+                        .off('click');
+                    $('.statistic-content')
+                        .find('.btn-group-toggle .btn')
+                        .on('click', function() {
+                            event.stopPropagation();
+                            event.preventDefault();
+                            getTop(
+                                $(this)
+                                    .find('input')
+                                    .attr('id'),
+                                'services',
+                                'bar'
+                            );
+                        });
                 });
         };
 
@@ -89,23 +86,51 @@ function statistic() {
             $('.statistic-content')
                 .find('.top-number-btn')
                 .on('click', function() {
-                    getTop('year', 'numbers');
+                    getTop('year', 'numbers', 'bar');
+                    $('.statistic-content')
+                        .find('.btn-group-toggle .btn')
+                        .off('click');
+                    $('.statistic-content')
+                        .find('.btn-group-toggle .btn')
+                        .on('click', function() {
+                            event.stopPropagation();
+                            event.preventDefault();
+                            getTop(
+                                $(this)
+                                    .find('input')
+                                    .attr('id'),
+                                'numbers',
+                                'bar'
+                            );
+                        });
                 });
-
+        };
+        var drowProfitGraph = function() {
             $('.statistic-content')
-                .find('.btn-group-toggle .btn')
+                .find('.profit-btn')
                 .on('click', function() {
-                    event.stopPropagation();
-                    getTop(
-                        $(this)
-                            .find('input')
-                            .attr('id'),
-                        'numbers'
-                    );
+                    getTop('year', 'profit', 'line');
+                    $('.statistic-content')
+                        .find('.btn-group-toggle .btn')
+                        .off('click');
+                    $('.statistic-content')
+                        .find('.btn-group-toggle .btn')
+                        .on('click', function() {
+                            event.stopPropagation();
+                            event.preventDefault();
+                            getTop(
+                                $(this)
+                                    .find('input')
+                                    .attr('id'),
+                                'profit',
+                                'line'
+                            );
+                        });
                 });
         };
         drowTopNumbersGraph();
         drowTopServiceGraph();
+        drowProfitGraph();
     }
 }
 module.exports = {
